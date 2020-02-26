@@ -9,24 +9,21 @@
         <Label alignment="TOP_CENTER" text="Upload your Files" />
       <FlowPane alignment="TOP_CENTER" prefHeight="37.0" prefWidth="739.0">
          <children>
-
-
-             <TextField alignment="CENTER" />
-             <Button fx:id="browseClicksBtn" alignment="CENTER" onAction="#switchToPrimary" text="Browse..." />
+             <TextField fx:id="clicksPathLabel" alignment="CENTER" />
+             <Button fx:id="browseClicksBtn" alignment="CENTER" text="Browse..." />
              <Label text="   click_log.csv" />
-
          </children>
       </FlowPane>
 
       <FlowPane alignment="TOP_CENTER" prefHeight="25.0" prefWidth="0.0">
-          <TextField alignment="CENTER" />
-          <Button fx:id="browseImprBtn" alignment="CENTER" onAction="#switchToPrimary" text="Browse..." />
+          <TextField fx:id="imprPathLabel" alignment="CENTER" />
+          <Button fx:id="browseImprBtn" alignment="CENTER"  text="Browse..." />
           <Label text="   impression_log.csv" />
       </FlowPane>
 
       <FlowPane alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0">
-          <TextField alignment="CENTER" />
-          <Button fx:id="browseServerBtn" alignment="CENTER" onMouseClicked="#switchToPrimary" text="Browse..." />
+          <TextField fx:id="serverPathLabel" alignment="CENTER" />
+          <Button fx:id="browseServerBtn" alignment="CENTER" text="Browse..." />
           <Label text="   server_log.csv" />
       </FlowPane>
 
