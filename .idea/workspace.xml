@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5ed4ac8e-15cf-48fd-a856-ac0e41048dc2" name="Default Changelist" comment="setup">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/segGroupCW/fileUpload.fxml" afterDir="false" />
+    <list default="true" id="5ed4ac8e-15cf-48fd-a856-ac0e41048dc2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/segGroupCW/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/segGroupCW/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/segGroupCW/PrimaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/segGroupCW/PrimaryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/segGroupCW/SecondaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/segGroupCW/FileLoadController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/segGroupCW/secondary.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/segGroupCW/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/segGroupCW/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/segGroupCW/PrimaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/segGroupCW/PrimaryController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/segGroupCW/SecondaryController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/segGroupCW/secondary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/segGroupCW/secondary.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/null/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/null/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/null/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/null/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/segGroupCW/fileUpload.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/segGroupCW/fileUpload.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +41,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="GitIgnore" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="Maven.Run">
@@ -116,7 +110,8 @@
       <workItem from="1582642397185" duration="889000" />
       <workItem from="1582648592448" duration="262000" />
       <workItem from="1582732096038" duration="3486000" />
-      <workItem from="1582747086256" duration="8041000" />
+      <workItem from="1582747086256" duration="8118000" />
+      <workItem from="1582820460927" duration="3430000" />
     </task>
     <task id="LOCAL-00001" summary="added gitignore">
       <created>1582732886004</created>
@@ -146,7 +141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582733339300</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="made a basic file upload page">
+      <created>1582758522042</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1582758522042</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +170,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added gitignore" />
     <MESSAGE value="setup" />
-    <option name="LAST_COMMIT_MESSAGE" value="setup" />
+    <MESSAGE value="made a basic file upload page" />
+    <option name="LAST_COMMIT_MESSAGE" value="made a basic file upload page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582732604905">
@@ -179,37 +182,39 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="679" y="209" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582732776559" />
-    <state x="585" y="114" width="1180" height="811" key="CommitChangelistDialog2" timestamp="1582746486415">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="2505" y="114" width="1180" height="811" key="CommitChangelistDialog2" timestamp="1582758521189">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="585" y="114" width="1180" height="811" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582746486415" />
-    <state width="1877" height="182" key="GridCell.Tab.0.bottom" timestamp="1582758252459">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="129" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582746490742" />
-    <state width="1877" height="182" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582758252459" />
-    <state width="1877" height="182" key="GridCell.Tab.0.center" timestamp="1582758252458">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="129" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582746490742" />
-    <state width="1877" height="182" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582758252458" />
-    <state width="1877" height="182" key="GridCell.Tab.0.left" timestamp="1582758252458">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="129" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582746490741" />
-    <state width="1877" height="182" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582758252458" />
-    <state width="1877" height="182" key="GridCell.Tab.0.right" timestamp="1582758252458">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="129" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582746490742" />
-    <state width="1877" height="182" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582758252458" />
-    <state x="461" y="162" key="SettingsEditor" timestamp="1582747015748">
+    <state x="2505" y="114" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582758521189" />
+    <state width="1877" height="99" key="GridCell.Tab.0.bottom" timestamp="1582847331819">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="162" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582747015748" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1582746268593">
+    <state width="1877" height="99" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582847331819" />
+    <state width="1877" height="182" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582758566756" />
+    <state width="1877" height="99" key="GridCell.Tab.0.center" timestamp="1582847331818">
       <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="99" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582847331818" />
+    <state width="1877" height="182" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582758566756" />
+    <state width="1877" height="99" key="GridCell.Tab.0.left" timestamp="1582847331818">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="99" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582847331818" />
+    <state width="1877" height="182" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582758566756" />
+    <state width="1877" height="99" key="GridCell.Tab.0.right" timestamp="1582847331818">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="99" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582847331818" />
+    <state width="1877" height="182" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582758566756" />
+    <state x="461" y="162" key="SettingsEditor" timestamp="1582847234948">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="162" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582847234948" />
+    <state x="2472" y="253" key="Vcs.Push.Dialog.v2" timestamp="1582758524986">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582746268593" />
+    <state x="2472" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582758524986" />
   </component>
 </project>
