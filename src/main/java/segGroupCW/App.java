@@ -13,26 +13,34 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    private static Scene scene;
 
-    @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"));
-        stage.setScene(scene);
-        stage.show();
-    }
+	private static Scene scene;
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
+	public static Scene getScene(){
+		return scene;
+	}
+	@Override
+	public void start(Stage stage) throws IOException {
+		scene = new Scene(loadFXML("fileUpload"));
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
+		stage.setScene(scene);
+		stage.show();
+	}
 
-    public static void main(String[] args) {
-        launch();
-    }
+
+	 static void setRoot(String fxml) throws IOException {
+		scene.setRoot(loadFXML(fxml));
+
+	}
+
+
+	private static Parent loadFXML(String fxml) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+		return fxmlLoader.load();
+	}
+
+	public static void main(String[] args) {
+		launch();
+	}
 
 }
