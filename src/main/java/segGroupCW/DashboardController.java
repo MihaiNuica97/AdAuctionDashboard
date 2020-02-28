@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class SecondaryController {
+public class DashboardController {
 
 
     @FXML
@@ -106,5 +106,11 @@ public class SecondaryController {
     private void switchToPrimary() throws IOException {
         App.setRoot("primary");
     }
+
+    @FXML
+    private void clicksLabel(){
+        value1.setText("chickennnnn");
+    }
+
 
 }
