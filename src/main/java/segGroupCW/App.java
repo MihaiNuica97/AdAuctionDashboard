@@ -19,6 +19,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("primary"));
         stage.setScene(scene);
+        stage.setWidth(900);
+        stage.setHeight(950);
         stage.show();
     }
 
@@ -32,6 +34,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+
         launch();
     }
 
