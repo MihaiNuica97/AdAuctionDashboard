@@ -60,9 +60,8 @@ public class FileLoadController {
 	@FXML
 	private void goToDashboard() throws IOException
 	{
-		App.setRoot("primary");
+		App.setRoot("dashboard");
 	}
-	
 	private Boolean isDBReady(){
 		return true;
 	}
