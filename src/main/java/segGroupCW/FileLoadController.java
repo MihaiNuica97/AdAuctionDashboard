@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
 
 public class FileLoadController {
 
@@ -29,11 +30,15 @@ public class FileLoadController {
 	@FXML
 	private Button browseServerBtn;
 
+	@FXML
+	private Button dashboardBtn;
+	
 	public void initialize(){
 		fileChooser = new FileChooser();;
         browseClicksBtn.setOnAction( e -> browseFiles(clicksPathLabel,"Clicks Log"));
 		browseImprBtn.setOnAction( e -> browseFiles(imprPathLabel,"Impressions"));
 		browseServerBtn.setOnAction( e -> browseFiles(serverPathLabel,"Server Log"));
+		dashboardBtn.setDisable(true);
 	}
 
 
@@ -46,10 +51,21 @@ public class FileLoadController {
 
 		File file = fileChooser.showOpenDialog(App.getScene().getWindow());
 		field.setText(file.getAbsolutePath());
-
+		if(isDBReady()){
+			dashboardBtn.setDisable(false);
+		}
 		return file;
 	}
-
+	
+	@FXML
+	private void goToDashboard() throws IOException
+	{
+		App.setRoot("primary");
+	}
+	
+	private Boolean isDBReady(){
+		return true;
+	}
 
 
 }
