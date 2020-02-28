@@ -9,19 +9,21 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane prefHeight="1187.0" prefWidth="849.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:id="scrollPane" prefHeight="1187.0" prefWidth="849.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.SecondaryController">
    <content>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="851.0">
          <children>
             <VBox layoutX="151.0" layoutY="100.0" prefHeight="1099.0" prefWidth="178.0" spacing="20.0" style="-fx-background-color: #828a95;">
                <children>
-                  <Pane prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
+                  <Pane fx:id="pane1" prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
                      <effect>
                         <DropShadow />
                      </effect>
@@ -31,82 +33,82 @@
                               <Font name="Verdana Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
+                        <Label fx:id="value1" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="33.0" />
                            </font>
                         </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
+                  <Pane fx:id="pane2" prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
                      <effect>
                         <DropShadow />
                      </effect>
                      <children>
-                        <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF IMPRESSIONS" wrapText="true">
+                        <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF CLICKS" wrapText="true">
                            <font>
                               <Font name="Verdana Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
+                        <Label fx:id="value2" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="33.0" />
                            </font>
                         </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
+                  <Pane fx:id="pane3" prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
                      <effect>
                         <DropShadow />
                      </effect>
                      <children>
-                        <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF IMPRESSIONS" wrapText="true">
+                        <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF UNIQUES" wrapText="true">
                            <font>
                               <Font name="Verdana Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
+                        <Label fx:id="value3" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="33.0" />
                            </font>
                         </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
+                  <Pane fx:id="pane4" prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
                      <effect>
                         <DropShadow />
                      </effect>
                      <children>
-                        <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF IMPRESSIONS" wrapText="true">
+                        <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF BOUNCES" wrapText="true">
                            <font>
                               <Font name="Verdana Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
+                        <Label fx:id="value4" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="33.0" />
                            </font>
                         </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
+                  <Pane fx:id="pane5" prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
                      <effect>
                         <DropShadow />
                      </effect>
                      <children>
-                        <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF IMPRESSIONS" wrapText="true">
+                        <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF CONVERSIONS" wrapText="true">
                            <font>
                               <Font name="Verdana Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
+                        <Label fx:id="value5" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="33.0" />
                            </font>
                         </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
+                  <Pane fx:id="pane6" prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
                      <effect>
                         <DropShadow />
                      </effect>
@@ -116,7 +118,7 @@
                               <Font name="Verdana Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
+                        <Label fx:id="value6" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" style="-fx-background-color: #5bc0be;" text="567, 920" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="33.0" />
                            </font>
@@ -132,7 +134,7 @@
                <children>
                   <Pane prefHeight="148.0" prefWidth="504.0" style="-fx-background-color: #5bc0be;">
                      <children>
-                        <LineChart createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                        <LineChart fx:id="lineChart1" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                            <xAxis>
                               <CategoryAxis side="BOTTOM" />
                            </xAxis>
@@ -147,7 +149,7 @@
                   </Pane>
                   <Pane prefHeight="148.0" prefWidth="504.0" style="-fx-background-color: #5bc0be;">
                      <children>
-                        <LineChart createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                        <LineChart fx:id="lineChart2" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                            <xAxis>
                               <CategoryAxis side="BOTTOM" />
                            </xAxis>
@@ -162,7 +164,7 @@
                   </Pane>
                   <Pane prefHeight="148.0" prefWidth="504.0" style="-fx-background-color: #5bc0be;">
                      <children>
-                        <LineChart createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                        <LineChart fx:id="lineChart3" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                            <xAxis>
                               <CategoryAxis side="BOTTOM" />
                            </xAxis>
@@ -177,7 +179,7 @@
                   </Pane>
                   <Pane prefHeight="148.0" prefWidth="504.0" style="-fx-background-color: #5bc0be;">
                      <children>
-                        <LineChart createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                        <LineChart fx:id="lineChart4" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                            <xAxis>
                               <CategoryAxis side="BOTTOM" />
                            </xAxis>
@@ -192,7 +194,7 @@
                   </Pane>
                   <Pane prefHeight="148.0" prefWidth="504.0" style="-fx-background-color: #5bc0be;">
                      <children>
-                        <LineChart createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                        <LineChart fx:id="lineChart5" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                            <xAxis>
                               <CategoryAxis side="BOTTOM" />
                            </xAxis>
@@ -207,7 +209,7 @@
                   </Pane>
                   <Pane prefHeight="148.0" prefWidth="504.0" style="-fx-background-color: #5bc0be;">
                      <children>
-                        <LineChart createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                        <LineChart fx:id="lineChart6" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                            <xAxis>
                               <CategoryAxis side="BOTTOM" />
                            </xAxis>
@@ -225,14 +227,23 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </VBox>
-            <VBox layoutY="100.0" prefHeight="1105.0" prefWidth="151.0" spacing="20.0" style="-fx-background-color: #1c2541;">
+            <VBox fx:id="campaignVBox" layoutY="100.0" prefHeight="1105.0" prefWidth="151.0" spacing="20.0" style="-fx-background-color: #1c2541;">
                <children>
-                  <Label prefHeight="34.0" prefWidth="151.0" text="           CAMPAIGNS" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="campaignLabel" prefHeight="34.0" prefWidth="151.0" text="  CAMPAIGNS" textFill="WHITE">
                      <font>
                         <Font name="Verdana Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Campaign 1" />
+                  <Button fx:id="campaign1Button" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Campaign 1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Separator prefWidth="200.0" />
+                  <Button fx:id="campaign2Button" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Campaign 2">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                   <Separator prefWidth="200.0" />
                </children>
                <padding>
@@ -246,12 +257,19 @@
                <children>
                   <Pane prefHeight="100.0" prefWidth="246.0">
                      <children>
-                        <Button layoutX="1.0" layoutY="8.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Account" />
+                        <Button fx:id="accountButton" layoutX="4.0" layoutY="27.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0">
+                           <graphic>
+                              <ImageView fx:id="accountImageView" fitHeight="35.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../Downloads/user_5-15-512.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                      </children>
                   </Pane>
-                  <Pane prefHeight="100.0" prefWidth="370.0">
+                  <Pane fx:id="topHBox" prefHeight="100.0" prefWidth="370.0">
                      <children>
-                        <Label layoutX="56.0" layoutY="10.0" prefHeight="70.0" prefWidth="285.0" text="Dashboard" textFill="WHITE">
+                        <Label fx:id="dashBoardLabel" layoutX="56.0" layoutY="10.0" prefHeight="70.0" prefWidth="285.0" text="Dashboard" textFill="WHITE">
                            <font>
                               <Font name="Verdana" size="48.0" />
                            </font>
@@ -260,8 +278,15 @@
                   </Pane>
                   <Pane prefHeight="100.0" prefWidth="218.0">
                      <children>
-                        <Button layoutX="72.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Change Campaign" />
-                        <Button layoutX="72.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Filter" />
+                        <Button fx:id="changeCampaignButton" layoutX="72.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="123.0" text="Change Campaign" />
+                        <Button fx:id="filterButton" layoutX="75.0" layoutY="46.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="117.0" text="Filter">
+                           <graphic>
+                              <ImageView fitHeight="49.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../Downloads/Filter-512.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                      </children>
                   </Pane>
                </children>

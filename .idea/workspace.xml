@@ -4,13 +4,9 @@
     <list default="true" id="5ed4ac8e-15cf-48fd-a856-ac0e41048dc2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/segGroupCW/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/segGroupCW/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/segGroupCW/SecondaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/segGroupCW/SecondaryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/segGroupCW/primary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/segGroupCW/primary.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/segGroupCW/secondary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/segGroupCW/secondary.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/segGroupCW/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/segGroupCW/App.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/segGroupCW/SecondaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/segGroupCW/SecondaryController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/segGroupCW/primary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/segGroupCW/primary.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/segGroupCW/secondary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/segGroupCW/secondary.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -105,7 +101,7 @@
       <workItem from="1582642397185" duration="889000" />
       <workItem from="1582648592448" duration="1215000" />
       <workItem from="1582649843999" duration="1626000" />
-      <workItem from="1582729569658" duration="24134000" />
+      <workItem from="1582729569658" duration="27975000" />
     </task>
     <task id="LOCAL-00001" summary="Made the windows to size we want">
       <created>1582648933407</created>
@@ -114,7 +110,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582648933407</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Created dashboard page, no functionality, scroll pane not working">
+      <created>1582891660347</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1582891660347</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,6 +138,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Made the windows to size we want" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made the windows to size we want" />
+    <MESSAGE value="Created dashboard page, no functionality, scroll pane not working" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created dashboard page, no functionality, scroll pane not working" />
   </component>
 </project>
