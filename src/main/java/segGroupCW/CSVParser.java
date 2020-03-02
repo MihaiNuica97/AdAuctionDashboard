@@ -4,21 +4,42 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class CSVParser {
     // Parses 3 csvs and inserts into tables
     public void parse(File clickLog, File serverLog, File impressionLog) {
         try {
+            DatabaseHandler db = new DatabaseHandler();
+            db.connectDB();
+            db.sendSQL("CREATE TABLE clicks ( ID INT PRIMARY KEY," +
+                    " Date TIMESTAMP," +
+                    " ClickCost FLOAT(8) );");
+            db.sendSQL("CREATE TABLE server ( ID INT PRIMARY KEY," +
+                    " EntryDate TIMESTAMP," +
+                    " ExitDate TIMESTAMP," +
+                    " PagesViewed INT," +
+                    " Conversion BOOLEAN );");
+            db.sendSQL("CREATE TABLE impressions ( ID INT PRIMARY KEY," +
+                    " Date TIMESTAMP," +
+                    " Gender VARCHAR(255)," +
+                    " Age VARCHAR(255)," +
+                    " Income VARCHAR(255)," +
+                    " Context VARCHAR(255)," +
+                    " Cost FLOAT(7) );");
+            System.out.println("Table Created");
             BufferedReader csvReader1 = new BufferedReader(new FileReader(clickLog));
             String row = csvReader1.readLine();
             String[] data = row.split(",");
             if (!data[0].equals("Date")) {  // Includes first line if it isn't the headings
                 //INSERT INTO ? VALUES (data[1], data[0], data[2])
+                db.sendSQL("INSERT INTO clicks VALUES (" + data[1] + ", " + data[0] + ", " + data[2] + ");");
             }
             while ((row = csvReader1.readLine()) != null) {
                 data = row.split(",");
                 //Date, ID, Click Cost
                 //INSERT INTO ? VALUES (data[1], data[0], data[2])
+                db.sendSQL("INSERT INTO clicks VALUES (" + data[1] + ", " + data[0] + ", "  + data[2] + ");");
             }
             csvReader1.close();
 
@@ -28,8 +49,10 @@ public class CSVParser {
             if (!data[0].equals("Entry Date")) {  // Includes first line if it isn't the headings
                 if (data[2].equals("n/a")) {  // If no valid exit date, skip it
                     //INSERT INTO ? (col1, col2, col4, col4) VALUES (data[1], data[0], data[3], data[4])
+                    db.sendSQL("INSERT INTO server (ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", " + data[0] + ", " + data[3] + ", " + data[4] + ");");
                 } else {
                     //INSERT INTO ? VALUES (data[1], data[0], data[2], data[3], data[4])}
+                    db.sendSQL("INSERT INTO server VALUES (" + data[1] + ", " + data[0] + ", " + data[2] + ", " + data[3] + ", " + data[4] + ");");
                 }
             }
             while ((row = csvReader2.readLine()) != null) {
@@ -37,8 +60,10 @@ public class CSVParser {
                 // EntryDate, ID, ExitDate, Pages viewed, Conversion
                 if (data[2].equals("n/a")) {  // If no valid exit date, skip it
                     //INSERT INTO ? (col1, col2, col4, col4) VALUES (data[1], data[0], data[3], data[4])
+                    db.sendSQL("INSERT INTO server (ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", " + data[0] + ", " + data[3] + ", " + data[4] + ");");
                 } else {
                     //INSERT INTO ? VALUES (data[1], data[0], data[2], data[3], data[4])}
+                    db.sendSQL("INSERT INTO server VALUES (" + data[1] + ", " + data[0] + ", " + data[2] + ", " + data[3] + ", " + data[4] + ");");
                 }
             }
             csvReader2.close();
@@ -48,16 +73,22 @@ public class CSVParser {
             data = row.split(",");
             if (!data[0].equals("Entry Date")) {  // Includes first line if it isn't the headings
                 //INSERT INTO ? VALUES (data[1], data[0], data[2], data[3], data[4], data[5], data[6])
+                db.sendSQL("INSERT INTO server VALUES (" + data[1] + ", " + data[0] + ", " + data[2] + ", " + data[3] + ", " + data[4] + data[5] + ", " + data[6] + ");");
             }
             while ((row = csvReader3.readLine()) != null) {
                 data = row.split(",");
-                //Date, ID, Gender, Age range, Income, Context, Impression cost
-                // What type will Age Range be?
+                //ID, Date, Gender, Age range, Income, Context, Impression cost
                 //INSERT INTO ? VALUES (data[1], data[0], data[2], data[3], data[4], data[5], data[6])
+                db.sendSQL("INSERT INTO server VALUES (" + data[1] + ", " + data[0] + ", " + data[2] + ", " + data[3] + ", " + data[4] + data[5] + ", " + data[6] + ");");
             }
             csvReader3.close();
+
+            db.closeSQL();
         } catch (IOException e) {  // If readline function throws error
             System.out.println("Failed to readline");
+        } catch (SQLException e) {  // If the dbhandler throws an error
+            System.out.println("Failed to DB");
+            e.printStackTrace();
         }
     }
 }

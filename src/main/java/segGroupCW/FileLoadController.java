@@ -8,10 +8,13 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class FileLoadController {
 
 	private FileChooser fileChooser;
+
+	private HashMap<String, File> fileMap = new HashMap<String, File>(3);
 
 	private Scene scene;
 	@FXML
@@ -50,6 +53,7 @@ public class FileLoadController {
 		fileChooser.setSelectedExtensionFilter(fileExtensions);
 
 		File file = fileChooser.showOpenDialog(App.getScene().getWindow());
+		fileMap.put(fileType, file);
 		field.setText(file.getAbsolutePath());
 		if(isDBReady()){
 			dashboardBtn.setDisable(false);
@@ -60,6 +64,8 @@ public class FileLoadController {
 	@FXML
 	private void goToDashboard() throws IOException
 	{
+		System.out.println("Dashboard button clicked, loading: " + fileMap.get("Clicks Log").getPath() + fileMap.get("Server Log").getPath() + fileMap.get("Impressions").getPath());
+		(new CSVParser()).parse(fileMap.get("Clicks Log"), fileMap.get("Server Log"), fileMap.get("Impressions"));
 		App.setRoot("dashboard");
 	}
 	private Boolean isDBReady(){
