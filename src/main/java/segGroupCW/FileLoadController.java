@@ -64,7 +64,7 @@ public class FileLoadController {
 	@FXML
 	private void goToDashboard() throws IOException
 	{
-		System.out.println("Dashboard button clicked, loading: " + fileMap.get("Clicks Log").getPath() + fileMap.get("Server Log").getPath() + fileMap.get("Impressions").getPath());
+		System.out.println("Dashboard button clicked");
 		(new CSVParser()).parse(fileMap.get("Clicks Log"), fileMap.get("Server Log"), fileMap.get("Impressions"));
 		App.setRoot("dashboard");
 	}
