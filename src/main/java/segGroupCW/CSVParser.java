@@ -12,15 +12,19 @@ public class CSVParser {
         try {
             DatabaseHandler db = new DatabaseHandler();
             db.connectDB();
-            db.sendSQL("CREATE TABLE clicks ( ID INT PRIMARY KEY," +
+            db.sendSQL("DROP TABLE IF EXISTS clicks; DROP TABLE IF EXISTS server; DROP TABLE IF EXISTS impressions;");
+            db.sendSQL("CREATE TABLE clicks ( entryID INT PRIMARY KEY AUTO_INCREMENT," +
+                    "ID BIGINT," +
                     " Date TIMESTAMP," +
                     " ClickCost FLOAT(8) );");
-            db.sendSQL("CREATE TABLE server ( ID INT PRIMARY KEY," +
+            db.sendSQL("CREATE TABLE server ( entryID INT PRIMARY KEY AUTO_INCREMENT," +
+                    " ID BIGINT," +
                     " EntryDate TIMESTAMP," +
                     " ExitDate TIMESTAMP," +
                     " PagesViewed INT," +
                     " Conversion BOOLEAN );");
-            db.sendSQL("CREATE TABLE impressions ( ID INT PRIMARY KEY," +
+            db.sendSQL("CREATE TABLE impressions ( entryID INT PRIMARY KEY AUTO_INCREMENT," +
+                    " ID BIGINT," +
                     " Date TIMESTAMP," +
                     " Gender VARCHAR(255)," +
                     " Age VARCHAR(255)," +
@@ -33,13 +37,13 @@ public class CSVParser {
             String[] data = row.split(",");
             if (!data[0].equals("Date")) {  // Includes first line if it isn't the headings
                 //INSERT INTO ? VALUES (data[1], data[0], data[2])
-                db.sendSQL("INSERT INTO clicks VALUES (" + data[1] + ", " + data[0] + ", " + data[2] + ");");
+                db.sendSQL("INSERT INTO clicks(ID, Date, ClickCost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[2] + ");");
             }
             while ((row = csvReader1.readLine()) != null) {
                 data = row.split(",");
                 //Date, ID, Click Cost
                 //INSERT INTO ? VALUES (data[1], data[0], data[2])
-                db.sendSQL("INSERT INTO clicks VALUES (" + data[1] + ", " + data[0] + ", "  + data[2] + ");");
+                db.sendSQL("INSERT INTO clicks(ID, Date, ClickCost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', "  + data[2] + ");");
             }
             csvReader1.close();
 
@@ -49,10 +53,10 @@ public class CSVParser {
             if (!data[0].equals("Entry Date")) {  // Includes first line if it isn't the headings
                 if (data[2].equals("n/a")) {  // If no valid exit date, skip it
                     //INSERT INTO ? (col1, col2, col4, col4) VALUES (data[1], data[0], data[3], data[4])
-                    db.sendSQL("INSERT INTO server (ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", " + data[0] + ", " + data[3] + ", " + data[4] + ");");
+                    db.sendSQL("INSERT INTO server(ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[3] + ", " + data[4] + ");");
                 } else {
                     //INSERT INTO ? VALUES (data[1], data[0], data[2], data[3], data[4])}
-                    db.sendSQL("INSERT INTO server VALUES (" + data[1] + ", " + data[0] + ", " + data[2] + ", " + data[3] + ", " + data[4] + ");");
+                    db.sendSQL("INSERT INTO server(ID, EntryDate, ExitDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', TIMESTAMP '" + data[2] + "', " + data[3] + ", " + data[4] + ");");
                 }
             }
             while ((row = csvReader2.readLine()) != null) {
@@ -60,10 +64,11 @@ public class CSVParser {
                 // EntryDate, ID, ExitDate, Pages viewed, Conversion
                 if (data[2].equals("n/a")) {  // If no valid exit date, skip it
                     //INSERT INTO ? (col1, col2, col4, col4) VALUES (data[1], data[0], data[3], data[4])
-                    db.sendSQL("INSERT INTO server (ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", " + data[0] + ", " + data[3] + ", " + data[4] + ");");
+                    db.sendSQL("INSERT INTO server(ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[3] + ", " + data[4] + ");");
                 } else {
                     //INSERT INTO ? VALUES (data[1], data[0], data[2], data[3], data[4])}
-                    db.sendSQL("INSERT INTO server VALUES (" + data[1] + ", " + data[0] + ", " + data[2] + ", " + data[3] + ", " + data[4] + ");");
+                    db.sendSQL("INSERT INTO server(ID, EntryDate, ExitDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', TIMESTAMP '" + data[2] + "', " + data[3] + ", " + data[4] + ");");
+                    //INSERT INTO SERVER(ID, ENTRYDATE, EXITDATE, PAGESVIEWED, CONVERSION) VALUES (8895519749317550080, 2015-01-01 12[*]:01:21, TIMESTAMP '2015-01-01 12:05:13', TIMESTAMP '7', NO)
                 }
             }
             csvReader2.close();
@@ -73,13 +78,13 @@ public class CSVParser {
             data = row.split(",");
             if (!data[0].equals("Entry Date")) {  // Includes first line if it isn't the headings
                 //INSERT INTO ? VALUES (data[1], data[0], data[2], data[3], data[4], data[5], data[6])
-                db.sendSQL("INSERT INTO server VALUES (" + data[1] + ", " + data[0] + ", " + data[2] + ", " + data[3] + ", " + data[4] + data[5] + ", " + data[6] + ");");
+                db.sendSQL("INSERT INTO server(ID, Date, Gender, Age, Income, Context, Cost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[2] + ", " + data[3] + ", " + data[4] + data[5] + ", " + data[6] + ");");
             }
             while ((row = csvReader3.readLine()) != null) {
                 data = row.split(",");
                 //ID, Date, Gender, Age range, Income, Context, Impression cost
                 //INSERT INTO ? VALUES (data[1], data[0], data[2], data[3], data[4], data[5], data[6])
-                db.sendSQL("INSERT INTO server VALUES (" + data[1] + ", " + data[0] + ", " + data[2] + ", " + data[3] + ", " + data[4] + data[5] + ", " + data[6] + ");");
+                db.sendSQL("INSERT INTO server(ID, Date, Gender, Age, Income, Context, Cost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[2] + ", " + data[3] + ", " + data[4] + data[5] + ", " + data[6] + ");");
             }
             csvReader3.close();
 
