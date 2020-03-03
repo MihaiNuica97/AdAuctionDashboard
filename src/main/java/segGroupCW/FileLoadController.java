@@ -32,7 +32,9 @@ public class FileLoadController {
 
 	@FXML
 	private Button dashboardBtn;
-	
+
+
+
 	public void initialize(){
 		fileChooser = new FileChooser();;
         browseClicksBtn.setOnAction( e -> browseFiles(clicksPathLabel,"Clicks Log"));
@@ -61,6 +63,8 @@ public class FileLoadController {
 	private void goToDashboard() throws IOException
 	{
 		App.setRoot("dashboard");
+		App.getScene().getWindow().setHeight(900);
+		App.getScene().getWindow().setWidth(968);
 	}
 	private Boolean isDBReady(){
 		return true;
