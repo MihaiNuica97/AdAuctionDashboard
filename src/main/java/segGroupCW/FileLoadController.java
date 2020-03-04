@@ -72,5 +72,9 @@ public class FileLoadController {
 		return true;
 	}
 
+	private void loadFilesToDB(){
+
+	}
+
 
 }

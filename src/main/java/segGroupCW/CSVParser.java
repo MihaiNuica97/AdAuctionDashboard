@@ -1,100 +1,59 @@
 package segGroupCW;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 
 public class CSVParser {
+
+    private BufferedReader csvReader;
+    private String row;
+    //private String[] data;
+    private String sqlStatement = "";
+
     // Parses 3 csvs and inserts into tables
-    public void parse(File clickLog, File serverLog, File impressionLog) {
+    public void parse(File clicksFile, File serverFile, File impresssionFile) {
         try {
-            System.out.println("Parsing " + clickLog.getPath() + ", " + serverLog.getPath() + ", " + impressionLog.getPath());
+            //System.out.println("Parsing " + impresssionFile.getPath() + ", " + clicksFile.getPath() + ", " + serverFile.getPath());
             DatabaseHandler db = new DatabaseHandler();
-            db.connectDB();
-            db.sendSQL("DROP TABLE IF EXISTS clicks, server, impressions, users;");
-            db.sendSQL("CREATE TABLE users ( ID BIGINT PRIMARY KEY," +
+            db.sendSQL("DROP TABLE IF EXISTS clicks, server, impressions, users;" + System.lineSeparator() +
+
+                    "CREATE TABLE users ( ID BIGINT PRIMARY KEY," +
                     " Gender VARCHAR(255)," +
                     " Age VARCHAR(255)," +
-                    " Income VARCHAR(255) );");
-            db.sendSQL("CREATE TABLE impressions ( ID BIGINT," +
+                    " Income VARCHAR(255) );" + System.lineSeparator() +
+
+                    "CREATE TABLE impressions ( ID BIGINT," +
                     " Date TIMESTAMP," +
                     " Context VARCHAR(255)," +
                     " Cost FLOAT(7)," +
                     " FOREIGN KEY (ID) REFERENCES USERS(ID)," +
-                    " PRIMARY KEY (ID, Date) );");
-            db.sendSQL("CREATE TABLE clicks ( ID BIGINT," +
+                    " PRIMARY KEY (ID, Date) );" + System.lineSeparator() +
+
+                    "CREATE TABLE clicks ( ID BIGINT," +
                     " Date TIMESTAMP," +
                     " ClickCost FLOAT(8)," +
                     " FOREIGN KEY (ID) REFERENCES USERS(ID)," +
-                    " PRIMARY KEY (ID, Date) );");
-            db.sendSQL("CREATE TABLE server ( ID BIGINT," +
+                    " PRIMARY KEY (ID, Date) );" + System.lineSeparator() +
+
+                    "CREATE TABLE server ( ID BIGINT," +
                     " EntryDate TIMESTAMP," +
                     " ExitDate TIMESTAMP," +
                     " PagesViewed INT," +
                     " Conversion BOOLEAN," +
                     " FOREIGN KEY (ID) REFERENCES USERS(ID)," +
                     " PRIMARY KEY (ID, EntryDate) );");
-            System.out.println("Table Created. Loading Data...");
 
-            //ID, Date, Gender, Age range, Income, Context, Impression cost
-            BufferedReader csvReader1 = new BufferedReader(new FileReader(impressionLog));
-            String row = csvReader1.readLine();
-            String[] data = row.split(",");
-            if (!data[0].equals("Date")) {  // Includes first line if it isn't the headings
-                db.sendSQL("INSERT INTO users(ID, Gender, Age, Income) VALUES (" + data[1] + ", '" + data[2] + "', '" + data[3] + "', '" + data[4] + "' );");
-                db.sendSQL("INSERT INTO impressions(ID, Date, Context, Cost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', '" + data[5] + "', " + data[6] + ");");
-            }
-            while ((row = csvReader1.readLine()) != null) {
-                data = row.split(",");
-                db.sendSQL("INSERT INTO users(ID, Gender, Age, Income) VALUES (" + data[1] + ", '" + data[2] + "', '" + data[3] + "', '" + data[4] + "' );");
-                db.sendSQL("INSERT INTO impressions(ID, Date, Context, Cost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', '" + data[5] + "', " + data[6] + ");");
-            }
-            csvReader1.close();
+                    System.out.println("Table Created. Loading Data...");
 
-            //Date, ID, Click Cost
-            BufferedReader csvReader2 = new BufferedReader(new FileReader(clickLog));
-            row = csvReader2.readLine();
-           data = row.split(",");
-            if (!data[0].equals("Date")) {  // Includes first line if it isn't the headings
-                db.sendSQL("INSERT INTO clicks(ID, Date, ClickCost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[2] + ");");
-            }
-            while ((row = csvReader2.readLine()) != null) {
-                data = row.split(",");
-                db.sendSQL("INSERT INTO clicks(ID, Date, ClickCost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', "  + data[2] + ");");
-            }
-            csvReader2.close();
+                    db.sendSQL(parseImpression(impresssionFile));
+                    System.out.println("impressions complete");
 
-            // EntryDate, ID, ExitDate, Pages viewed, Conversion
-            BufferedReader csvReader3 = new BufferedReader(new FileReader(serverLog));
-            row = csvReader3.readLine();
-            data = row.split(",");
-            String conv = "FALSE";
-            if (!data[0].equals("Entry Date")) {  // Includes first line if it isn't the headings
-                if (data[4].equals("Yes")) {
-                    conv = "TRUE";
-                }
-                if (data[2].equals("n/a")) {  // If no valid exit date, skip it
-                    db.sendSQL("INSERT INTO server(ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[3] + ", " + conv + ");");
-                } else {
-                    db.sendSQL("INSERT INTO server(ID, EntryDate, ExitDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', TIMESTAMP '" + data[2] + "', " + data[3] + ", " + conv + ");");
-                }
-            }
-            while ((row = csvReader3.readLine()) != null) {
-                data = row.split(",");
-                if (data[4].equals("Yes")) {
-                    conv = "TRUE";
-                } else {
-                    conv = "FALSE";
-                }
-                if (data[2].equals("n/a")) {  // If no valid exit date, skip it
-                    db.sendSQL("INSERT INTO server(ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[3] + ", " + conv + ");");
-                } else {
-                    db.sendSQL("INSERT INTO server(ID, EntryDate, ExitDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', TIMESTAMP '" + data[2] + "', " + data[3] + ", " + conv + ");");
-                }
-            }
-            csvReader3.close();
+                    db.sendSQL(parseClicks(clicksFile));
+                    System.out.println("clicks complete");
+
+                    db.sendSQL(parseServer(serverFile));
+                    System.out.println("server complete");
+
 
 
 
@@ -108,4 +67,74 @@ public class CSVParser {
             e.printStackTrace();
         }
     }
+
+
+    public String parseImpression(File file) throws IOException {
+        //ID, Date, Gender, Age range, Income, Context, Impression cost
+        csvReader = new BufferedReader(new FileReader(file));
+        row = csvReader.readLine();
+        String[] data = row.split(",");
+        System.out.println(row);
+        if (!data[0].equals("Date")) {  // Includes first line if it isn't the headings
+            sqlStatement += "MERGE INTO users(ID, Gender, Age, Income) VALUES (" + data[1] + ", '" + data[2] + "', '" + data[3] + "', '" + data[4] + "' );";
+            sqlStatement += "INSERT INTO impressions(ID, Date, Context, Cost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', '" + data[5] + "', " + data[6] + ");";
+        }
+        while ((row = csvReader.readLine()) != null) {
+            data = row.split(",");
+            sqlStatement += "MERGE INTO users(ID, Gender, Age, Income) VALUES (" + data[1] + ", '" + data[2] + "', '" + data[3] + "', '" + data[4] + "' );";
+            sqlStatement += "INSERT INTO impressions(ID, Date, Context, Cost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', '" + data[5] + "', " + data[6] + ");";
+        }
+        System.out.println(sqlStatement);
+        return sqlStatement;
+    }
+
+    public String parseClicks(File file) throws IOException {
+        //Date, ID, Click Cost
+        csvReader = new BufferedReader(new FileReader(file));
+        row = csvReader.readLine();
+        String[] data = row.split(",");
+        if (!data[0].equals("Date")) {  // Includes first line if it isn't the headings
+            sqlStatement += "INSERT INTO clicks(ID, Date, ClickCost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[2] + ");";
+        }
+        while ((row = csvReader.readLine()) != null) {
+            data = row.split(",");
+            sqlStatement += "INSERT INTO clicks(ID, Date, ClickCost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', "  + data[2] + ");";
+        }
+        return sqlStatement;
+    }
+
+    public String parseServer(File file) throws IOException {
+        // EntryDate, ID, ExitDate, Pages viewed, Conversion
+        csvReader = new BufferedReader(new FileReader(file));
+        row = csvReader.readLine();
+        String[] data = row.split(",");
+        String conv = "FALSE";
+        if (!data[0].equals("Entry Date")) {  // Includes first line if it isn't the headings
+            if (data[4].equals("Yes")) {
+                conv = "TRUE";
+            }
+            if (data[2].equals("n/a")) {  // If no valid exit date, skip it
+                sqlStatement += "INSERT INTO server(ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[3] + ", " + conv + ");";
+            } else {
+                sqlStatement += "INSERT INTO server(ID, EntryDate, ExitDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', TIMESTAMP '" + data[2] + "', " + data[3] + ", " + conv + ");";
+            }
+        }
+        while ((row = csvReader.readLine()) != null) {
+            data = row.split(",");
+            if (data[4].equals("Yes")) {
+                conv = "TRUE";
+            } else {
+                conv = "FALSE";
+            }
+            if (data[2].equals("n/a")) {  // If no valid exit date, skip it
+                sqlStatement += "INSERT INTO server(ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[3] + ", " + conv + ");";
+            } else {
+                sqlStatement += "INSERT INTO server(ID, EntryDate, ExitDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', TIMESTAMP '" + data[2] + "', " + data[3] + ", " + conv + ");";
+            }
+        }
+        return sqlStatement;
+    }
+
+
+
 }
