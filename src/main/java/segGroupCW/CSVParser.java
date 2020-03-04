@@ -11,7 +11,9 @@ public class CSVParser {
     private String sqlStatement = "";
 
     // Parses 3 csvs and inserts into tables
+
     public void parse(File clicksFile, File serverFile, File impresssionFile) {
+
         try {
             //System.out.println("Parsing " + impresssionFile.getPath() + ", " + clicksFile.getPath() + ", " + serverFile.getPath());
             DatabaseHandler db = new DatabaseHandler();

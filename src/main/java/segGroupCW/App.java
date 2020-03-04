@@ -25,8 +25,8 @@ public class App extends Application {
 
 		stage.setScene(scene);
 		stage.show();
-		stage.setHeight(950);
-		stage.setWidth(950);
+		stage.setHeight(500);
+		stage.setWidth(560);
 	}
 
 

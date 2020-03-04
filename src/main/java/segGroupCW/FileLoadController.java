@@ -35,7 +35,9 @@ public class FileLoadController {
 
 	@FXML
 	private Button dashboardBtn;
-	
+
+
+
 	public void initialize(){
 		fileChooser = new FileChooser();;
         browseClicksBtn.setOnAction( e -> browseFiles(clicksPathLabel,"Clicks Log"));
@@ -67,6 +69,8 @@ public class FileLoadController {
 		System.out.println("Dashboard button clicked");
 		(new CSVParser()).parse(fileMap.get("Clicks Log"), fileMap.get("Server Log"), fileMap.get("Impressions"));
 		App.setRoot("dashboard");
+		App.getScene().getWindow().setHeight(900);
+		App.getScene().getWindow().setWidth(968);
 	}
 	private Boolean isDBReady(){
 		return true;
