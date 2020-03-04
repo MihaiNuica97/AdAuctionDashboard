@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class CSVParser {
     // Parses 3 csvs and inserts into tables
+    // :p
     public void parse(File clickLog, File serverLog, File impressionLog) {
         try {
             BufferedReader csvReader1 = new BufferedReader(new FileReader(clickLog));
