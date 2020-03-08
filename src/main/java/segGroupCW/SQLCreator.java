@@ -3,6 +3,11 @@ package segGroupCW;
 import java.util.ArrayList;
 
 public class SQLCreator {
+    /**
+     * Generates all the SQL statements to initialise the dashboard totals.
+     *
+     * @return      ArrayList of the SQL statements
+     */
     public ArrayList<String> initialise() {
         ArrayList<String> statements = new ArrayList<>();
         statements.add(numOfImps());
@@ -19,18 +24,48 @@ public class SQLCreator {
         return statements;
     }
 
+    /**
+     * SQL statement to calculate the total impressions.
+     *
+     * @return    string of the SQL statement
+     */
     private String numOfImps() {
         return "SELECT COUNT(*) FROM impressions;";
     }
 
+    /**
+     * SQL statement to calculate the total clicks.
+     *
+     * @return      string of the SQL statement
+     */
     private String numOfClicks() { return "SELECT COUNT(*) FROM clicks;";}
 
+    /**
+     * SQL statement to calculate the total clicks from unique users.
+     *
+     * @return      string of the SQL statement
+     */
     private String numOfUniques() { return "SELECT COUNT(DISTINCT (ID)) FROM CLICKS;";}
 
+    /**
+     * SQL statement to calculate the total bounces. Default bounce definition is only 1 page viewed.
+     *
+     * @return      string of the SQL statement
+     */
     private String numOfBounces() { return "SELECT COUNT(*) FROM SERVER WHERE PAGESVIEWED = 1;";}
 
+    /**
+     * SQL statement to calculate the total conversions.
+     *
+     * @return      string of the SQL statement
+     */
     private String numOfConvs() { return "SELECT COUNT (*) FROM SERVER WHERE CONVERSION = TRUE;";}
 
+    /**
+     * SQL statements to calculate the total cost.
+     *
+     * @return      ArrayList of the SQL statements
+     */
     private ArrayList<String> totalCost() {
         ArrayList<String> result = new ArrayList<>();
         result.add("SELECT SUM(COST) FROM IMPRESSIONS;");
@@ -38,6 +73,11 @@ public class SQLCreator {
         return result;
     }
 
+    /**
+     * SQL statements to calculate the click-through-rate.
+     *
+     * @return      ArrayList of the SQL statements
+     */
     private ArrayList<String> ctr() {
         ArrayList<String> result = new ArrayList<>();
         result.add(numOfClicks());
@@ -45,6 +85,11 @@ public class SQLCreator {
         return result;
     }
 
+    /**
+     * SQL statements to calculate the clicks-per-acquisition.
+     *
+     * @return      ArrayList of the SQL statements
+     */
     private ArrayList<String> cpa() {
         ArrayList<String> result = new ArrayList<>();
         result.addAll(totalCost());
@@ -52,6 +97,11 @@ public class SQLCreator {
         return result;
     }
 
+    /**
+     * SQL statements to calculate the cost-per-click.
+     *
+     * @return      ArrayList of the SQL statements
+     */
     private ArrayList<String> cpc() {
         ArrayList<String> result = new ArrayList<>();
         result.addAll(totalCost());
@@ -59,6 +109,11 @@ public class SQLCreator {
         return result;
     }
 
+    /**
+     * SQL statements to calculate the cost-per-thousand-impressions.
+     *
+     * @return      ArrayList of the SQL statements
+     */
     private ArrayList<String> cpm() {
         ArrayList<String> result = new ArrayList<>();
         result.addAll(totalCost());
@@ -66,6 +121,11 @@ public class SQLCreator {
         return result;
     }
 
+    /**
+     * SQL statements to calculate the bounce rate.
+     *
+     * @return      ArrayList of the SQL statements
+     */
     private ArrayList<String> bounceRate(){
         ArrayList<String> result = new ArrayList<>();
         result.add(numOfBounces());
