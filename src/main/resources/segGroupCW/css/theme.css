@@ -1,0 +1,26 @@
+.root{
+    -main-bg-color: #F2F4F4;
+    -primary: #5988FF;
+    -secondary: white;
+    -success: #55CF5A;
+    -error: red;
+    -fx-background-color: -main-bg-color;
+    -fx-font-size: 12px;
+
+}
+.primary{
+    -fx-color: -primary;
+}
+.btn-primary{
+    -fx-background-color: -primary;
+    -fx-text-fill: -secondary;
+}
+
+.text-primary{
+    -fx-text-fill: -primary;
+}
+
+.btn-submit{
+    -fx-background-color: -success;
+    -fx-text-fill: white;
+}
