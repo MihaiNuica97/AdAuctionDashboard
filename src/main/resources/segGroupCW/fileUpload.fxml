@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="550.0" style="-fx-background-color: #5bc0be;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.FileLoadController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="550.0" stylesheets="@css/theme.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.FileLoadController">
+   <stylesheets>
+      <URL value="@css/fileUpload.css" />
+   </stylesheets>
    <children>
-      <HBox alignment="CENTER" prefHeight="95.0" prefWidth="550.0" style="-fx-background-color: #3a506b;">
+      <HBox alignment="CENTER" prefHeight="95.0" prefWidth="550.0">
          <children>
-            <Label prefHeight="90.0" prefWidth="541.0" style="-fx-background-color: #3a506b;" text="   AD AUCTION DASHBOARD" textAlignment="CENTER" textFill="#fcf8f8">
+            <Label prefHeight="90.0" prefWidth="541.0" styleClass="text-primary" text="   AD AUCTION DASHBOARD" textAlignment="CENTER">
                <font>
                   <Font size="40.0" />
                </font>
@@ -21,42 +22,42 @@
       </HBox>
       <HBox alignment="CENTER" layoutX="24.0" layoutY="371.0" prefHeight="30.0" prefWidth="503.0">
          <children>
-            <Button fx:id="dashboardBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#goToDashboard" text="Go to Dashboard" />
+            <JFXButton fx:id="dashboardBtn" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#goToDashboard" styleClass="btn-submit" text="Go to Dashboard" />
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="17.0" layoutY="296.0" prefHeight="48.0" prefWidth="503.0" spacing="30.0">
+      <HBox alignment="CENTER_LEFT" layoutX="17.0" layoutY="183.0" prefHeight="25.0" prefWidth="452.0" spacing="30.0">
          <children>
-            <TextField fx:id="serverPathLabel" prefHeight="25.0" prefWidth="194.0" promptText="server_log.csv" />
-            <Button fx:id="browseServerBtn" alignment="CENTER" text="Browse..." />
-            <Label text="   server_log.csv" />
+            <TextField fx:id="clicksPathLabel" prefHeight="25.0" prefWidth="195.0" promptText="click_log.csv" />
+            <JFXButton fx:id="browseClicksBtn" alignment="CENTER" buttonType="RAISED" styleClass="btn-primary" text="Browse..." />
+            <Label text="   click_log.csv" />
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="17.0" layoutY="238.0" prefHeight="58.0" prefWidth="503.0" spacing="30.0">
+      <HBox alignment="CENTER_LEFT" layoutX="17.0" layoutY="234.0" prefHeight="30.0" prefWidth="503.0" spacing="30.0">
          <children>
             <TextField fx:id="imprPathLabel" prefHeight="25.0" prefWidth="194.0" promptText="impression_log.csv" />
-            <Button fx:id="browseImprBtn" alignment="CENTER" text="Browse..." />
+            <JFXButton fx:id="browseImprBtn" alignment="CENTER" buttonType="RAISED" styleClass="btn-primary" text="Browse..." />
             <Label text="   impression_log.csv" />
          </children>
       </HBox>
-      <Pane layoutX="26.0" layoutY="110.0" prefHeight="73.0" prefWidth="485.0">
+      <HBox alignment="CENTER_LEFT" layoutX="17.0" layoutY="284.0" prefHeight="30.0" prefWidth="503.0" spacing="30.0">
          <children>
-            <Label alignment="TOP_CENTER" layoutX="139.0" layoutY="22.0" prefHeight="36.0" prefWidth="225.0" text="File Upload">
+            <TextField fx:id="serverPathLabel" prefHeight="25.0" prefWidth="194.0" promptText="server_log.csv" />
+            <JFXButton fx:id="browseServerBtn" alignment="CENTER" buttonType="RAISED" styleClass="btn-primary" text="Browse..." />
+            <Label text="   server_log.csv" />
+         </children>
+      </HBox>
+      <Pane layoutX="26.0" layoutY="95.0" prefHeight="30.0" prefWidth="485.0">
+         <children>
+            <Label styleClass="text-primary" alignment="TOP_CENTER" layoutX="130.0" prefHeight="36.0" prefWidth="225.0" text="Please Load your Files">
                <font>
-                  <Font size="18.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
          </children>
       </Pane>
       <HBox alignment="CENTER" layoutX="24.0" layoutY="409.0" prefHeight="40.0" prefWidth="503.0">
          <children>
-            <Button mnemonicParsing="false" text="Load previous campaign" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="17.0" layoutY="211.0" prefHeight="25.0" prefWidth="452.0" spacing="30.0">
-         <children>
-            <TextField fx:id="clicksPathLabel" prefHeight="25.0" prefWidth="195.0" promptText="click_log.csv" />
-            <Button fx:id="browseClicksBtn" alignment="CENTER" text="Browse..." />
-            <Label text="   click_log.csv" />
+            <JFXButton mnemonicParsing="false" styleClass="btn, btn-primary" text="Load previous campaign" />
          </children>
       </HBox>
    </children>

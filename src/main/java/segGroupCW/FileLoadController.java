@@ -1,5 +1,6 @@
 package segGroupCW;
 
+import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,6 +37,8 @@ public class FileLoadController {
 	@FXML
 	private Button dashboardBtn;
 
+	@FXML
+	private JFXButton testBtn;
 
 
 	public void initialize(){
@@ -67,7 +70,7 @@ public class FileLoadController {
 	private void goToDashboard() throws IOException
 	{
 		System.out.println("Dashboard button clicked");
-		(new CSVParser()).parse(fileMap.get("Clicks Log"), fileMap.get("Server Log"), fileMap.get("Impressions"));
+//		(new CSVParser()).parse(fileMap.get("Clicks Log"), fileMap.get("Server Log"), fileMap.get("Impressions"));
 		App.setRoot("dashboard");
 		App.getScene().getWindow().setHeight(900);
 		App.getScene().getWindow().setWidth(968);
