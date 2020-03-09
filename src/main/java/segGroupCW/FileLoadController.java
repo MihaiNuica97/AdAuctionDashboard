@@ -37,8 +37,6 @@ public class FileLoadController {
 	@FXML
 	private Button dashboardBtn;
 
-	@FXML
-	private JFXButton testBtn;
 
 
 	public void initialize(){
@@ -46,7 +44,7 @@ public class FileLoadController {
         browseClicksBtn.setOnAction( e -> browseFiles(clicksPathLabel,"Clicks Log"));
 		browseImprBtn.setOnAction( e -> browseFiles(imprPathLabel,"Impressions"));
 		browseServerBtn.setOnAction( e -> browseFiles(serverPathLabel,"Server Log"));
-		dashboardBtn.setDisable(true);
+//		dashboardBtn.setDisable(true);
 	}
 
 

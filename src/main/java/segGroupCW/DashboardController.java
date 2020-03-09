@@ -1,5 +1,7 @@
 package segGroupCW;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,13 +36,13 @@ public class DashboardController implements Initializable {
     private Label campaignLabel;
 
     @FXML
-    private Button campaign1Button;
+    private JFXButton campaign1Button;
 
     @FXML
-    private Button campaign2Button;
+    private JFXButton campaign2Button;
 
     @FXML
-    private Button accountButton;
+    private JFXButton accountButton;
 
     @FXML
     private ImageView accountImageView;
@@ -52,10 +54,10 @@ public class DashboardController implements Initializable {
     private Label dashBoardLabel;
 
     @FXML
-    private Button changeCampaignButton;
+    private JFXButton changeCampaignButton;
 
     @FXML
-    private Button filterButton;
+    private JFXButton filterButton;
 
     @FXML
     private Pane pane1;
@@ -82,7 +84,7 @@ public class DashboardController implements Initializable {
     private Label value4;
 
     @FXML
-    private Button bounceDefinitionButton;
+    private JFXButton bounceDefinitionButton;
 
     @FXML
     private Pane pane5;
@@ -148,10 +150,10 @@ public class DashboardController implements Initializable {
     private LineChart<?, ?> lineChart132;
 
     @FXML
-    protected RadioButton LineChartRadioGraph;
+    protected JFXRadioButton LineChartRadioGraph;
 
     @FXML
-    private RadioButton pieChartRadioButton;
+    private JFXRadioButton pieChartRadioButton;
 
     @FXML
     private LineChart<?, ?> lineChart133;
@@ -278,9 +280,9 @@ public class DashboardController implements Initializable {
 
         ToggleGroup bounceToggle = new ToggleGroup();
 
-        RadioButton bounceDefinition1 = new RadioButton("Entry date & exit date are too close together");
-        RadioButton bounceDefinition2 = new RadioButton("Number of pages viewed is below a threshold");
-        RadioButton bounceDefinition3 = new RadioButton("Conversion did not take place");
+        JFXRadioButton bounceDefinition1 = new JFXRadioButton("Entry date & exit date are too close together");
+        JFXRadioButton bounceDefinition2 = new JFXRadioButton("Number of pages viewed is below a threshold");
+        JFXRadioButton bounceDefinition3 = new JFXRadioButton("Conversion did not take place");
 
         bounceDefinition1.setToggleGroup(bounceToggle);
         bounceDefinition2.setToggleGroup(bounceToggle);
