@@ -341,9 +341,8 @@ public class DashboardController implements Initializable {
         DatabaseHandler db = new DatabaseHandler();
         ArrayList<String> statements = new SQLCreator().initializeTotals();
         try {
-            for (String each : statements) {
-                ResultSet result = db.querySQL(each);
-            }
+            ResultSet result = db.querySQL(statements.get(0));
+            System.out.println(result.getString(1));
         } catch (SQLException e) {
             e.printStackTrace();
         }
