@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="601.0" prefWidth="693.0" spacing="20.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.PrimaryController">
+<VBox alignment="CENTER" prefHeight="601.0" prefWidth="693.0" spacing="20.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.GraphController">
    <children>
       <Button fx:id="primaryButton" onAction="#switchToSecondary" text="Switch to Secondary View" />
       <Label text="Primary View" />
