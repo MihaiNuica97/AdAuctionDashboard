@@ -3,12 +3,14 @@ package segGroupCW;
 import java.util.ArrayList;
 
 public class SQLCreator {
+    //INIT functions
+
     /**
      * Generates all the SQL statements to initialise the dashboard totals.
      *
      * @return      ArrayList of the SQL statements
      */
-    public ArrayList<String> initialise() {
+    public ArrayList<String> initializeTotals() {
         ArrayList<String> statements = new ArrayList<>();
         statements.add(numOfImps());
         statements.add(numOfClicks());
@@ -21,6 +23,12 @@ public class SQLCreator {
         statements.addAll(cpc());
         statements.addAll(cpm());
         statements.addAll(bounceRate());
+        return statements;
+    }
+
+    public ArrayList<String> initializeCharts(String start, String end) {
+        ArrayList<String> statements = new ArrayList<>();
+
         return statements;
     }
 
@@ -141,6 +149,7 @@ public class SQLCreator {
      * but you can also do impressions + date(start, end)
      */
 
+    //CUSTOM endings
     /**
      * SQL statement for a generic where statement between 2 dates. Both dates should be in YYYY-MM-DD [HH:MM:SS] format.
      *
@@ -152,6 +161,11 @@ public class SQLCreator {
         return "DATE => TIMESTAMP '" + start + "' AND DATE" + " <= '" + end + "'";
     }
 
+    private String earliestDate() {
+        return "SELECT MIN(Date) FROM IMPRESSIONS;";
+    }
+
+    //CUSTOM builders
     /**
      * SQL statement for the total impressions between 2 dates. Both dates should be in YYYY-MM-DD [HH:MM:SS] format.
      *
@@ -159,7 +173,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      String of the SQL statement
      */
-    private String numOfImps(String start, String end) {
+    private String betweenDateImps(String start, String end) {
         return "SELECT COUNT(*) FROM impressions WHERE " + betweenDate(start, end) + ";";
     }
 
@@ -170,7 +184,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      String of the SQL statement
      */
-    private String numOfClicks(String start, String end) {
+    private String betweenDateClicks(String start, String end) {
         return "SELECT COUNT(*) FROM clicks WHERE " + betweenDate(start, end) + ";";
     }
 

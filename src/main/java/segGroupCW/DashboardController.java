@@ -21,6 +21,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -335,6 +338,16 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        DatabaseHandler db = new DatabaseHandler();
+        ArrayList<String> statements = new SQLCreator().initializeTotals();
+        try {
+            for (String each : statements) {
+                ResultSet result = db.querySQL(each);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         XYChart.Series series = new XYChart.Series();
         XYChart.Series series1 = new XYChart.Series();
         XYChart.Series series2 = new XYChart.Series();
