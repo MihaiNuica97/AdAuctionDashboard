@@ -346,11 +346,13 @@ public class DashboardController implements Initializable {
             ResultSet result = db.querySQL(statements.get(0));
             System.out.println(result.getMetaData());
             result.first();
+            int imps = result.getInt(1);
             System.out.println(result.getString(1));
             noImprLabel.setText(result.getString(1));
 
             result = db.querySQL(statements.get(1));
             result.first();
+            int clicks = result .getInt(1);
             System.out.println(result.getString(1));
             noClicksLabel.setText(result.getString(1));
 
@@ -361,11 +363,13 @@ public class DashboardController implements Initializable {
 
             result = db.querySQL(statements.get(3));
             result.first();
+            float bounces = result.getInt(1);
             System.out.println(result.getString(1));
             noBounceLabel.setText(result.getString(1));
 
             result = db.querySQL(statements.get(4));
             result.first();
+            int convs = result.getInt(1);
             System.out.println(result.getString(1));
             noConversionLabel.setText(result.getString(1));
 
@@ -380,17 +384,55 @@ public class DashboardController implements Initializable {
             System.out.println(total);
             totalCostLabel.setText(Double.toString(total));
 
-            result = db.querySQL(statements.get(7));
-            result.first();
-            int clicks = result.getInt(1);
-            result = db.querySQL(statements.get(8));
-            result.first();
-            float ctr = clicks / result.getFloat(1);
-            double ctrRound = Math.round(ctr * 100.0) / 100.0;
-            System.out.println(ctr);
-            System.out.println(ctrRound);
-            ctrLabel.setText(Double.toString(ctrRound));
+            if (imps == 0) {
+                ctrLabel.setText("0");
+            } else {
+                float ctr = (float) clicks / imps;
+                double ctrRound = Math.round(ctr * 100.0) / 100.0;
+                System.out.println(ctr);
+                System.out.println(ctrRound);
+                ctrLabel.setText(Double.toString(ctrRound));
+            }
 
+            if (convs == 0) {
+                cpaLabel.setText("0");
+            } else {
+                float cpa = totalCost / convs;
+                double cpaRound = Math.round(cpa * 100.0) / 100.0;
+                System.out.println(cpa);
+                System.out.println(cpaRound);
+                cpaLabel.setText(Double.toString(cpaRound));
+            }
+
+            if (clicks == 0) {
+                cpcLabel.setText("0");
+            } else {
+                float cpc = totalCost / clicks;
+                double cpcRound = Math.round(cpc * 100.0) / 100.0;
+                System.out.println(cpc);
+                System.out.println(cpcRound);
+                cpcLabel.setText(Double.toString(cpcRound));
+            }
+
+            if (imps == 0) {
+                cpmLabel.setText("0");
+            } else {
+                float cpm = totalCost / (imps * 1000);
+                double cpmRound = Math.round(cpm * 100.0) / 100.0;
+                System.out.println(cpm);
+                System.out.println(cpmRound);
+                cpmLabel.setText(Double.toString(cpmRound));
+            }
+
+            if (clicks == 0) {
+                bounceRateLabel.setText("0");
+            } else {
+                float br = bounces / clicks;
+                double brRound = Math.round(br * 100.0) / 100.0;
+                System.out.println(br);
+                System.out.println(brRound);
+                bounceRateLabel.setText(Double.toString(brRound));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
