@@ -17,8 +17,6 @@ public class FileLoadController {
 
 	private HashMap<String, File> fileMap = new HashMap<String, File>(3);
 
-	private CSVParser csvParser = new CSVParser();
-
 	private Scene scene;
 	@FXML
 	private Button browseClicksBtn;
@@ -42,7 +40,7 @@ public class FileLoadController {
 
 
 	public void initialize(){
-		fileChooser = new FileChooser();
+		fileChooser = new FileChooser();;
         browseClicksBtn.setOnAction( e -> browseFiles(clicksPathLabel,"Clicks Log"));
 		browseImprBtn.setOnAction( e -> browseFiles(imprPathLabel,"Impressions"));
 		browseServerBtn.setOnAction( e -> browseFiles(serverPathLabel,"Server Log"));
