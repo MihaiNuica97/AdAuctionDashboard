@@ -1,10 +1,6 @@
 package segGroupCW;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-
+import java.sql.*;
 
 
 public class DatabaseHandler {
@@ -50,6 +46,13 @@ public class DatabaseHandler {
      */
     public void sendSQL(String sql) throws SQLException {
         sqlcmd.executeUpdate(sql);
+    }
+
+    /*
+     * String is Sql, returned is result of query
+     */
+    public ResultSet querySQL(String sql) throws SQLException {
+        return sqlcmd.executeQuery(sql);
     }
 
     //close sql statement
