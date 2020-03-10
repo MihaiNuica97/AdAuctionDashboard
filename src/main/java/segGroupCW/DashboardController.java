@@ -28,7 +28,6 @@ import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
 
-
     @FXML
     private VBox campaignVBox;
 
@@ -42,16 +41,10 @@ public class DashboardController implements Initializable {
     private JFXButton campaign2Button;
 
     @FXML
-    private JFXButton accountButton;
-
-    @FXML
-    private ImageView accountImageView;
+    private Label dashBoardLabel;
 
     @FXML
     private Pane topHBox;
-
-    @FXML
-    private Label dashBoardLabel;
 
     @FXML
     private JFXButton changeCampaignButton;
@@ -63,25 +56,25 @@ public class DashboardController implements Initializable {
     private Pane pane1;
 
     @FXML
-    private Label value1;
+    private Label noImprLabel;
 
     @FXML
     private Pane pane2;
 
     @FXML
-    private Label value2;
+    private Label noClicksLabel;
 
     @FXML
     private Pane pane3;
 
     @FXML
-    private Label value3;
+    private Label noUniqueLabel;
 
     @FXML
     private Pane pane4;
 
     @FXML
-    private Label value4;
+    private Label noBounceLabel;
 
     @FXML
     private JFXButton bounceDefinitionButton;
@@ -90,87 +83,43 @@ public class DashboardController implements Initializable {
     private Pane pane5;
 
     @FXML
-    private Label value5;
+    private Label noConversionLabel;
 
     @FXML
     private Pane pane6;
 
     @FXML
-    private Label value6;
+    private Label totalCostLabel;
 
     @FXML
     private Pane pane61;
 
     @FXML
-    private Label value61;
+    private Label ctrLabel;
 
     @FXML
     private Pane pane62;
 
     @FXML
-    private Label value62;
+    private Label cpaLabel;
 
     @FXML
     private Pane pane63;
 
     @FXML
-    private Label value63;
+    private Label cpcLabel;
 
     @FXML
     private Pane pane64;
 
     @FXML
-    private Label value64;
+    private Label cpmLabel;
 
     @FXML
     private Pane pane65;
 
     @FXML
-    private Label value65;
-
-    @FXML
-    private LineChart<?, ?> lineChart1;
-
-    @FXML
-    private LineChart<?, ?> lineChart11;
-
-    @FXML
-    private LineChart<?, ?> lineChart12;
-
-    @FXML
-    private LineChart<?, ?> lineChart13;
-
-    @FXML
-    private LineChart<?, ?> lineChart131;
-
-    @FXML
-    private Pane totalCostPane;
-
-    @FXML
-    private LineChart<?, ?> lineChart132;
-
-    @FXML
-    protected JFXRadioButton LineChartRadioGraph;
-
-    @FXML
-    private JFXRadioButton pieChartRadioButton;
-
-    @FXML
-    private LineChart<?, ?> lineChart133;
-
-    @FXML
-    private LineChart<?, ?> lineChart134;
-
-    @FXML
-    private LineChart<?, ?> lineChart1341;
-
-    @FXML
-    private LineChart<?, ?> lineChart1342;
-
-    @FXML
-    private LineChart<?, ?> lineChart1343;
-
-    private PieChart pieChart;
+    private Label bounceRateLabel;
 
     @FXML
     private LineChart<?, ?> NoImpressionsChart;
@@ -180,7 +129,6 @@ public class DashboardController implements Initializable {
 
     @FXML
     private NumberAxis y;
-
 
     @FXML
     private LineChart<?, ?> NoImpressionsChart1;
@@ -217,6 +165,39 @@ public class DashboardController implements Initializable {
 
     @FXML
     private NumberAxis y31;
+
+    @FXML
+    private Pane totalCostPane;
+
+    @FXML
+    private LineChart<?, ?> lineChart132;
+
+    @FXML
+    private JFXRadioButton LineChartRadioGraph;
+
+    @FXML
+    private ToggleGroup group1;
+
+    @FXML
+    private JFXRadioButton pieChartRadioButton;
+
+    @FXML
+    private LineChart<?, ?> lineChart133;
+
+    @FXML
+    private LineChart<?, ?> lineChart134;
+
+    @FXML
+    private LineChart<?, ?> lineChart1341;
+
+    @FXML
+    private LineChart<?, ?> lineChart1342;
+
+    @FXML
+    private LineChart<?, ?> lineChart1343;
+
+    private PieChart pieChart;
+
 
     @FXML
     void pieChartChange() {
