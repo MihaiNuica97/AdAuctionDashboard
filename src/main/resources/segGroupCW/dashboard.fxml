@@ -19,26 +19,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="952.0" prefWidth="938.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.DashboardController">
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<AnchorPane stylesheets="@css/theme.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="952.0" prefWidth="938.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.DashboardController">
    <children>
-      <VBox fx:id="campaignVBox" layoutX="1.0" layoutY="100.0" prefHeight="848.0" prefWidth="151.0" spacing="20.0" style="-fx-background-color: #1c2541;">
+      <VBox fx:id="campaignVBox" layoutX="1.0" layoutY="100.0" prefHeight="848.0" prefWidth="151.0" spacing="20.0">
          <children>
-            <Label fx:id="campaignLabel" prefHeight="34.0" prefWidth="151.0" text="  CAMPAIGNS" textFill="WHITE">
+            <Label fx:id="campaignLabel" prefHeight="34.0" prefWidth="151.0" text="  CAMPAIGNS">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
             </Label>
-            <Button fx:id="campaign1Button" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Campaign 1" underline="true">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
+            <JFXButton styleClass="btn-primary" fx:id="campaign1Button" mnemonicParsing="false"  text="Campaign 1" >
+
+            </JFXButton>
             <Separator prefWidth="200.0" />
-            <Button fx:id="campaign2Button" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Campaign 2">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
+            <JFXButton styleClass="btn-primary" fx:id="campaign2Button" mnemonicParsing="false" text="Campaign 2">
+
+            </JFXButton>
             <Separator prefWidth="200.0" />
          </children>
          <padding>
@@ -48,13 +46,13 @@
             <DropShadow />
          </effect>
       </VBox>
-      <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="938.0" style="-fx-background-color: #3a506b;">
+      <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="938.0">
          <children>
             <Pane prefHeight="100.0" prefWidth="246.0">
                <children>
-                  <Label fx:id="dashBoardLabel" layoutX="-80.0" layoutY="15.0" prefHeight="70.0" prefWidth="285.0" text="Dashboard" textFill="WHITE">
+                  <Label styleClass="text-primary" fx:id="dashBoardLabel" layoutX="-80.0" layoutY="15.0" prefHeight="70.0" prefWidth="285.0" text="Dashboard">
                      <font>
-                        <Font name="Verdana" size="48.0" />
+                        <Font  name="Verdana" size="48.0" />
                      </font>
                   </Label>
                </children></Pane>
@@ -69,16 +67,16 @@
             </Pane>
             <Pane prefHeight="100.0" prefWidth="220.0">
                <children>
-                  <Button fx:id="changeCampaignButton" layoutX="72.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="123.0" text="Change Campaign" />
-                  <Button fx:id="filterButton" layoutX="75.0" layoutY="46.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="117.0" text="Filter">
+                  <JFXButton styleClass="btn-submit" fx:id="changeCampaignButton" layoutX="72.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="123.0" text="Change Campaign" />
+                  <JFXButton fx:id="filterButton" layoutX="75.0" layoutY="46.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="117.0" text="Filter">
                      <graphic>
                         <ImageView fitHeight="49.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="file:/C:/Users/ivash/IdeaProjects/segGroupCW/src/main/resources/assets/Filter-512.png" />
+                              <Image url="@../assets/Filter-512.png" />
                            </image>
                         </ImageView>
                      </graphic>
-                  </Button>
+                  </JFXButton>
                </children>
             </Pane>
          </children>
@@ -160,15 +158,15 @@
                                           <Font name="System Bold" size="33.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="bounceDefinitionButton" layoutX="122.0" layoutY="-1.0" mnemonicParsing="false" onAction="#bounceChange" prefHeight="19.0" prefWidth="36.0" style="-fx-background-color: #ff00;" textFill="TRANSPARENT">
+                                    <JFXButton fx:id="bounceDefinitionButton" layoutX="122.0" layoutY="-1.0" mnemonicParsing="false" onAction="#bounceChange" prefHeight="19.0" prefWidth="36.0" style="-fx-background-color: #ff00;" textFill="TRANSPARENT">
                                        <graphic>
                                           <ImageView fitHeight="150.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/School_Study_Student_Education_Pencil-512.png" />
-                                             </image>
+<!--                                             <image>-->
+<!--                                                <Image url="@../assets/School_Study_Student_Education_Pencil-512.png" />-->
+<!--                                             </image>-->
                                           </ImageView>
                                        </graphic>
-                                    </Button>
+                                    </JFXButton>
                                  </children>
                               </Pane>
                               <Pane fx:id="pane5" prefHeight="147.0" prefWidth="153.0" style="-fx-background-color: #5bc0be;">
@@ -382,11 +380,11 @@
                                           <NumberAxis side="LEFT" />
                                        </yAxis>
                                     </LineChart>
-                                    <RadioButton fx:id="LineChartRadioGraph" layoutX="497.0" layoutY="24.0" mnemonicParsing="false" onAction="#lineChartChange" text="Line Chart">
+                                    <JFXRadioButton fx:id="LineChartRadioGraph" layoutX="497.0" layoutY="24.0" mnemonicParsing="false" onAction="#lineChartChange" text="Line Chart">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="group1" />
-                                       </toggleGroup></RadioButton>
-                                    <RadioButton fx:id="pieChartRadioButton" layoutX="497.0" layoutY="50.0" mnemonicParsing="false" onAction="#pieChartOption" text="Pie Chart" toggleGroup="$group1" />
+                                       </toggleGroup></JFXRadioButton>
+                                    <JFXRadioButton fx:id="pieChartRadioButton" layoutX="497.0" layoutY="50.0" mnemonicParsing="false" onAction="#pieChartOption" text="Pie Chart" toggleGroup="$group1" />
                                  </children>
                                  <effect>
                                     <DropShadow />

@@ -2,6 +2,8 @@
     -main-bg-color: #F2F4F4;
     -primary: #5988FF;
     -secondary: white;
+    -text-primary: #5988FF;
+    -text-secodary: #63788F;
     -success: #55CF5A;
     -error: red;
     -fx-background-color: -main-bg-color;
@@ -17,10 +19,10 @@
 }
 
 .text-primary{
-    -fx-text-fill: -primary;
+    -fx-text-fill: -text-primary;
 }
 
 .btn-submit{
     -fx-background-color: -success;
-    -fx-text-fill: white;
+    -fx-text-fill: -secondary;
 }
