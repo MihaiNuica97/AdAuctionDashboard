@@ -73,7 +73,6 @@ public class CSVParser {
 
     public String parseImpression(File file) throws IOException {
         //ID, Date, Gender, Age range, Income, Context, Impression cost
-        sqlStatement = "";
         csvReader = new BufferedReader(new FileReader(file));
         row = csvReader.readLine();
         String[] data = row.split(",");
@@ -93,7 +92,6 @@ public class CSVParser {
 
     public String parseClicks(File file) throws IOException {
         //Date, ID, Click Cost
-        sqlStatement = "";
         csvReader = new BufferedReader(new FileReader(file));
         row = csvReader.readLine();
         String[] data = row.split(",");
@@ -109,7 +107,6 @@ public class CSVParser {
 
     public String parseServer(File file) throws IOException {
         // EntryDate, ID, ExitDate, Pages viewed, Conversion
-        sqlStatement = "";
         csvReader = new BufferedReader(new FileReader(file));
         row = csvReader.readLine();
         String[] data = row.split(",");
