@@ -52,6 +52,13 @@ public class DatabaseHandler {
         sqlcmd.executeUpdate(sql);
     }
 
+    /*
+     * String is Sql, returned is result of query
+     */
+    public ResultSet querySQL(String sql) throws SQLException {
+        return sqlcmd.executeQuery(sql);
+    }
+
     //close sql statement
     public void closeSQL() throws SQLException {
         sqlcmd.close();
