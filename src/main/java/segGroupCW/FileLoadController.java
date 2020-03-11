@@ -70,7 +70,7 @@ public class FileLoadController {
 		System.out.println("Dashboard button clicked");
 //		(new CSVParser()).parse(fileMap.get("Clicks Log"), fileMap.get("Server Log"), fileMap.get("Impressions"));
 		App.setRoot("dashboard");
-		App.getScene().getWindow().setHeight(900);
+		App.getScene().getWindow().setHeight(1000);
 		App.getScene().getWindow().setWidth(968);
 	}
 	private Boolean isDBReady(){
