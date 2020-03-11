@@ -331,6 +331,35 @@ public class DashboardController implements Initializable {
 
 */
 
+
+
+
+/*
+
+        box.getChildren().add(hBox1);
+        box.getChildren().add(hBox2);
+        box.getChildren().add(hBox3);
+
+        ToggleGroup bounceToggle = new ToggleGroup();
+
+        RadioButton bounceDefinition1 = new RadioButton("def 1");
+        RadioButton bounceDefinition2 = new RadioButton("def2");
+        RadioButton bounceDefinition3 = new RadioButton("def3");
+
+        bounceDefinition1.setToggleGroup(bounceToggle);
+        bounceDefinition2.setToggleGroup(bounceToggle);
+        bounceDefinition3.setToggleGroup(bounceToggle);
+
+        box.getChildren().add(bounceDefinition1);
+        box.getChildren().add(bounceDefinition2);
+        box.getChildren().add(bounceDefinition3);
+
+        hBox1.getChildren().add(bounceDefinition1);
+        hBox2.getChildren().add(bounceDefinition2);
+        hBox3.getChildren().add(bounceDefinition3);
+
+*/
+
     }
 
 
