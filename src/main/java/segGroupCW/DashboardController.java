@@ -23,11 +23,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
-
 
     @FXML
     private VBox campaignVBox;
@@ -42,16 +44,10 @@ public class DashboardController implements Initializable {
     private JFXButton campaign2Button;
 
     @FXML
-    private JFXButton accountButton;
-
-    @FXML
-    private ImageView accountImageView;
+    private Label dashBoardLabel;
 
     @FXML
     private Pane topHBox;
-
-    @FXML
-    private Label dashBoardLabel;
 
     @FXML
     private JFXButton changeCampaignButton;
@@ -63,25 +59,25 @@ public class DashboardController implements Initializable {
     private Pane pane1;
 
     @FXML
-    private Label value1;
+    private Label noImprLabel;
 
     @FXML
     private Pane pane2;
 
     @FXML
-    private Label value2;
+    private Label noClicksLabel;
 
     @FXML
     private Pane pane3;
 
     @FXML
-    private Label value3;
+    private Label noUniqueLabel;
 
     @FXML
     private Pane pane4;
 
     @FXML
-    private Label value4;
+    private Label noBounceLabel;
 
     @FXML
     private JFXButton bounceDefinitionButton;
@@ -90,87 +86,43 @@ public class DashboardController implements Initializable {
     private Pane pane5;
 
     @FXML
-    private Label value5;
+    private Label noConversionLabel;
 
     @FXML
     private Pane pane6;
 
     @FXML
-    private Label value6;
+    private Label totalCostLabel;
 
     @FXML
     private Pane pane61;
 
     @FXML
-    private Label value61;
+    private Label ctrLabel;
 
     @FXML
     private Pane pane62;
 
     @FXML
-    private Label value62;
+    private Label cpaLabel;
 
     @FXML
     private Pane pane63;
 
     @FXML
-    private Label value63;
+    private Label cpcLabel;
 
     @FXML
     private Pane pane64;
 
     @FXML
-    private Label value64;
+    private Label cpmLabel;
 
     @FXML
     private Pane pane65;
 
     @FXML
-    private Label value65;
-
-    @FXML
-    private LineChart<?, ?> lineChart1;
-
-    @FXML
-    private LineChart<?, ?> lineChart11;
-
-    @FXML
-    private LineChart<?, ?> lineChart12;
-
-    @FXML
-    private LineChart<?, ?> lineChart13;
-
-    @FXML
-    private LineChart<?, ?> lineChart131;
-
-    @FXML
-    private Pane totalCostPane;
-
-    @FXML
-    private LineChart<?, ?> lineChart132;
-
-    @FXML
-    protected JFXRadioButton LineChartRadioGraph;
-
-    @FXML
-    private JFXRadioButton pieChartRadioButton;
-
-    @FXML
-    private LineChart<?, ?> lineChart133;
-
-    @FXML
-    private LineChart<?, ?> lineChart134;
-
-    @FXML
-    private LineChart<?, ?> lineChart1341;
-
-    @FXML
-    private LineChart<?, ?> lineChart1342;
-
-    @FXML
-    private LineChart<?, ?> lineChart1343;
-
-    private PieChart pieChart;
+    private Label bounceRateLabel;
 
     @FXML
     private LineChart<?, ?> NoImpressionsChart;
@@ -180,7 +132,6 @@ public class DashboardController implements Initializable {
 
     @FXML
     private NumberAxis y;
-
 
     @FXML
     private LineChart<?, ?> NoImpressionsChart1;
@@ -217,6 +168,39 @@ public class DashboardController implements Initializable {
 
     @FXML
     private NumberAxis y31;
+
+    @FXML
+    private Pane totalCostPane;
+
+    @FXML
+    private LineChart<?, ?> lineChart132;
+
+    @FXML
+    private JFXRadioButton LineChartRadioGraph;
+
+    @FXML
+    private ToggleGroup group1;
+
+    @FXML
+    private JFXRadioButton pieChartRadioButton;
+
+    @FXML
+    private LineChart<?, ?> lineChart133;
+
+    @FXML
+    private LineChart<?, ?> lineChart134;
+
+    @FXML
+    private LineChart<?, ?> lineChart1341;
+
+    @FXML
+    private LineChart<?, ?> lineChart1342;
+
+    @FXML
+    private LineChart<?, ?> lineChart1343;
+
+    private PieChart pieChart;
+
 
     @FXML
     void pieChartChange() {
@@ -334,9 +318,117 @@ public class DashboardController implements Initializable {
 
     }
 
-
+    /**
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // InitLabels
+        DatabaseHandler db = new DatabaseHandler();
+        ArrayList<String> statements = new SQLCreator().initializeTotals();
+        for (String each : statements) {
+            System.out.println(each);
+        }
+        try {
+            ResultSet result = db.querySQL(statements.get(0));
+            System.out.println(result.getMetaData());
+            result.first();
+            int imps = result.getInt(1);
+            System.out.println(result.getString(1));
+            noImprLabel.setText(result.getString(1));
+
+            result = db.querySQL(statements.get(1));
+            result.first();
+            int clicks = result .getInt(1);
+            System.out.println(result.getString(1));
+            noClicksLabel.setText(result.getString(1));
+
+            result = db.querySQL(statements.get(2));
+            result.first();
+            System.out.println(result.getString(1));
+            noUniqueLabel.setText(result.getString(1));
+
+            result = db.querySQL(statements.get(3));
+            result.first();
+            float bounces = result.getInt(1);
+            System.out.println(result.getString(1));
+            noBounceLabel.setText(result.getString(1));
+
+            result = db.querySQL(statements.get(4));
+            result.first();
+            int convs = result.getInt(1);
+            System.out.println(result.getString(1));
+            noConversionLabel.setText(result.getString(1));
+
+            result = db.querySQL(statements.get(5));
+            result.first();
+            float impCost = result.getFloat(1);
+            result = db.querySQL(statements.get(6));
+            result.first();
+            float totalCost = impCost + result.getFloat(1);
+            double total = Math.round(totalCost * 100.0) / 100.0;
+            System.out.println(totalCost);
+            System.out.println(total);
+            totalCostLabel.setText(Double.toString(total));
+
+            if (imps == 0) {
+                ctrLabel.setText("0");
+            } else {
+                float ctr = (float) clicks / imps;
+                double ctrRound = Math.round(ctr * 100.0) / 100.0;
+                System.out.println(ctr);
+                System.out.println(ctrRound);
+                ctrLabel.setText(Double.toString(ctrRound));
+            }
+
+            if (convs == 0) {
+                cpaLabel.setText("0");
+            } else {
+                float cpa = totalCost / convs;
+                double cpaRound = Math.round(cpa * 100.0) / 100.0;
+                System.out.println(cpa);
+                System.out.println(cpaRound);
+                cpaLabel.setText(Double.toString(cpaRound));
+            }
+
+            if (clicks == 0) {
+                cpcLabel.setText("0");
+            } else {
+                float cpc = totalCost / clicks;
+                double cpcRound = Math.round(cpc * 100.0) / 100.0;
+                System.out.println(cpc);
+                System.out.println(cpcRound);
+                cpcLabel.setText(Double.toString(cpcRound));
+            }
+
+            if (imps == 0) {
+                cpmLabel.setText("0");
+            } else {
+                float cpm = totalCost / (imps * 1000);
+                double cpmRound = Math.round(cpm * 100.0) / 100.0;
+                System.out.println(cpm);
+                System.out.println(cpmRound);
+                cpmLabel.setText(Double.toString(cpmRound));
+            }
+
+            if (clicks == 0) {
+                bounceRateLabel.setText("0");
+            } else {
+                float br = bounces / clicks;
+                double brRound = Math.round(br * 100.0) / 100.0;
+                System.out.println(br);
+                System.out.println(brRound);
+                bounceRateLabel.setText(Double.toString(brRound));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // InitCharts
+
         XYChart.Series series = new XYChart.Series();
         XYChart.Series series1 = new XYChart.Series();
         XYChart.Series series2 = new XYChart.Series();
@@ -383,7 +475,6 @@ public class DashboardController implements Initializable {
         series31.getData().add(new XYChart.Data("6", 280));
         series31.getData().add(new XYChart.Data("7", 299));
 
-        System.out.println("Hello Dil");
         NoImpressionsChart.getData().addAll(series);
         NoImpressionsChart1.getData().addAll(series1);
         NoImpressionsChart2.getData().addAll(series2);
