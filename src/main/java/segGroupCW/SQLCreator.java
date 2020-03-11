@@ -3,12 +3,14 @@ package segGroupCW;
 import java.util.ArrayList;
 
 public class SQLCreator {
+    //INIT functions
+
     /**
      * Generates all the SQL statements to initialise the dashboard totals.
      *
      * @return      ArrayList of the SQL statements
      */
-    public ArrayList<String> initialise() {
+    public ArrayList<String> initializeTotals() {
         ArrayList<String> statements = new ArrayList<>();
         statements.add(numOfImps());
         statements.add(numOfClicks());
@@ -24,13 +26,19 @@ public class SQLCreator {
         return statements;
     }
 
+    public ArrayList<String> initializeCharts(String start, String end) {
+        ArrayList<String> statements = new ArrayList<>();
+
+        return statements;
+    }
+
     /**
      * SQL statement to calculate the total impressions.
      *
      * @return    String of the SQL statement
      */
     private String numOfImps() {
-        return "SELECT COUNT(*) FROM impressions;";
+        return "SELECT COUNT(*) FROM IMPRESSIONS;";
     }
 
     /**
@@ -38,7 +46,7 @@ public class SQLCreator {
      *
      * @return      String of the SQL statement
      */
-    private String numOfClicks() { return "SELECT COUNT(*) FROM clicks;";}
+    private String numOfClicks() { return "SELECT COUNT(*) FROM CLICKS;";}
 
     /**
      * SQL statement to calculate the total clicks from unique users.
@@ -59,7 +67,7 @@ public class SQLCreator {
      *
      * @return      String of the SQL statement
      */
-    private String numOfConvs() { return "SELECT COUNT (*) FROM SERVER WHERE CONVERSION = TRUE;";}
+    private String numOfConvs() { return "SELECT COUNT(*) FROM SERVER WHERE CONVERSION = TRUE;";}
 
     /**
      * SQL statements to calculate the total cost.
@@ -141,6 +149,7 @@ public class SQLCreator {
      * but you can also do impressions + date(start, end)
      */
 
+    //CUSTOM endings
     /**
      * SQL statement for a generic where statement between 2 dates. Both dates should be in YYYY-MM-DD [HH:MM:SS] format.
      *
@@ -152,6 +161,11 @@ public class SQLCreator {
         return "DATE => TIMESTAMP '" + start + "' AND DATE" + " <= '" + end + "'";
     }
 
+    private String earliestDate() {
+        return "SELECT MIN(Date) FROM IMPRESSIONS;";
+    }
+
+    //CUSTOM builders
     /**
      * SQL statement for the total impressions between 2 dates. Both dates should be in YYYY-MM-DD [HH:MM:SS] format.
      *
@@ -159,7 +173,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      String of the SQL statement
      */
-    private String numOfImps(String start, String end) {
+    private String betweenDateImps(String start, String end) {
         return "SELECT COUNT(*) FROM impressions WHERE " + betweenDate(start, end) + ";";
     }
 
@@ -170,7 +184,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      String of the SQL statement
      */
-    private String numOfClicks(String start, String end) {
+    private String betweenDateClicks(String start, String end) {
         return "SELECT COUNT(*) FROM clicks WHERE " + betweenDate(start, end) + ";";
     }
 
