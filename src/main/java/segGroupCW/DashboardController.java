@@ -302,7 +302,8 @@ public class DashboardController implements Initializable {
         Scene newScene = new Scene(box, 350, 120);
         newStage.setScene(newScene);
         newStage.showAndWait();
-
+        
+        
 
 
 
