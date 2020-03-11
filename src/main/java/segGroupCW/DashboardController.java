@@ -326,6 +326,66 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // InitLabels
+//        initLabels();
+
+        // InitCharts
+
+        XYChart.Series series = new XYChart.Series();
+        XYChart.Series series1 = new XYChart.Series();
+        XYChart.Series series2 = new XYChart.Series();
+        XYChart.Series series3 = new XYChart.Series();
+        XYChart.Series series31 = new XYChart.Series();
+
+        series.getData().add(new XYChart.Data("1", 23));
+        series.getData().add(new XYChart.Data("2", 48));
+        series.getData().add(new XYChart.Data("3", 70));
+        series.getData().add(new XYChart.Data("4", 90));
+        series.getData().add(new XYChart.Data("5", 123));
+        series.getData().add(new XYChart.Data("6", 245));
+        series.getData().add(new XYChart.Data("7", 109));
+
+        series1.getData().add(new XYChart.Data("1", 12));
+        series1.getData().add(new XYChart.Data("2", 30));
+        series1.getData().add(new XYChart.Data("3", 45));
+        series1.getData().add(new XYChart.Data("4", 13));
+        series1.getData().add(new XYChart.Data("5", 70));
+        series1.getData().add(new XYChart.Data("6", 25));
+        series1.getData().add(new XYChart.Data("7", 109));
+
+        series2.getData().add(new XYChart.Data("1", 45));
+        series2.getData().add(new XYChart.Data("2", 30));
+        series2.getData().add(new XYChart.Data("3", 89));
+        series2.getData().add(new XYChart.Data("4", 20));
+        series2.getData().add(new XYChart.Data("5", 7));
+        series2.getData().add(new XYChart.Data("6", 25));
+        series2.getData().add(new XYChart.Data("7", 230));
+
+        series3.getData().add(new XYChart.Data("1", 90));
+        series3.getData().add(new XYChart.Data("2", 34));
+        series3.getData().add(new XYChart.Data("3", 89));
+        series3.getData().add(new XYChart.Data("4", 105));
+        series3.getData().add(new XYChart.Data("5", 279));
+        series3.getData().add(new XYChart.Data("6", 300));
+        series3.getData().add(new XYChart.Data("7", 299));
+
+        series31.getData().add(new XYChart.Data("1", 400));
+        series31.getData().add(new XYChart.Data("2", 398));
+        series31.getData().add(new XYChart.Data("3", 321));
+        series31.getData().add(new XYChart.Data("4", 345));
+        series31.getData().add(new XYChart.Data("5", 311));
+        series31.getData().add(new XYChart.Data("6", 280));
+        series31.getData().add(new XYChart.Data("7", 299));
+
+        NoImpressionsChart.getData().addAll(series);
+        NoImpressionsChart1.getData().addAll(series1);
+        NoImpressionsChart2.getData().addAll(series2);
+        NoImpressionsChart3.getData().addAll(series3);
+        NoImpressionsChart31.getData().addAll(series31);
+
+
+    }
+
+    private void initLabels() {
         DatabaseHandler db = new DatabaseHandler();
         ArrayList<String> statements = new SQLCreator().initializeTotals();
         for (String each : statements) {
@@ -426,61 +486,5 @@ public class DashboardController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        // InitCharts
-
-        XYChart.Series series = new XYChart.Series();
-        XYChart.Series series1 = new XYChart.Series();
-        XYChart.Series series2 = new XYChart.Series();
-        XYChart.Series series3 = new XYChart.Series();
-        XYChart.Series series31 = new XYChart.Series();
-
-        series.getData().add(new XYChart.Data("1", 23));
-        series.getData().add(new XYChart.Data("2", 48));
-        series.getData().add(new XYChart.Data("3", 70));
-        series.getData().add(new XYChart.Data("4", 90));
-        series.getData().add(new XYChart.Data("5", 123));
-        series.getData().add(new XYChart.Data("6", 245));
-        series.getData().add(new XYChart.Data("7", 109));
-
-        series1.getData().add(new XYChart.Data("1", 12));
-        series1.getData().add(new XYChart.Data("2", 30));
-        series1.getData().add(new XYChart.Data("3", 45));
-        series1.getData().add(new XYChart.Data("4", 13));
-        series1.getData().add(new XYChart.Data("5", 70));
-        series1.getData().add(new XYChart.Data("6", 25));
-        series1.getData().add(new XYChart.Data("7", 109));
-
-        series2.getData().add(new XYChart.Data("1", 45));
-        series2.getData().add(new XYChart.Data("2", 30));
-        series2.getData().add(new XYChart.Data("3", 89));
-        series2.getData().add(new XYChart.Data("4", 20));
-        series2.getData().add(new XYChart.Data("5", 7));
-        series2.getData().add(new XYChart.Data("6", 25));
-        series2.getData().add(new XYChart.Data("7", 230));
-
-        series3.getData().add(new XYChart.Data("1", 90));
-        series3.getData().add(new XYChart.Data("2", 34));
-        series3.getData().add(new XYChart.Data("3", 89));
-        series3.getData().add(new XYChart.Data("4", 105));
-        series3.getData().add(new XYChart.Data("5", 279));
-        series3.getData().add(new XYChart.Data("6", 300));
-        series3.getData().add(new XYChart.Data("7", 299));
-
-        series31.getData().add(new XYChart.Data("1", 400));
-        series31.getData().add(new XYChart.Data("2", 398));
-        series31.getData().add(new XYChart.Data("3", 321));
-        series31.getData().add(new XYChart.Data("4", 345));
-        series31.getData().add(new XYChart.Data("5", 311));
-        series31.getData().add(new XYChart.Data("6", 280));
-        series31.getData().add(new XYChart.Data("7", 299));
-
-        NoImpressionsChart.getData().addAll(series);
-        NoImpressionsChart1.getData().addAll(series1);
-        NoImpressionsChart2.getData().addAll(series2);
-        NoImpressionsChart3.getData().addAll(series3);
-        NoImpressionsChart31.getData().addAll(series31);
-
-
     }
 }
