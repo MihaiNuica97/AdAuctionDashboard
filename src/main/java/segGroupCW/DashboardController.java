@@ -305,8 +305,6 @@ public class DashboardController implements Initializable {
         
         
 
-
-
 /*
 
         box.getChildren().add(hBox1);
