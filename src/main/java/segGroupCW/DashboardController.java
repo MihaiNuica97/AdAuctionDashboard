@@ -334,9 +334,112 @@ public class DashboardController implements Initializable {
 
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // InitLabels
+        DatabaseHandler db = new DatabaseHandler();
+        ArrayList<String> statements = new SQLCreator().initializeTotals();
+        for (String each : statements) {
+            System.out.println(each);
+        }
+        try {
+            ResultSet result = db.querySQL(statements.get(0));
+            System.out.println(result.getMetaData());
+            result.first();
+            int imps = result.getInt(1);
+            System.out.println(result.getString(1));
+            noImprLabel.setText(result.getString(1));
+
+            result = db.querySQL(statements.get(1));
+            result.first();
+            int clicks = result .getInt(1);
+            System.out.println(result.getString(1));
+            noClicksLabel.setText(result.getString(1));
+
+            result = db.querySQL(statements.get(2));
+            result.first();
+            System.out.println(result.getString(1));
+            noUniqueLabel.setText(result.getString(1));
+
+            result = db.querySQL(statements.get(3));
+            result.first();
+            float bounces = result.getInt(1);
+            System.out.println(result.getString(1));
+            noBounceLabel.setText(result.getString(1));
+
+            result = db.querySQL(statements.get(4));
+            result.first();
+            int convs = result.getInt(1);
+            System.out.println(result.getString(1));
+            noConversionLabel.setText(result.getString(1));
+
+            result = db.querySQL(statements.get(5));
+            result.first();
+            float impCost = result.getFloat(1);
+            result = db.querySQL(statements.get(6));
+            result.first();
+            float totalCost = impCost + result.getFloat(1);
+            double total = Math.round(totalCost * 100.0) / 100.0;
+            System.out.println(totalCost);
+            System.out.println(total);
+            totalCostLabel.setText(Double.toString(total));
+
+            if (imps == 0) {
+                ctrLabel.setText("0");
+            } else {
+                float ctr = (float) clicks / imps;
+                double ctrRound = Math.round(ctr * 100.0) / 100.0;
+                System.out.println(ctr);
+                System.out.println(ctrRound);
+                ctrLabel.setText(Double.toString(ctrRound));
+            }
+
+            if (convs == 0) {
+                cpaLabel.setText("0");
+            } else {
+                float cpa = totalCost / convs;
+                double cpaRound = Math.round(cpa * 100.0) / 100.0;
+                System.out.println(cpa);
+                System.out.println(cpaRound);
+                cpaLabel.setText(Double.toString(cpaRound));
+            }
+
+            if (clicks == 0) {
+                cpcLabel.setText("0");
+            } else {
+                float cpc = totalCost / clicks;
+                double cpcRound = Math.round(cpc * 100.0) / 100.0;
+                System.out.println(cpc);
+                System.out.println(cpcRound);
+                cpcLabel.setText(Double.toString(cpcRound));
+            }
+
+            if (imps == 0) {
+                cpmLabel.setText("0");
+            } else {
+                float cpm = totalCost / (imps * 1000);
+                double cpmRound = Math.round(cpm * 100.0) / 100.0;
+                System.out.println(cpm);
+                System.out.println(cpmRound);
+                cpmLabel.setText(Double.toString(cpmRound));
+            }
+
+            if (clicks == 0) {
+                bounceRateLabel.setText("0");
+            } else {
+                float br = bounces / clicks;
+                double brRound = Math.round(br * 100.0) / 100.0;
+                System.out.println(br);
+                System.out.println(brRound);
+                bounceRateLabel.setText(Double.toString(brRound));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // InitCharts
+
         XYChart.Series series = new XYChart.Series();
         XYChart.Series series1 = new XYChart.Series();
         XYChart.Series series2 = new XYChart.Series();
@@ -383,7 +486,6 @@ public class DashboardController implements Initializable {
         series31.getData().add(new XYChart.Data("6", 280));
         series31.getData().add(new XYChart.Data("7", 299));
 
-        System.out.println("Hello Dil");
         NoImpressionsChart.getData().addAll(series);
         NoImpressionsChart1.getData().addAll(series1);
         NoImpressionsChart2.getData().addAll(series2);

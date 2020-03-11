@@ -30,7 +30,7 @@ public class SQLCreator {
      * @return    String of the SQL statement
      */
     private String numOfImps() {
-        return "SELECT COUNT(*) FROM impressions;";
+        return "SELECT COUNT(*) FROM IMPRESSIONS;";
     }
 
     /**
@@ -38,7 +38,7 @@ public class SQLCreator {
      *
      * @return      String of the SQL statement
      */
-    private String numOfClicks() { return "SELECT COUNT(*) FROM clicks;";}
+    private String numOfClicks() { return "SELECT COUNT(*) FROM CLICKS;";}
 
     /**
      * SQL statement to calculate the total clicks from unique users.
@@ -59,7 +59,7 @@ public class SQLCreator {
      *
      * @return      String of the SQL statement
      */
-    private String numOfConvs() { return "SELECT COUNT (*) FROM SERVER WHERE CONVERSION = TRUE;";}
+    private String numOfConvs() { return "SELECT COUNT(*) FROM SERVER WHERE CONVERSION = TRUE;";}
 
     /**
      * SQL statements to calculate the total cost.
