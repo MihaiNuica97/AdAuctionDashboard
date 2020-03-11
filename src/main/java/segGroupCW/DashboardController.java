@@ -318,6 +318,11 @@ public class DashboardController implements Initializable {
 
     }
 
+    /**
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // InitLabels
