@@ -15,6 +15,7 @@ public class App extends Application {
 
 
 	private static Scene scene;
+	private ThemeController themeController = new ThemeController();
 
 	public static Scene getScene(){
 		return scene;
@@ -22,20 +23,23 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
 		scene = new Scene(loadFXML("fileUpload"));
-
+		scene.getStylesheets().add(this.getClass().getResource(themeController.getMainTheme()).toExternalForm());
+		
 		stage.setScene(scene);
 		stage.show();
 		stage.setHeight(500);
 		stage.setWidth(560);
 	}
-
+	
 
  	static void setRoot(String fxml) throws IOException {
 		scene.setRoot(loadFXML(fxml));
+		
 
 	}
-
-
+	
+	
+	
 	private static Parent loadFXML(String fxml) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
 		return fxmlLoader.load();

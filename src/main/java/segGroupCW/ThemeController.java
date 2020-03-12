@@ -2,9 +2,22 @@ package segGroupCW;
 
 import javafx.fxml.FXMLLoader;
 
-public class ThemeController {
+import java.util.ArrayList;
 
-	public static void addStyle(String style){
+public class ThemeController {
+	private String mainTheme;
+	private ArrayList<String> themes;
+	
+	public ThemeController(){
+	    mainTheme = "css/themes/default.css";
+//	    private File[] files = new File()
+	}
+	public String getMainTheme()
+	{
+		return mainTheme;
+	}
+	
+	public static void addTheme(String style){
 		App.getScene().getStylesheets().add(FXMLLoader.getDefaultClassLoader().getResource(style).toExternalForm());
 	}
 
