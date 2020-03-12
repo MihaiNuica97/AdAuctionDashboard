@@ -39,7 +39,11 @@ public class FileLoadController {
 
 
 	public void initialize(){
-		fileChooser = new FileChooser();;
+//		ThemeController.addStyle("@/css/fileUpload.css");
+//		ThemeController.getStyles();
+//		System.out.println(App.getScene().getStylesheets().toString());
+
+		fileChooser = new FileChooser();
         browseClicksBtn.setOnAction( e -> browseFiles(clicksPathLabel,"Clicks Log"));
 		browseImprBtn.setOnAction( e -> browseFiles(imprPathLabel,"Impressions"));
 		browseServerBtn.setOnAction( e -> browseFiles(serverPathLabel,"Server Log"));
@@ -67,7 +71,7 @@ public class FileLoadController {
 	private void goToDashboard() throws IOException
 	{
 		System.out.println("Dashboard button clicked");
-//		(new CSVParser()).parse(fileMap.get("Clicks Log"), fileMap.get("Server Log"), fileMap.get("Impressions"));
+//		(new CSVParser()).parse(fileMap.get("Clicks Log"), fileMap.get("Server Log"), fileMap.get("Impressions");
 		App.setRoot("dashboard");
 		App.getScene().getWindow().setHeight(900);
 		App.getScene().getWindow().setWidth(968);
