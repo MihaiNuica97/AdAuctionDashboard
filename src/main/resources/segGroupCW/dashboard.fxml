@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="938.0" stylesheets="@css/theme.css, @css/dashboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="949.0" prefWidth="938.0" stylesheets="@css/theme.css, @css/dashboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.DashboardController">
    <children>
       <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="938.0">
          <children>
@@ -35,19 +35,7 @@
                   <Label layoutX="130.0" layoutY="36.0" prefHeight="17.0" prefWidth="176.0" styleClass="campaign-title" text="Campaign 1" />
                </children>
             </Pane>
-            <Pane prefHeight="100.0" prefWidth="220.0">
-               <children>
-                  <JFXButton fx:id="filterButton" layoutX="75.0" layoutY="46.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="117.0" text="Filter">
-                     <graphic>
-                        <ImageView fitHeight="49.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/Filter-512.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-               </children>
-            </Pane>
+            <Pane prefHeight="100.0" prefWidth="220.0" />
          </children>
       </HBox>
       <BorderPane layoutY="120.0" prefWidth="152.0">
@@ -75,7 +63,7 @@
             </VBox>
          </bottom>
       </BorderPane>
-      <ScrollPane layoutX="152.0" layoutY="100.0" prefHeight="780.0" prefWidth="787.0">
+      <ScrollPane layoutX="152.0" layoutY="100.0" prefHeight="848.0" prefWidth="787.0">
          <content>
             <VBox prefHeight="1144.0" prefWidth="788.0">
                <children>
@@ -90,7 +78,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value1" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="527, 920" textAlignment="CENTER">
+                                    <Label fx:id="noImprLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="527, 920" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -104,7 +92,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value2" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="20, 569" textAlignment="CENTER">
+                                    <Label fx:id="noClicksLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="20, 569" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -118,7 +106,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value3" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="13, 702" textAlignment="CENTER">
+                                    <Label fx:id="noUniqueLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="13, 702" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -132,18 +120,17 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value4" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="8, 401">
+                                    <Label fx:id="noBounceLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="8, 401">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
                                     </Label>
                                     <JFXButton fx:id="bounceDefinitionButton" layoutX="122.0" layoutY="-1.0" mnemonicParsing="false" onAction="#bounceChange" prefHeight="19.0" prefWidth="36.0" style="-fx-background-color: #ff00;" textFill="TRANSPARENT">
                                        <graphic>
-                                          <ImageView fitHeight="150.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-<!--                                             <image>-->
-<!--                                                <Image url="@../assets/School_Study_Student_Education_Pencil-512.png" />-->
-<!--                                             </image>-->
-                                          </ImageView>
+                                          <ImageView fx:id="pencilButton" fitHeight="35.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../assets/School_Study_Student_Education_Pencil-512.png" />
+                                             </image></ImageView>
                                        </graphic>
                                     </JFXButton>
                                  </children>
@@ -155,7 +142,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value5" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="4, 591" textAlignment="CENTER">
+                                    <Label fx:id="noConversionLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="4, 591" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -169,7 +156,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value6" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="totalCostLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -183,7 +170,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value61" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="ctrLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -197,7 +184,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value62" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="cpaLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -211,7 +198,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value63" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="cpcLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -225,7 +212,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value64" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="cpmLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -239,7 +226,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="value65" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="bounceRateLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -253,7 +240,7 @@
                         </VBox>
                         <VBox layoutX="170.0" layoutY="-3.0" prefWidth="616.0" spacing="20.0">
                            <children>
-                              <Pane prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="noImprPane" onMouseClicked="#graphViewImpressions" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="NoImpressionsChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
@@ -265,9 +252,9 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="noClicksPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
-                                    <LineChart fx:id="NoImpressionsChart1" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-8.0" layoutY="-1.0" prefHeight="147.0" prefWidth="504.0">
+                                    <LineChart fx:id="noOfClicksChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-8.0" layoutY="-1.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" fx:id="x1" />
                                        </xAxis>
@@ -277,9 +264,9 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="noOfUniques" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
-                                    <LineChart fx:id="NoImpressionsChart2" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-12.0" layoutY="-1.0" prefHeight="147.0" prefWidth="504.0">
+                                    <LineChart fx:id="NoUniquesChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-12.0" layoutY="-1.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" fx:id="x2" />
                                        </xAxis>
@@ -289,9 +276,9 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="noBouncePane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
-                                    <LineChart fx:id="NoImpressionsChart3" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-12.0" layoutY="-1.0" prefHeight="147.0" prefWidth="504.0">
+                                    <LineChart fx:id="NoBouncesChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-12.0" layoutY="-1.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" fx:id="x3" />
                                        </xAxis>
@@ -301,9 +288,9 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="noOfConversionsPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
-                                    <LineChart fx:id="NoImpressionsChart31" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-11.0" layoutY="1.0" prefHeight="147.0" prefWidth="504.0">
+                                    <LineChart fx:id="NoConversionsChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-11.0" layoutY="1.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" fx:id="x31" />
                                        </xAxis>
@@ -315,7 +302,7 @@
                               </Pane>
                               <Pane fx:id="totalCostPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
-                                    <LineChart fx:id="lineChart132" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                                    <LineChart fx:id="totalCostChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" />
                                        </xAxis>
@@ -328,11 +315,12 @@
                                           <ToggleGroup fx:id="group1" />
                                        </toggleGroup></JFXRadioButton>
                                     <JFXRadioButton fx:id="pieChartRadioButton" layoutX="497.0" layoutY="50.0" mnemonicParsing="false" onAction="#pieChartOption" text="Pie Chart" toggleGroup="$group1" />
+                                    <JFXRadioButton fx:id="histogramRadioButton" layoutX="497.0" layoutY="75.0" onAction="#histogramChange" text="Histogram" toggleGroup="$group1" />
                                  </children>
                               </Pane>
-                              <Pane prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="ctrPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
-                                    <LineChart fx:id="lineChart133" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                                    <LineChart fx:id="ctrChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" />
                                        </xAxis>
@@ -342,9 +330,9 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="cpaPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
-                                    <LineChart fx:id="lineChart134" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                                    <LineChart fx:id="cpaChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" />
                                        </xAxis>
@@ -354,9 +342,9 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="cpcPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
-                                    <LineChart fx:id="lineChart1341" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                                    <LineChart fx:id="cpcChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" />
                                        </xAxis>
@@ -366,9 +354,9 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="cpmPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
-                                    <LineChart fx:id="lineChart1342" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                                    <LineChart fx:id="cpmChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" />
                                        </xAxis>
@@ -378,9 +366,9 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="bounceRatePane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
-                                    <LineChart fx:id="lineChart1343" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
+                                    <LineChart fx:id="bounceRateChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" />
                                        </xAxis>
@@ -401,5 +389,6 @@
             </VBox>
          </content>
       </ScrollPane>
+      <VBox layoutY="316.0" prefHeight="241.0" prefWidth="152.0" />
    </children>
 </AnchorPane>

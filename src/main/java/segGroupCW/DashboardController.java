@@ -9,33 +9,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
 
     @FXML
-    private VBox campaignVBox;
-
-    @FXML
-    private Label campaignLabel;
+    private Label dashBoardLabel;
 
     @FXML
     private JFXButton campaign1Button;
@@ -44,37 +35,16 @@ public class DashboardController implements Initializable {
     private JFXButton campaign2Button;
 
     @FXML
-    private Label dashBoardLabel;
-
-    @FXML
-    private Pane topHBox;
-
-    @FXML
     private JFXButton changeCampaignButton;
-
-    @FXML
-    private JFXButton filterButton;
-
-    @FXML
-    private Pane pane1;
 
     @FXML
     private Label noImprLabel;
 
     @FXML
-    private Pane pane2;
-
-    @FXML
     private Label noClicksLabel;
 
     @FXML
-    private Pane pane3;
-
-    @FXML
     private Label noUniqueLabel;
-
-    @FXML
-    private Pane pane4;
 
     @FXML
     private Label noBounceLabel;
@@ -83,46 +53,28 @@ public class DashboardController implements Initializable {
     private JFXButton bounceDefinitionButton;
 
     @FXML
-    private Pane pane5;
-
-    @FXML
     private Label noConversionLabel;
-
-    @FXML
-    private Pane pane6;
 
     @FXML
     private Label totalCostLabel;
 
     @FXML
-    private Pane pane61;
-
-    @FXML
     private Label ctrLabel;
-
-    @FXML
-    private Pane pane62;
 
     @FXML
     private Label cpaLabel;
 
     @FXML
-    private Pane pane63;
-
-    @FXML
     private Label cpcLabel;
-
-    @FXML
-    private Pane pane64;
 
     @FXML
     private Label cpmLabel;
 
     @FXML
-    private Pane pane65;
+    private Label bounceRateLabel;
 
     @FXML
-    private Label bounceRateLabel;
+    private Pane noImprPane;
 
     @FXML
     private LineChart<?, ?> NoImpressionsChart;
@@ -134,7 +86,10 @@ public class DashboardController implements Initializable {
     private NumberAxis y;
 
     @FXML
-    private LineChart<?, ?> NoImpressionsChart1;
+    private Pane noClicksPane;
+
+    @FXML
+    private LineChart<?, ?> noOfClicksChart;
 
     @FXML
     private CategoryAxis x1;
@@ -143,7 +98,10 @@ public class DashboardController implements Initializable {
     private NumberAxis y1;
 
     @FXML
-    private LineChart<?, ?> NoImpressionsChart2;
+    private Pane noOfUniques;
+
+    @FXML
+    private LineChart<?, ?> NoUniquesChart;
 
     @FXML
     private CategoryAxis x2;
@@ -152,7 +110,10 @@ public class DashboardController implements Initializable {
     private NumberAxis y2;
 
     @FXML
-    private LineChart<?, ?> NoImpressionsChart3;
+    private Pane noBouncePane;
+
+    @FXML
+    private LineChart<?, ?> NoBouncesChart;
 
     @FXML
     private CategoryAxis x3;
@@ -161,7 +122,10 @@ public class DashboardController implements Initializable {
     private NumberAxis y3;
 
     @FXML
-    private LineChart<?, ?> NoImpressionsChart31;
+    private Pane noOfConversionsPane;
+
+    @FXML
+    private LineChart<?, ?> NoConversionsChart;
 
     @FXML
     private CategoryAxis x31;
@@ -173,7 +137,7 @@ public class DashboardController implements Initializable {
     private Pane totalCostPane;
 
     @FXML
-    private LineChart<?, ?> lineChart132;
+    private LineChart<?, ?> totalCostChart;
 
     @FXML
     private JFXRadioButton LineChartRadioGraph;
@@ -185,26 +149,57 @@ public class DashboardController implements Initializable {
     private JFXRadioButton pieChartRadioButton;
 
     @FXML
-    private LineChart<?, ?> lineChart133;
+    private JFXRadioButton histogramRadioButton;
 
     @FXML
-    private LineChart<?, ?> lineChart134;
+    private Pane ctrPane;
 
     @FXML
-    private LineChart<?, ?> lineChart1341;
+    private LineChart<?, ?> ctrChart;
 
     @FXML
-    private LineChart<?, ?> lineChart1342;
+    private Pane cpaPane;
 
     @FXML
-    private LineChart<?, ?> lineChart1343;
+    private LineChart<?, ?> cpaChart;
+
+    @FXML
+    private Pane cpcPane;
+
+    @FXML
+    private LineChart<?, ?> cpcChart;
+
+    @FXML
+    private Pane cpmPane;
+
+    @FXML
+    private LineChart<?, ?> cpmChart;
+
+    @FXML
+    private Pane bounceRatePane;
+
+    @FXML
+    private LineChart<?, ?> bounceRateChart;
 
     private PieChart pieChart;
+
+    final CategoryAxis xAxis = new CategoryAxis();
+    final NumberAxis yAxis = new NumberAxis();
+    final BarChart<String,Number> histogram = new BarChart<>(xAxis,yAxis);
+
 
 
     @FXML
     void pieChartChange() {
-        totalCostPane.getChildren().remove(lineChart132);
+        if (totalCostPane.getChildren() == totalCostChart){
+            totalCostPane.getChildren().remove(totalCostChart);
+        }
+
+        else{
+            totalCostPane.getChildren().remove(histogram);
+        }
+
+        totalCostPane.getChildren().remove(totalCostChart);
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Click Cost", 13),
@@ -216,9 +211,44 @@ public class DashboardController implements Initializable {
         pieChart.setMaxHeight(50);
     }
 
+
+    @FXML
+    void histogramChange(ActionEvent event) {
+        if (totalCostPane.getChildren() == pieChart){
+            totalCostPane.getChildren().remove(pieChart);
+        }
+
+        else{
+            totalCostPane.getChildren().remove(totalCostChart);
+        }
+
+
+        totalCostPane.getChildren().remove(totalCostChart);
+        histogram.setCategoryGap(0);
+        histogram.setBarGap(0);
+
+        xAxis.setLabel("Time");
+        yAxis.setLabel("Total Cost");
+
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("Histogram");
+        //series1.getData().add(new XYChart.Data("0-10", group[0]));
+        histogram.getData().addAll(series1);
+
+        totalCostPane.getChildren().add(histogram);
+
+        histogram.setMaxHeight(50);
+    }
+
     void lineChartChange() {
-        totalCostPane.getChildren().remove(pieChart);
-        totalCostPane.getChildren().add(lineChart132);
+        if (totalCostPane.getChildren() == pieChart){
+            totalCostPane.getChildren().remove(pieChart);
+        }
+
+        else{
+            totalCostPane.getChildren().remove(histogram);
+        }
+        totalCostPane.getChildren().add(totalCostChart);
 
         //pieChart.autosize();
         pieChart.setMaxHeight(50);
@@ -287,35 +317,6 @@ public class DashboardController implements Initializable {
         newStage.setScene(newScene);
         newStage.showAndWait();
 
-
-
-
-/*
-
-        box.getChildren().add(hBox1);
-        box.getChildren().add(hBox2);
-        box.getChildren().add(hBox3);
-
-        ToggleGroup bounceToggle = new ToggleGroup();
-
-        RadioButton bounceDefinition1 = new RadioButton("def 1");
-        RadioButton bounceDefinition2 = new RadioButton("def2");
-        RadioButton bounceDefinition3 = new RadioButton("def3");
-
-        bounceDefinition1.setToggleGroup(bounceToggle);
-        bounceDefinition2.setToggleGroup(bounceToggle);
-        bounceDefinition3.setToggleGroup(bounceToggle);
-
-        box.getChildren().add(bounceDefinition1);
-        box.getChildren().add(bounceDefinition2);
-        box.getChildren().add(bounceDefinition3);
-
-        hBox1.getChildren().add(bounceDefinition1);
-        hBox2.getChildren().add(bounceDefinition2);
-        hBox3.getChildren().add(bounceDefinition3);
-
-*/
-
     }
 
     /**
@@ -325,63 +326,20 @@ public class DashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // InitLabels
-//        initLabels();
 
-        // InitCharts
 
-        XYChart.Series series = new XYChart.Series();
-        XYChart.Series series1 = new XYChart.Series();
-        XYChart.Series series2 = new XYChart.Series();
-        XYChart.Series series3 = new XYChart.Series();
-        XYChart.Series series31 = new XYChart.Series();
+    }
 
-        series.getData().add(new XYChart.Data("1", 23));
-        series.getData().add(new XYChart.Data("2", 48));
-        series.getData().add(new XYChart.Data("3", 70));
-        series.getData().add(new XYChart.Data("4", 90));
-        series.getData().add(new XYChart.Data("5", 123));
-        series.getData().add(new XYChart.Data("6", 245));
-        series.getData().add(new XYChart.Data("7", 109));
 
-        series1.getData().add(new XYChart.Data("1", 12));
-        series1.getData().add(new XYChart.Data("2", 30));
-        series1.getData().add(new XYChart.Data("3", 45));
-        series1.getData().add(new XYChart.Data("4", 13));
-        series1.getData().add(new XYChart.Data("5", 70));
-        series1.getData().add(new XYChart.Data("6", 25));
-        series1.getData().add(new XYChart.Data("7", 109));
+    @FXML
+    void graphViewImpressions(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
 
-        series2.getData().add(new XYChart.Data("1", 45));
-        series2.getData().add(new XYChart.Data("2", 30));
-        series2.getData().add(new XYChart.Data("3", 89));
-        series2.getData().add(new XYChart.Data("4", 20));
-        series2.getData().add(new XYChart.Data("5", 7));
-        series2.getData().add(new XYChart.Data("6", 25));
-        series2.getData().add(new XYChart.Data("7", 230));
+    }
 
-        series3.getData().add(new XYChart.Data("1", 90));
-        series3.getData().add(new XYChart.Data("2", 34));
-        series3.getData().add(new XYChart.Data("3", 89));
-        series3.getData().add(new XYChart.Data("4", 105));
-        series3.getData().add(new XYChart.Data("5", 279));
-        series3.getData().add(new XYChart.Data("6", 300));
-        series3.getData().add(new XYChart.Data("7", 299));
-
-        series31.getData().add(new XYChart.Data("1", 400));
-        series31.getData().add(new XYChart.Data("2", 398));
-        series31.getData().add(new XYChart.Data("3", 321));
-        series31.getData().add(new XYChart.Data("4", 345));
-        series31.getData().add(new XYChart.Data("5", 311));
-        series31.getData().add(new XYChart.Data("6", 280));
-        series31.getData().add(new XYChart.Data("7", 299));
-
-        NoImpressionsChart.getData().addAll(series);
-        NoImpressionsChart1.getData().addAll(series1);
-        NoImpressionsChart2.getData().addAll(series2);
-        NoImpressionsChart3.getData().addAll(series3);
-        NoImpressionsChart31.getData().addAll(series31);
-
+    @FXML
+    void dashboardReturn(ActionEvent event) throws IOException {
+        App.setRoot("dashboard");
 
     }
 

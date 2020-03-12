@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -10,6 +11,8 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -45,9 +48,9 @@
          <children>
             <Pane prefHeight="100.0" prefWidth="246.0">
                <children>
-                  <Label fx:id="dashBoardLabel" layoutX="-80.0" layoutY="15.0" prefHeight="70.0" prefWidth="285.0" styleClass="text-primary" text="Dashboard">
+                  <Label fx:id="mainMetricLabel" layoutX="-80.0" layoutY="15.0" prefHeight="70.0" prefWidth="285.0" styleClass="text-primary" text="No of Impressions">
                      <font>
-                        <Font name="Verdana" size="48.0" />
+                        <Font name="Verdana" size="24.0" />
                      </font>
                   </Label>
                </children></Pane>
@@ -63,6 +66,18 @@
             <Pane prefHeight="100.0" prefWidth="220.0">
                <children>
                   <JFXButton fx:id="changeCampaignButton" layoutX="72.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="123.0" styleClass="btn-submit" text="Change Campaign" />
+                  <JFXButton buttonType="RAISED" layoutX="105.0" layoutY="50.0" onAction="#dashboardReturn" prefHeight="42.0" prefWidth="57.0" ripplerFill="#fdfdfd" text=" ">
+                     <cursor>
+                        <Cursor fx:constant="NONE" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fx:id="houseImageView" fitHeight="34.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/thin-046_house_home-512.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                </children>
             </Pane>
          </children>
@@ -72,7 +87,7 @@
       </HBox>
       <Pane layoutX="174.0" layoutY="109.0" prefHeight="404.0" prefWidth="752.0" style="-fx-background-color: #5bc0be;">
          <children>
-            <LineChart layoutX="12.0" layoutY="14.0" prefHeight="371.0" prefWidth="727.0" title="No of Impressions">
+            <LineChart fx:id="mainChart" layoutX="12.0" layoutY="14.0" prefHeight="371.0" prefWidth="727.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -82,21 +97,21 @@
             </LineChart>
          </children>
       </Pane>
-      <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="524.0" prefHeight="70.0" prefWidth="752.0" spacing="20.0" style="-fx-background-color: #5bc0be;">
+      <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="563.0" prefHeight="70.0" prefWidth="752.0" spacing="20.0" style="-fx-background-color: #5bc0be;">
          <children>
             <Label alignment="CENTER" prefHeight="70.0" prefWidth="147.0" text="Time">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
-            <JFXRadioButton text="Hours">
+            <JFXRadioButton fx:id="hoursRadioButoon" text="Hours">
                <toggleGroup>
                   <ToggleGroup fx:id="timeToggle" />
                </toggleGroup>
             </JFXRadioButton>
-            <JFXRadioButton text="Days" toggleGroup="$timeToggle" />
-            <JFXRadioButton text="Weeks" toggleGroup="$timeToggle" />
-            <JFXRadioButton text="Months" toggleGroup="$timeToggle" />
+            <JFXRadioButton fx:id="daysRadioButton" text="Days" toggleGroup="$timeToggle" />
+            <JFXRadioButton fx:id="weeksRadioButton" text="Weeks" toggleGroup="$timeToggle" />
+            <JFXRadioButton fx:id="monthsRadioButton" text="Months" toggleGroup="$timeToggle" />
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />
@@ -168,6 +183,26 @@
                </font>
             </Label>
          </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="185.0" layoutY="573.0" prefHeight="70.0" prefWidth="752.0" spacing="20.0" style="-fx-background-color: #5bc0be;">
+         <children>
+            <Label alignment="CENTER" prefHeight="70.0" prefWidth="147.0" text="Time">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <JFXRadioButton fx:id="hoursRadioButoon1" text="Hours">
+               <toggleGroup>
+                  <ToggleGroup fx:id="timeToggle1" />
+               </toggleGroup>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="daysRadioButton1" text="Days" toggleGroup="$timeToggle1" />
+            <JFXRadioButton fx:id="weeksRadioButton1" text="Weeks" toggleGroup="$timeToggle1" />
+            <JFXRadioButton fx:id="monthsRadioButton1" text="Months" toggleGroup="$timeToggle1" />
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
       </HBox>
 
    </children>
