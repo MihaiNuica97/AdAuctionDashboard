@@ -214,7 +214,7 @@ public class SQLCreator {
         return "SELECT COUNT(*) FROM SERVER WHERE PAGESVIEWED < " + pages;
     }
 
-    private String createDB(){
+    public String createDB(){
 
              return "DROP TABLE IF EXISTS clicks, server, impressions, users;" + System.lineSeparator() +
 
@@ -244,5 +244,13 @@ public class SQLCreator {
                     " FOREIGN KEY (ID) REFERENCES USERS(ID)," +
                     " PRIMARY KEY (ID, EntryDate) );";
 
+    }
+
+    public String FirstLastDate(String table){
+        if(table.equals("server")){
+            return "select MIN(EntryDate), max(EntryDate) from server" + System.lineSeparator() +
+                    "select MIN(ExitDate), max(ExitDate) from server";
+        }
+        return "select MIN(Date), max(Date) from " + table.toLowerCase();
     }
 }

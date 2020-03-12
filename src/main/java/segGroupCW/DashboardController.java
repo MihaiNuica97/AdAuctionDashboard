@@ -23,8 +23,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -200,6 +202,8 @@ public class DashboardController implements Initializable {
     private LineChart<?, ?> lineChart1343;
 
     private PieChart pieChart;
+
+
 
 
     @FXML
@@ -385,4 +389,35 @@ public class DashboardController implements Initializable {
 
 
     }
+
+    /*
+        * create function that gets first and last dates of tables
+        * recieves time interval and range and creates a list of sql statements, retruns a list of values
+        * turn values intop chart elemetns
+     */
+
+    /**
+     *
+     * @param start  start date of data required - yyyy-MM-dd
+     * @param end    end date of data required - yyyy-MM-dd
+     * @param interval  the array list containing the list of intervals
+     * @return
+     */
+
+    public static ArrayList<String> iterTimeIntervals(String start, String end, int interval){
+        ArrayList<String> intervals = new ArrayList<>();
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        intervals.add(startDate.toString());
+
+        while (startDate.isBefore(endDate)){
+            startDate = startDate.plusDays(interval);
+            intervals.add(startDate.toString());
+        }
+        return intervals;
+    }
+
+
+
+
 }
