@@ -213,4 +213,44 @@ public class SQLCreator {
     private String bounceByPages(String pages) {
         return "SELECT COUNT(*) FROM SERVER WHERE PAGESVIEWED < " + pages;
     }
+
+    public String createDB(){
+
+             return "DROP TABLE IF EXISTS clicks, server, impressions, users;" + System.lineSeparator() +
+
+                    "CREATE TABLE users ( ID BIGINT PRIMARY KEY," +
+                    " Gender VARCHAR(255)," +
+                    " Age VARCHAR(255)," +
+                    " Income VARCHAR(255) );" + System.lineSeparator() +
+
+                    "CREATE TABLE impressions ( ID BIGINT," +
+                    " Date TIMESTAMP," +
+                    " Context VARCHAR(255)," +
+                    " Cost FLOAT(7)," +
+                    " FOREIGN KEY (ID) REFERENCES USERS(ID)," +
+                    " PRIMARY KEY (ID, Date) );" + System.lineSeparator() +
+
+                    "CREATE TABLE clicks ( ID BIGINT," +
+                    " Date TIMESTAMP," +
+                    " ClickCost FLOAT(8)," +
+                    " FOREIGN KEY (ID) REFERENCES USERS(ID)," +
+                    " PRIMARY KEY (ID, Date) );" + System.lineSeparator() +
+
+                    "CREATE TABLE server ( ID BIGINT," +
+                    " EntryDate TIMESTAMP," +
+                    " ExitDate TIMESTAMP," +
+                    " PagesViewed INT," +
+                    " Conversion BOOLEAN," +
+                    " FOREIGN KEY (ID) REFERENCES USERS(ID)," +
+                    " PRIMARY KEY (ID, EntryDate) );";
+
+    }
+
+    public String FirstLastDate(String table){
+        if(table.equals("server")){
+            return "select MIN(EntryDate), max(EntryDate) from server" + System.lineSeparator() +
+                    "select MIN(ExitDate), max(ExitDate) from server";
+        }
+        return "select MIN(Date), max(Date) from " + table.toLowerCase();
+    }
 }

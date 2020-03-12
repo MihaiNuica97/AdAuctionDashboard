@@ -8,6 +8,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class FileLoadController {
@@ -15,6 +16,10 @@ public class FileLoadController {
 	private FileChooser fileChooser;
 
 	private HashMap<String, File> fileMap = new HashMap<String, File>(3);
+
+	private CSVParser csvParser = new CSVParser();
+	private SQLCreator sqlcreator = new SQLCreator();
+	private DatabaseHandler dbHandler = new DatabaseHandler();
 
 	private Scene scene;
 	@FXML
@@ -68,6 +73,13 @@ public class FileLoadController {
 	{
 		System.out.println("Dashboard button clicked");
 //		(new CSVParser()).parse(fileMap.get("Clicks Log"), fileMap.get("Server Log"), fileMap.get("Impressions"));
+//		DONT DELETE ^
+		// try {
+		// 	dbHandler.sendSQL(sqlcreator.createDB());
+		// 	loadFilesToDB();
+		// } catch (SQLException e) {
+		// 	e.printStackTrace();
+		// }
 		App.setRoot("dashboard");
 		App.getScene().getWindow().setHeight(900);
 		App.getScene().getWindow().setWidth(968);
@@ -76,8 +88,11 @@ public class FileLoadController {
 		return true;
 	}
 
-	private void loadFilesToDB(){
 
+	private void loadFilesToDB() throws IOException, SQLException {
+		dbHandler.sendSQL(csvParser.parseClicks(fileMap.get("Clicks Log")));
+		dbHandler.sendSQL(csvParser.parseServer(fileMap.get("Server Log")));
+		dbHandler.sendSQL(csvParser.parseImpression(fileMap.get("Impressions")));
 	}
 
 
