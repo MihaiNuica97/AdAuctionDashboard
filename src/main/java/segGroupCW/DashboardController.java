@@ -188,7 +188,9 @@ public class DashboardController implements Initializable {
     final BarChart<String,Number> histogram = new BarChart<>(xAxis,yAxis);
 
 
-
+    /**
+     * Change total cost chart to pie chart
+     */
     @FXML
     void pieChartChange() {
         if (totalCostPane.getChildren() == totalCostChart){
@@ -211,7 +213,10 @@ public class DashboardController implements Initializable {
         pieChart.setMaxHeight(50);
     }
 
-
+    /**
+     * Change total cost chart to histogram
+     * @param event
+     */
     @FXML
     void histogramChange(ActionEvent event) {
         if (totalCostPane.getChildren() == pieChart){
@@ -221,7 +226,6 @@ public class DashboardController implements Initializable {
         else{
             totalCostPane.getChildren().remove(totalCostChart);
         }
-
 
         totalCostPane.getChildren().remove(totalCostChart);
         histogram.setCategoryGap(0);
@@ -240,6 +244,9 @@ public class DashboardController implements Initializable {
         histogram.setMaxHeight(50);
     }
 
+    /**
+     * Change total cost chart to line chart
+     */
     void lineChartChange() {
         if (totalCostPane.getChildren() == pieChart){
             totalCostPane.getChildren().remove(pieChart);
@@ -263,6 +270,10 @@ public class DashboardController implements Initializable {
         pieChartChange();
     }
 
+    /**
+     * Brings you to main Input Page
+     * @throws IOException
+     */
     @FXML
     private void switchToPrimary() throws IOException {
         App.setRoot("fileUpload");
@@ -271,7 +282,10 @@ public class DashboardController implements Initializable {
 
     }
 
-
+    /**
+     * Functionality for changing bounce change
+     * @param event
+     */
     @FXML
     void bounceChange(ActionEvent event) {
 
@@ -330,13 +344,22 @@ public class DashboardController implements Initializable {
 
     }
 
-
+    /**
+     * Brings you to the graph page by clicking on pane
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void graphViewImpressions(MouseEvent event) throws IOException {
         App.setRoot("graphView");
 
     }
 
+    /**
+     * Brings you to the dashboard page
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void dashboardReturn(ActionEvent event) throws IOException {
         App.setRoot("dashboard");
