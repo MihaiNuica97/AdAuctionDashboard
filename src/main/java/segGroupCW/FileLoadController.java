@@ -72,14 +72,13 @@ public class FileLoadController {
 	private void goToDashboard() throws IOException
 	{
 		System.out.println("Dashboard button clicked");
-//		(new CSVParser()).parse(fileMap.get("Clicks Log"), fileMap.get("Server Log"), fileMap.get("Impressions"));
-//		DONT DELETE ^
-		// try {
-		// 	dbHandler.sendSQL(sqlcreator.createDB());
-		// 	loadFilesToDB();
-		// } catch (SQLException e) {
-		// 	e.printStackTrace();
-		// }
+//		 try {
+//		 	dbHandler.sendSQL(sqlcreator.createDB());
+//		 	loadFilesToDB();
+//		 } catch (SQLException e) {
+//		  System.out.println("Database not created");
+//		 	e.printStackTrace();
+//		 }
 		App.setRoot("dashboard");
 		App.getScene().getWindow().setHeight(900);
 		App.getScene().getWindow().setWidth(968);

@@ -80,6 +80,7 @@ public class SQLCreator {
     private String bounceByPages(String pages) {
         return "SELECT COUNT(*) FROM SERVER WHERE PAGESVIEWED < " + pages + ";";
     }
+
     /**
      * SQL statement to calculate the total conversions.
      *
@@ -148,8 +149,9 @@ public class SQLCreator {
     }
 
     /**
-     * SQL statements to calculate the bounce rate.
+     * SQL statements to calculate the bounce rate using the page definition.
      *
+     * @param pages The maximum number of pages that counts as a bounce
      * @return      ArrayList of the SQL statements
      */
     private ArrayList<String> bounceRatePage(String pages){
@@ -159,6 +161,13 @@ public class SQLCreator {
         return result;
     }
 
+    /**
+     * SQL statements to calculate the bounce rate using the time definition.
+     *
+     * @param unit  The unit of the time
+     * @param time  The amount of time that qualifies a visit as a bounce
+     * @return      ArrayList of the SQL statements
+     */
     private ArrayList<String> bounceRateTime(String unit, String time){
         ArrayList<String> result = new ArrayList<>();
         result.add(bounceByTime(unit, time));
@@ -208,22 +217,60 @@ public class SQLCreator {
         return "SELECT COUNT(*) FROM CLICKS WHERE " + betweenDate("DATE", start, end) + ";";
     }
 
+    /**
+     * SQL statement for total uniques between 2 dates.
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @return      String of the SQL statement
+     */
     private String betweenDateUniques(String start, String end) {
         return "SELECT COUNT(DISTINCT(ID)) FROM CLICKS WHERE " + betweenDate("DATE", start, end) + ";";
     }
 
+    /**
+     * SQL statement for bounces between 2 dates using the pages viewed definition.
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @param pages Maximum number of pages that counts as a bounce
+     * @return      String of the SQL statement
+     */
     private String betweenDateBouncesPage(String start, String end, String pages) {
         return "SELECT COUNT(*) FROM SERVER WHERE PAGESVIEWED = " + pages + " AND " + betweenDate("ENTRYDATE", start, end)   + ";";
     }
 
+    /**
+     * SQL statement for bounces between 2 dates using the time definition
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @param unit  The unit that the time is in
+     * @param time  The amount of time that qualifies a visit as not a bounce
+     * @return      String of the SQL statement
+     */
     private String betweenDateBouncesTime(String start, String end, String unit, String time) {
         return "SELECT COUNT(*) FROM SERVER WHERE DATEDIFF(" + unit + ", ENTRYDATE, EXITDATE) < " + time + " AND " + betweenDate("ENTRYDATE", start, end) + ";";
     }
 
+    /**
+     * SQL statement for conversions between 2 dates.
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @return      String of the SQL statement
+     */
     private String betweenDateConvs(String start, String end) {
         return "SELECT COUNT(*) FROM SERVER WHERE CONVERSION = TRUE AND " + betweenDate("ENTRYDATE", start, end) + ";";
     }
 
+    /**
+     * SQL statements for the total cost between 2 dates.
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @return      ArrayList of strings of the SQL statements
+     */
     private ArrayList<String> betweenDateTotalCost(String start, String end) {
         ArrayList<String> result = new ArrayList<>();
         result.add("SELECT SUM(COST) FROM IMPRESSIONS" + betweenDate("DATE", start, end) + ";");
@@ -231,6 +278,13 @@ public class SQLCreator {
         return result;
     }
 
+    /**
+     * SQL statements for the Click-Through-Rate between 2 dates.
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @return      ArrayList of strings of the SQL statements
+     */
    private ArrayList<String> betweenDateCTR(String start, String end) {
        ArrayList<String> result = new ArrayList<>();
        result.add(betweenDateClicks(start, end));
@@ -238,6 +292,13 @@ public class SQLCreator {
        return result;
    }
 
+    /**
+     * SQL statements for the Cost-Per-Acquisition between 2 dates
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @return      ArrayList of the strings of the SQL statements
+     */
    private ArrayList<String> betweenDateCPA(String start, String end) {
        ArrayList<String> result = new ArrayList<>();
        result.addAll(betweenDateTotalCost(start, end));
@@ -245,6 +306,13 @@ public class SQLCreator {
        return result;
    }
 
+    /**
+     * SQL statements for the Cost-Per-Click between 2 dates
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @return      ArrayList of the strings of the SQL statements
+     */
    private ArrayList<String> betweenDateCPC(String start, String end) {
        ArrayList<String> result = new ArrayList<>();
        result.addAll(betweenDateTotalCost(start, end));
@@ -252,6 +320,13 @@ public class SQLCreator {
        return result;
    }
 
+    /**
+     * SQL statements for the Cost-Per-Thousand-Impressions between 2 dates
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @return      ArrayList of the strings of the SQL statements
+     */
    private ArrayList<String> betweenDateCPM(String start, String end) {
        ArrayList<String> result = new ArrayList<>();
        result.addAll(betweenDateTotalCost(start, end));
@@ -259,6 +334,14 @@ public class SQLCreator {
        return result;
    }
 
+    /**
+     * SQL statements for the bounce rate between 2 dates using the page definition.
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @param pages The maximum number of pages that counts as a bounce
+     * @return      ArrayList of the strings of the SQL statements
+     */
    private ArrayList<String> betweenDateBRPage(String start, String end, String pages){
         ArrayList<String> result = new ArrayList<>();
         result.add(betweenDateBouncesPage(start, end, pages));
@@ -266,6 +349,15 @@ public class SQLCreator {
         return result;
     }
 
+    /**
+     * SQL statements for the bounce rate between 2 dates using the time definition.
+     *
+     * @param start The earlier date
+     * @param end   The later date
+     * @param unit  The unit for the time
+     * @param time  The amount of time that qualifies a visit as not a bounce
+     * @return      ArrayList of the strings of the SQL statements
+     */
     private ArrayList<String> betweenDateBRTime(String start, String end, String unit, String time){
         ArrayList<String> result = new ArrayList<>();
         result.add(betweenDateBouncesTime(start, end, unit, time));
@@ -273,9 +365,10 @@ public class SQLCreator {
         return result;
     }
 
-
-
-
+    /**
+     * SQL statements to remove old tables if they exist and create new ones for the new database.
+     * @return  String of all the SQL statements
+     */
     public String createDB(){
 
              return "DROP TABLE IF EXISTS clicks, server, impressions, users;" + System.lineSeparator() +
@@ -308,6 +401,12 @@ public class SQLCreator {
 
     }
 
+    /**
+     * SQL statement to get the first and last date from a given database table.
+     *
+     * @param table The table that the dates will come from
+     * @return      String of the SQL statement
+     */
     public String FirstLastDate(String table){
         if(table.equals("server")){
             return "select MIN(EntryDate), max(EntryDate) from server" + System.lineSeparator() +
