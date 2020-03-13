@@ -498,7 +498,4 @@ public class DashboardController implements Initializable {
         return intervals;
     }
 
-
-
-
 }
