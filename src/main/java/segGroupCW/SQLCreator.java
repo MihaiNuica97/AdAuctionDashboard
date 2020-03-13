@@ -15,14 +15,14 @@ public class SQLCreator {
         statements.add(numOfImps());
         statements.add(numOfClicks());
         statements.add(numOfUniques());
-        statements.add(bounceByPages("1"));
+        statements.add(bounceByPages("2"));
         statements.add(numOfConvs());
         statements.addAll(totalCost());
         statements.addAll(ctr());
         statements.addAll(cpa());
         statements.addAll(cpc());
         statements.addAll(cpm());
-        statements.addAll(bounceRatePage("1"));
+        statements.addAll(bounceRatePage("2"));
         return statements;
     }
 

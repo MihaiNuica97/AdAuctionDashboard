@@ -89,9 +89,9 @@ public class FileLoadController {
 
 
 	private void loadFilesToDB() throws IOException, SQLException {
+		dbHandler.sendSQL(csvParser.parseImpression(fileMap.get("Impressions")));
 		dbHandler.sendSQL(csvParser.parseClicks(fileMap.get("Clicks Log")));
 		dbHandler.sendSQL(csvParser.parseServer(fileMap.get("Server Log")));
-		dbHandler.sendSQL(csvParser.parseImpression(fileMap.get("Impressions")));
 	}
 
 

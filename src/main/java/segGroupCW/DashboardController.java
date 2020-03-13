@@ -336,6 +336,7 @@ public class DashboardController implements Initializable {
     }
 
     /**
+     * Populates the labels with data from the database
      *
      * @param url
      * @param resourceBundle
