@@ -1,6 +1,7 @@
 package segGroupCW;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -344,6 +345,7 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //    initLabels();
 //    DONT DELETE ^
+
     }
 
     /**
