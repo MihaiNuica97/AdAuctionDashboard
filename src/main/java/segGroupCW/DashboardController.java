@@ -17,6 +17,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.h2.store.DataHandler;
+
+import javax.xml.crypto.Data;
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -372,105 +376,221 @@ public class DashboardController implements Initializable {
     }
 
     private void initLabels() {
-        DatabaseHandler db = new DatabaseHandler();
-        ArrayList<String> statements = new SQLCreator().initializeTotals();
-        for (String each : statements) {
-            System.out.println(each);
-        }
         try {
-            ResultSet result = db.querySQL(statements.get(0));
-            System.out.println(result.getMetaData());
-            result.first();
-            int imps = result.getInt(1);
-            System.out.println(result.getString(1));
-            noImprLabel.setText(result.getString(1));
-
-            result = db.querySQL(statements.get(1));
-            result.first();
-            int clicks = result .getInt(1);
-            System.out.println(result.getString(1));
-            noClicksLabel.setText(result.getString(1));
-
-            result = db.querySQL(statements.get(2));
-            result.first();
-            System.out.println(result.getString(1));
-            noUniqueLabel.setText(result.getString(1));
-
-            result = db.querySQL(statements.get(3));
-            result.first();
-            float bounces = result.getInt(1);
-            System.out.println(result.getString(1));
-            noBounceLabel.setText(result.getString(1));
-
-            result = db.querySQL(statements.get(4));
-            result.first();
-            int convs = result.getInt(1);
-            System.out.println(result.getString(1));
-            noConversionLabel.setText(result.getString(1));
-
-            result = db.querySQL(statements.get(5));
-            result.first();
-            float impCost = result.getFloat(1);
-            result = db.querySQL(statements.get(6));
-            result.first();
-            float totalCost = impCost + result.getFloat(1);
-            double total = Math.round(totalCost * 100.0) / 100.0;
-            System.out.println(totalCost);
-            System.out.println(total);
-            totalCostLabel.setText(Double.toString(total));
-
-            if (imps == 0) {
-                ctrLabel.setText("0");
-            } else {
-                float ctr = (float) clicks / imps;
-                double ctrRound = Math.round(ctr * 100.0) / 100.0;
-                System.out.println(ctr);
-                System.out.println(ctrRound);
-                ctrLabel.setText(Double.toString(ctrRound));
-            }
-
-            if (convs == 0) {
-                cpaLabel.setText("0");
-            } else {
-                float cpa = totalCost / convs;
-                double cpaRound = Math.round(cpa * 100.0) / 100.0;
-                System.out.println(cpa);
-                System.out.println(cpaRound);
-                cpaLabel.setText(Double.toString(cpaRound));
-            }
-
-            if (clicks == 0) {
-                cpcLabel.setText("0");
-            } else {
-                float cpc = totalCost / clicks;
-                double cpcRound = Math.round(cpc * 100.0) / 100.0;
-                System.out.println(cpc);
-                System.out.println(cpcRound);
-                cpcLabel.setText(Double.toString(cpcRound));
-            }
-
-            if (imps == 0) {
-                cpmLabel.setText("0");
-            } else {
-                float cpm = totalCost / (imps * 1000);
-                double cpmRound = Math.round(cpm * 100.0) / 100.0;
-                System.out.println(cpm);
-                System.out.println(cpmRound);
-                cpmLabel.setText(Double.toString(cpmRound));
-            }
-
-            if (clicks == 0) {
-                bounceRateLabel.setText("0");
-            } else {
-                float br = bounces / clicks;
-                double brRound = Math.round(br * 100.0) / 100.0;
-                System.out.println(br);
-                System.out.println(brRound);
-                bounceRateLabel.setText(Double.toString(brRound));
-            }
-
+            DatabaseHandler db = new DatabaseHandler();
+            SQLCreator sql = new SQLCreator();
+            setImpsLabel(db, sql);
+            setClicksLabel(db, sql);
+            setUniquesLabel(db, sql);
+            setNoBounceLabelPages(db, sql, "2");
+            setNoConvLabel(db, sql);
+            setTotalCostLabel(db, sql);
+            setCtrLabel(db, sql);
+            setCpaLabel(db, sql);
+            setCpcLabel(db, sql);
+            setCpmLabel(db, sql);
+            setBounceRateLabelPages(db, sql, "2");
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setImpsLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ResultSet result = db.querySQL(sql.numOfImps());
+        result.first();
+        System.out.println(result.getString(1));
+        noImprLabel.setText(result.getString(1));
+    }
+
+    public void setClicksLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ResultSet result = db.querySQL(sql.numOfClicks());
+        result.first();
+        System.out.println(result.getString(1));
+        noClicksLabel.setText(result.getString(1));
+    }
+
+    public void setUniquesLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ResultSet result = db.querySQL(sql.numOfUniques());
+        result.first();
+        System.out.println(result.getString(1));
+        noUniqueLabel.setText(result.getString(1));
+    }
+
+    public void setNoBounceLabelPages(DatabaseHandler db, SQLCreator sql, String pages) throws SQLException {
+        ResultSet result = db.querySQL(sql.bounceByPages(pages));
+        result.first();
+        System.out.println(result.getString(1));
+        noBounceLabel.setText(result.getString(1));
+    }
+
+    public void setNoBounceLabelTime(DatabaseHandler db, SQLCreator sql, String unit, String time) throws SQLException {
+        ResultSet result = db.querySQL(sql.bounceByTime(unit, time));
+        result.first();
+        System.out.println(result.getString(1));
+        noBounceLabel.setText(result.getString(1));
+    }
+
+    public void setNoBounceLabelConv(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ResultSet result = db.querySQL(sql.bounceByConv());
+        result.first();
+        System.out.println(result.getString(1));
+        noBounceLabel.setText(result.getString(1));
+    }
+
+    public void setNoConvLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ResultSet result = db.querySQL(sql.numOfConvs());
+        result.first();
+        System.out.println(result.getString(1));
+        noConversionLabel.setText(result.getString(1));
+    }
+
+    public void setTotalCostLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ArrayList<String> statements = sql.totalCost();
+        ResultSet result = db.querySQL(statements.get(0));
+        result.first();
+        float impCost = result.getFloat(1);
+        result = db.querySQL(statements.get(1));
+        result.first();
+        float totalCost = impCost + result.getFloat(1);
+        double total = Math.round(totalCost * 100.0) / 100.0;
+        System.out.println(total);
+        totalCostLabel.setText(Double.toString(total));
+    }
+
+    public void setCtrLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ArrayList<String> statements = sql.ctr();
+        ResultSet result = db.querySQL(statements.get(1));
+        result.first();
+        int imps = result.getInt(1);
+        if (imps == 0) {
+            ctrLabel.setText("N/A");
+        } else {
+            result = db.querySQL(statements.get(0));
+            result.first();
+            int clicks = result.getInt(1);
+            float ctr = (float) clicks / imps;
+            double ctrRound = Math.round(ctr * 100.0) / 100.0;
+            System.out.println(ctrRound);
+            ctrLabel.setText(Double.toString(ctrRound));
+        }
+    }
+
+    public void setCpaLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ArrayList<String> statements = sql.cpa();
+        ResultSet result = db.querySQL(statements.get(2));
+        result.first();
+        int convs = result.getInt(1);
+        if (convs == 0) {
+            cpaLabel.setText("N/A");
+        } else {
+            result = db.querySQL(statements.get(0));
+            result.first();
+            float impCost = result.getFloat(1);
+            result = db.querySQL(statements.get(1));
+            result.first();
+            float totalCost = impCost + result.getFloat(1);
+            float cpa = totalCost / convs;
+            double cpaRound = Math.round(cpa * 100.0) / 100.0;
+            System.out.println(cpa);
+            System.out.println(cpaRound);
+            cpaLabel.setText(Double.toString(cpaRound));
+        }
+    }
+
+    public void setCpcLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ArrayList<String> statements = sql.cpc();
+        ResultSet result = db.querySQL(statements.get(2));
+        result.first();
+        int clicks = result.getInt(1);
+        if (clicks == 0) {
+            cpcLabel.setText("N/A");
+        } else {
+            result = db.querySQL(statements.get(0));
+            result.first();
+            float impCost = result.getFloat(1);
+            result = db.querySQL(statements.get(1));
+            result.first();
+            float totalCost = impCost + result.getFloat(1);
+            float cpc = totalCost / clicks;
+            double cpcRound = Math.round(cpc * 100.0) / 100.0;
+            System.out.println(cpcRound);
+            cpcLabel.setText(Double.toString(cpcRound));
+        }
+    }
+
+    public void setCpmLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ArrayList<String> statements = sql.cpm();
+        ResultSet result = db.querySQL(statements.get(2));
+        result.first();
+        int imps = result.getInt(1);
+        if (imps == 0) {
+            cpmLabel.setText("N/A");
+        } else {
+            result = db.querySQL(statements.get(0));
+            result.first();
+            float impCost = result.getFloat(1);
+            result = db.querySQL(statements.get(1));
+            result.first();
+            float totalCost = impCost + result.getFloat(1);
+            float cpm = totalCost / (imps * 1000);
+            double cpmRound = Math.round(cpm * 100.0) / 100.0;
+            System.out.println(cpm);
+            System.out.println(cpmRound);
+            cpmLabel.setText(Double.toString(cpmRound));
+        }
+    }
+
+    public void setBounceRateLabelPages(DatabaseHandler db, SQLCreator sql, String pages) throws SQLException {
+        ArrayList<String> statements = sql.bounceRatePage(pages);
+        ResultSet result = db.querySQL(statements.get(1));
+        result.first();
+        int clicks = result.getInt(1);
+        if (clicks == 0) {
+            bounceRateLabel.setText("N/A");
+        } else {
+            result = db.querySQL(statements.get(0));
+            result.first();
+            int bounces = result.getInt(1);
+            float br = (float) bounces / clicks;
+            double brRound = Math.round(br * 100.0) / 100.0;
+            System.out.println(brRound);
+            bounceRateLabel.setText(Double.toString(brRound));
+        }
+    }
+
+    public void setBounceRateLabelTime(DatabaseHandler db, SQLCreator sql, String unit, String time) throws SQLException{
+        ArrayList<String> statements = sql.bounceRateTime(unit, time);
+        ResultSet result = db.querySQL(statements.get(1));
+        result.first();
+        int clicks = result.getInt(1);
+        if (clicks == 0) {
+            bounceRateLabel.setText("N/A");
+        } else {
+            result = db.querySQL(statements.get(0));
+            result.first();
+            int bounces = result.getInt(1);
+            float br = (float) bounces / clicks;
+            double brRound = Math.round(br * 100.0) / 100.0;
+            System.out.println(brRound);
+            bounceRateLabel.setText(Double.toString(brRound));
+        }
+    }
+
+    public void setBounceRateLabelConv(DatabaseHandler db, SQLCreator sql) throws SQLException {
+        ArrayList<String> statements = sql.bounceRateConv();
+        ResultSet result = db.querySQL(statements.get(1));
+        result.first();
+        int clicks = result.getInt(1);
+        if (clicks == 0) {
+            bounceRateLabel.setText("N/A");
+        } else {
+            result = db.querySQL(statements.get(0));
+            result.first();
+            int bounces = result.getInt(1);
+            float br = (float) bounces / clicks;
+            double brRound = Math.round(br * 100.0) / 100.0;
+            System.out.println(brRound);
+            bounceRateLabel.setText(Double.toString(brRound));
         }
     }
 

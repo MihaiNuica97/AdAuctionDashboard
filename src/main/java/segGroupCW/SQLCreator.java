@@ -3,41 +3,13 @@ package segGroupCW;
 import java.util.ArrayList;
 
 public class SQLCreator {
-    //INIT functions
-
-    /**
-     * Generates all the SQL statements to initialise the dashboard totals.
-     *
-     * @return      ArrayList of the SQL statements
-     */
-    public ArrayList<String> initializeTotals() {
-        ArrayList<String> statements = new ArrayList<>();
-        statements.add(numOfImps());
-        statements.add(numOfClicks());
-        statements.add(numOfUniques());
-        statements.add(bounceByPages("2"));
-        statements.add(numOfConvs());
-        statements.addAll(totalCost());
-        statements.addAll(ctr());
-        statements.addAll(cpa());
-        statements.addAll(cpc());
-        statements.addAll(cpm());
-        statements.addAll(bounceRatePage("2"));
-        return statements;
-    }
-
-    public ArrayList<String> initializeCharts(String start, String end) {
-        ArrayList<String> statements = new ArrayList<>();
-
-        return statements;
-    }
 
     /**
      * SQL statement to calculate the total impressions.
      *
      * @return    String of the SQL statement
      */
-    private String numOfImps() {
+    public String numOfImps() {
         return "SELECT COUNT(*) FROM IMPRESSIONS;";
     }
 
@@ -46,14 +18,14 @@ public class SQLCreator {
      *
      * @return      String of the SQL statement
      */
-    private String numOfClicks() { return "SELECT COUNT(*) FROM CLICKS;";}
+    public String numOfClicks() { return "SELECT COUNT(*) FROM CLICKS;";}
 
     /**
      * SQL statement to calculate the total clicks from unique users.
      *
      * @return      String of the SQL statement
      */
-    private String numOfUniques() { return "SELECT COUNT(DISTINCT (ID)) FROM CLICKS;";}
+    public String numOfUniques() { return "SELECT COUNT(DISTINCT (ID)) FROM CLICKS;";}
 
     /**SQL statement for total bounces based on time spent on the site. The user can define the
      * unit used and how many of said unit. Unit can be second, minute, hour, day, month, or year.
@@ -64,7 +36,7 @@ public class SQLCreator {
      * @param time  How long the visit needs to be to not be a bounce
      * @return      String of the SQL statement
      */
-    private String bounceByTime(String unit, String time) {
+    public String bounceByTime(String unit, String time) {
         return "SELECT COUNT(*) FROM SERVER WHERE DATEDIFF(" + unit + ", ENTRYDATE, EXITDATE) < " + time + ";";
     }
 
@@ -77,8 +49,12 @@ public class SQLCreator {
      * @param pages Number of pages to not count as a bounce
      * @return      String of the SQL statement
      */
-    private String bounceByPages(String pages) {
+    public String bounceByPages(String pages) {
         return "SELECT COUNT(*) FROM SERVER WHERE PAGESVIEWED < " + pages + ";";
+    }
+
+    public String bounceByConv() {
+        return "SELECT COUNT(*) FROM SERVER WHERE CONVERSION = FALSE;";
     }
 
     /**
@@ -86,14 +62,14 @@ public class SQLCreator {
      *
      * @return      String of the SQL statement
      */
-    private String numOfConvs() { return "SELECT COUNT(*) FROM SERVER WHERE CONVERSION = TRUE;";}
+    public String numOfConvs() { return "SELECT COUNT(*) FROM SERVER WHERE CONVERSION = TRUE;";}
 
     /**
      * SQL statements to calculate the total cost.
      *
      * @return      ArrayList of the SQL statements
      */
-    private ArrayList<String> totalCost() {
+    public ArrayList<String> totalCost() {
         ArrayList<String> result = new ArrayList<>();
         result.add("SELECT SUM(COST) FROM IMPRESSIONS;");
         result.add("SELECT SUM(CLICKCOST) FROM CLICKS;");
@@ -105,7 +81,7 @@ public class SQLCreator {
      *
      * @return      ArrayList of the SQL statements
      */
-    private ArrayList<String> ctr() {
+    public ArrayList<String> ctr() {
         ArrayList<String> result = new ArrayList<>();
         result.add(numOfClicks());
         result.add(numOfImps());
@@ -117,7 +93,7 @@ public class SQLCreator {
      *
      * @return      ArrayList of the SQL statements
      */
-    private ArrayList<String> cpa() {
+    public ArrayList<String> cpa() {
         ArrayList<String> result = new ArrayList<>();
         result.addAll(totalCost());
         result.add(numOfConvs());
@@ -129,7 +105,7 @@ public class SQLCreator {
      *
      * @return      ArrayList of the SQL statements
      */
-    private ArrayList<String> cpc() {
+    public ArrayList<String> cpc() {
         ArrayList<String> result = new ArrayList<>();
         result.addAll(totalCost());
         result.add(numOfClicks());
@@ -141,7 +117,7 @@ public class SQLCreator {
      *
      * @return      ArrayList of the SQL statements
      */
-    private ArrayList<String> cpm() {
+    public ArrayList<String> cpm() {
         ArrayList<String> result = new ArrayList<>();
         result.addAll(totalCost());
         result.add(numOfImps());
@@ -154,7 +130,7 @@ public class SQLCreator {
      * @param pages The maximum number of pages that counts as a bounce
      * @return      ArrayList of the SQL statements
      */
-    private ArrayList<String> bounceRatePage(String pages){
+    public ArrayList<String> bounceRatePage(String pages){
         ArrayList<String> result = new ArrayList<>();
         result.add(bounceByPages(pages));
         result.add(numOfClicks());
@@ -168,9 +144,16 @@ public class SQLCreator {
      * @param time  The amount of time that qualifies a visit as a bounce
      * @return      ArrayList of the SQL statements
      */
-    private ArrayList<String> bounceRateTime(String unit, String time){
+    public ArrayList<String> bounceRateTime(String unit, String time){
         ArrayList<String> result = new ArrayList<>();
         result.add(bounceByTime(unit, time));
+        result.add(numOfClicks());
+        return result;
+    }
+
+    public ArrayList<String> bounceRateConv() {
+        ArrayList<String> result = new ArrayList<>();
+        result.add(bounceByConv());
         result.add(numOfClicks());
         return result;
     }
@@ -190,7 +173,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      String of the SQL statement
      */
-    private String betweenDate(String date, String start, String end) {
+    public String betweenDate(String date, String start, String end) {
         return date + "=> TIMESTAMP '" + start + "' AND " + date + " <= '" + end + "'";
     }
 
@@ -202,7 +185,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      String of the SQL statement
      */
-    private String betweenDateImps(String start, String end) {
+    public String betweenDateImps(String start, String end) {
         return "SELECT COUNT(*) FROM IMPRESSIONS WHERE " + betweenDate("DATE", start, end) + ";";
     }
 
@@ -213,7 +196,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      String of the SQL statement
      */
-    private String betweenDateClicks(String start, String end) {
+    public String betweenDateClicks(String start, String end) {
         return "SELECT COUNT(*) FROM CLICKS WHERE " + betweenDate("DATE", start, end) + ";";
     }
 
@@ -224,7 +207,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      String of the SQL statement
      */
-    private String betweenDateUniques(String start, String end) {
+    public String betweenDateUniques(String start, String end) {
         return "SELECT COUNT(DISTINCT(ID)) FROM CLICKS WHERE " + betweenDate("DATE", start, end) + ";";
     }
 
@@ -236,7 +219,7 @@ public class SQLCreator {
      * @param pages Maximum number of pages that counts as a bounce
      * @return      String of the SQL statement
      */
-    private String betweenDateBouncesPage(String start, String end, String pages) {
+    public String betweenDateBouncesPage(String start, String end, String pages) {
         return "SELECT COUNT(*) FROM SERVER WHERE PAGESVIEWED = " + pages + " AND " + betweenDate("ENTRYDATE", start, end)   + ";";
     }
 
@@ -249,7 +232,7 @@ public class SQLCreator {
      * @param time  The amount of time that qualifies a visit as not a bounce
      * @return      String of the SQL statement
      */
-    private String betweenDateBouncesTime(String start, String end, String unit, String time) {
+    public String betweenDateBouncesTime(String start, String end, String unit, String time) {
         return "SELECT COUNT(*) FROM SERVER WHERE DATEDIFF(" + unit + ", ENTRYDATE, EXITDATE) < " + time + " AND " + betweenDate("ENTRYDATE", start, end) + ";";
     }
 
@@ -260,7 +243,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      String of the SQL statement
      */
-    private String betweenDateConvs(String start, String end) {
+    public String betweenDateConvs(String start, String end) {
         return "SELECT COUNT(*) FROM SERVER WHERE CONVERSION = TRUE AND " + betweenDate("ENTRYDATE", start, end) + ";";
     }
 
@@ -271,7 +254,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      ArrayList of strings of the SQL statements
      */
-    private ArrayList<String> betweenDateTotalCost(String start, String end) {
+    public ArrayList<String> betweenDateTotalCost(String start, String end) {
         ArrayList<String> result = new ArrayList<>();
         result.add("SELECT SUM(COST) FROM IMPRESSIONS" + betweenDate("DATE", start, end) + ";");
         result.add("SELECT SUM(CLICKCOST) FROM CLICKS" + betweenDate("DATE", start, end) + " ;");
@@ -285,7 +268,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      ArrayList of strings of the SQL statements
      */
-   private ArrayList<String> betweenDateCTR(String start, String end) {
+   public ArrayList<String> betweenDateCTR(String start, String end) {
        ArrayList<String> result = new ArrayList<>();
        result.add(betweenDateClicks(start, end));
        result.add(betweenDateImps(start, end));
@@ -299,7 +282,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      ArrayList of the strings of the SQL statements
      */
-   private ArrayList<String> betweenDateCPA(String start, String end) {
+   public ArrayList<String> betweenDateCPA(String start, String end) {
        ArrayList<String> result = new ArrayList<>();
        result.addAll(betweenDateTotalCost(start, end));
        result.add(betweenDateConvs(start, end));
@@ -313,7 +296,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      ArrayList of the strings of the SQL statements
      */
-   private ArrayList<String> betweenDateCPC(String start, String end) {
+   public ArrayList<String> betweenDateCPC(String start, String end) {
        ArrayList<String> result = new ArrayList<>();
        result.addAll(betweenDateTotalCost(start, end));
        result.add(betweenDateClicks(start, end));
@@ -327,7 +310,7 @@ public class SQLCreator {
      * @param end   The later date
      * @return      ArrayList of the strings of the SQL statements
      */
-   private ArrayList<String> betweenDateCPM(String start, String end) {
+   public ArrayList<String> betweenDateCPM(String start, String end) {
        ArrayList<String> result = new ArrayList<>();
        result.addAll(betweenDateTotalCost(start, end));
        result.add(betweenDateImps(start, end));
@@ -342,7 +325,7 @@ public class SQLCreator {
      * @param pages The maximum number of pages that counts as a bounce
      * @return      ArrayList of the strings of the SQL statements
      */
-   private ArrayList<String> betweenDateBRPage(String start, String end, String pages){
+   public ArrayList<String> betweenDateBRPage(String start, String end, String pages){
         ArrayList<String> result = new ArrayList<>();
         result.add(betweenDateBouncesPage(start, end, pages));
         result.add(betweenDateClicks(start, end));
@@ -358,7 +341,7 @@ public class SQLCreator {
      * @param time  The amount of time that qualifies a visit as not a bounce
      * @return      ArrayList of the strings of the SQL statements
      */
-    private ArrayList<String> betweenDateBRTime(String start, String end, String unit, String time){
+    public ArrayList<String> betweenDateBRTime(String start, String end, String unit, String time){
         ArrayList<String> result = new ArrayList<>();
         result.add(betweenDateBouncesTime(start, end, unit, time));
         result.add(betweenDateClicks(start, end));
