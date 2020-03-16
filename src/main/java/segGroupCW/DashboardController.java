@@ -1,7 +1,7 @@
 package segGroupCW;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -183,6 +184,83 @@ public class DashboardController implements Initializable {
     @FXML
     private LineChart<?, ?> bounceRateChart;
 
+    List<JFXCheckBox> checkBoxList;
+
+    @FXML
+    private JFXCheckBox femaleCheckBox;
+
+    @FXML
+    private JFXCheckBox maleCheckbox;
+
+    @FXML
+    private JFXCheckBox age1Checkbox;
+
+    @FXML
+    private JFXCheckBox age2Checkbox;
+
+    @FXML
+    private JFXCheckBox age3Checkbox;
+
+    @FXML
+    private JFXCheckBox age4Checkbox;
+
+    @FXML
+    private JFXCheckBox age5Checkbox;
+
+    @FXML
+    private JFXCheckBox lowIncomeCheckbox;
+
+    @FXML
+    private JFXCheckBox MediumIncomeCheckbox;
+
+    @FXML
+    private JFXCheckBox highIncomeCheckbox;
+
+    @FXML
+    private JFXCheckBox shoppingCheckbox;
+
+    @FXML
+    private JFXCheckBox newsCheckbox;
+
+    @FXML
+    private JFXCheckBox blogCheckbox;
+
+    @FXML
+    private JFXCheckBox socialMCheckbox;
+
+    @FXML
+    private JFXCheckBox hobbiesCheckbox;
+
+    @FXML
+    private JFXCheckBox travelCheckbox;
+
+    @FXML
+    private JFXButton applyFilterButton;
+
+    @FXML
+    private JFXButton clearFilterButton;
+
+    @FXML
+    void applyFilter(ActionEvent event) {
+        List<String> selectedCheckBoxes = new ArrayList<String>();
+        for (JFXCheckBox checkBox : checkBoxList){
+            if (checkBox.isSelected()) {
+                selectedCheckBoxes.add(checkBox.getText());
+               // System.out.println(checkBox.getText());
+            }
+        }
+    }
+
+    @FXML
+    void clearFilter(ActionEvent event) {
+        for (JFXCheckBox checkBox : checkBoxList){
+            if (checkBox.isSelected()) {
+                checkBox.setSelected(false);
+               // System.out.println(checkBox.getText() + " is cleared" );
+            }
+        }
+    }
+
     private PieChart pieChart;
 
     final CategoryAxis xAxis = new CategoryAxis();
@@ -225,10 +303,9 @@ public class DashboardController implements Initializable {
             totalCostPane.getChildren().remove(pieChart);
         }
 
-        else{
+        else {
             totalCostPane.getChildren().remove(totalCostChart);
         }
-
 
         totalCostPane.getChildren().remove(totalCostChart);
         histogram.setCategoryGap(0);
@@ -273,17 +350,6 @@ public class DashboardController implements Initializable {
         pieChartChange();
     }
 
-    /**
-     * Brings you to main Input Page
-     * @throws IOException
-     */
-    @FXML
-    private void switchToPrimary() throws IOException {
-        App.setRoot("fileUpload");
-        App.getScene().getWindow().setHeight(500);
-        App.getScene().getWindow().setWidth(560);
-
-    }
 
     /**
      * Functionality for changing bounce change
@@ -346,6 +412,24 @@ public class DashboardController implements Initializable {
 //    initLabels();
 //    DONT DELETE ^
 
+        checkBoxList = new ArrayList<JFXCheckBox>();
+        checkBoxList.add(femaleCheckBox);
+        checkBoxList.add(maleCheckbox);
+        checkBoxList.add(age1Checkbox);
+        checkBoxList.add(age2Checkbox);
+        checkBoxList.add(age3Checkbox);
+        checkBoxList.add(age4Checkbox);
+        checkBoxList.add(age5Checkbox);
+        checkBoxList.add(lowIncomeCheckbox);
+        checkBoxList.add(MediumIncomeCheckbox);
+        checkBoxList.add(highIncomeCheckbox);
+        checkBoxList.add(shoppingCheckbox);
+        checkBoxList.add(newsCheckbox);
+        checkBoxList.add(blogCheckbox);
+        checkBoxList.add(socialMCheckbox);
+        checkBoxList.add(hobbiesCheckbox);
+        checkBoxList.add(travelCheckbox);
+
     }
 
     /**
@@ -359,16 +443,7 @@ public class DashboardController implements Initializable {
 
     }
 
-    /**
-     * Brings you to the dashboard page
-     * @param event
-     * @throws IOException
-     */
-    @FXML
-    void dashboardReturn(ActionEvent event) throws IOException {
-        App.setRoot("dashboard");
 
-    }
 
     private void initLabels() {
         DatabaseHandler db = new DatabaseHandler();
@@ -501,6 +576,6 @@ public class DashboardController implements Initializable {
     }
 
 
-
-
+    public void switchToSecondary(ActionEvent actionEvent) {
+    }
 }

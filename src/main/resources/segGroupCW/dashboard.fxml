@@ -9,11 +9,7 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -22,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="949.0" prefWidth="938.0" stylesheets="@css/theme.css, @css/dashboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="875.0" prefWidth="938.0" stylesheets="@css/theme.css, @css/dashboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.DashboardController">
    <children>
       <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="938.0">
          <children>
@@ -42,11 +38,11 @@
             <Pane prefHeight="100.0" prefWidth="220.0" />
          </children>
       </HBox>
-      <ScrollPane layoutX="176.0" layoutY="100.0" prefHeight="851.0" prefWidth="763.0">
+      <ScrollPane layoutX="176.0" layoutY="100.0" prefHeight="772.0" prefWidth="763.0">
          <content>
             <VBox prefHeight="1144.0" prefWidth="788.0">
                <children>
-                  <AnchorPane prefHeight="1112.0" prefWidth="788.0">
+                  <AnchorPane prefHeight="1253.0" prefWidth="788.0">
                      <children>
                         <VBox layoutY="-3.0" prefHeight="1858.0" prefWidth="178.0" spacing="20.0">
                            <children>
@@ -57,7 +53,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="noImprLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="527, 920" textAlignment="CENTER">
+                                    <Label fx:id="noImprLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -71,7 +67,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="noClicksLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="20, 569" textAlignment="CENTER">
+                                    <Label fx:id="noClicksLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -85,7 +81,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="noUniqueLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="13, 702" textAlignment="CENTER">
+                                    <Label fx:id="noUniqueLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -99,7 +95,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="noBounceLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="8, 401">
+                                    <Label fx:id="noBounceLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -121,7 +117,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="noConversionLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="4, 591" textAlignment="CENTER">
+                                    <Label fx:id="noConversionLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -135,7 +131,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="totalCostLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="totalCostLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -149,7 +145,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="ctrLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="ctrLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -163,7 +159,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="cpaLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="cpaLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -177,7 +173,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="cpcLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="cpcLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -191,7 +187,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="cpmLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="cpmLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -205,7 +201,7 @@
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="bounceRateLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="567, 920" textAlignment="CENTER">
+                                    <Label fx:id="bounceRateLabel" layoutX="11.0" layoutY="63.0" prefHeight="70.0" prefWidth="139.0" text="n/a" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="33.0" />
                                        </font>
@@ -368,103 +364,70 @@
             </VBox>
          </content>
       </ScrollPane>
-      <VBox layoutY="316.0" prefHeight="241.0" prefWidth="152.0" />
       <VBox fx:id="testPane" layoutY="100.0" prefHeight="772.0" prefWidth="176.0" style="-fx-background-color: #5988FF;">
          <children>
-            <TabPane prefHeight="772.0" prefWidth="150.0" style="-fx-background-color: #5988FF;" tabClosingPolicy="UNAVAILABLE">
-               <tabs>
-                  <Tab text="Campaigns">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="743.0" prefWidth="151.0">
-                           <children>
-                              <VBox fx:id="campaignVBox" prefHeight="848.0" prefWidth="169.0" spacing="20.0" style="-fx-background-color: #5988FF;">
-                                 <children>
-                                    <Label fx:id="campaignLabel" prefHeight="34.0" prefWidth="151.0" text="  CAMPAIGNS">
-                                       <font>
-                                          <Font name="Verdana Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <JFXButton fx:id="campaign1Button" mnemonicParsing="false" styleClass="btn-primary" text="Campaign 1" />
-                                    <Separator prefWidth="200.0" />
-                                    <JFXButton fx:id="campaign2Button" mnemonicParsing="false" styleClass="btn-primary" text="Campaign 2" />
-                                    <Separator prefWidth="200.0" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="20.0" top="20.0" />
-                                 </padding>
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab text="Filter">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="705.0" prefWidth="176.0">
-                           <children>
-                              <VBox alignment="TOP_CENTER" prefHeight="718.0" prefWidth="176.0" spacing="20.0" style="-fx-background-color: #5988FF;">
-                                 <padding>
-                                    <Insets left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                                 <children>
-                                    <VBox prefHeight="97.0" prefWidth="156.0" spacing="10.0">
-                                       <children>
-                                          <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" text="Gender" textFill="WHITE" />
-                                          <JFXCheckBox text="Female" textFill="WHITE" />
-                                          <JFXCheckBox text="Male" textFill="#f7f3f3" />
-                                       </children>
-                                       <padding>
-                                          <Insets left="10.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                    <VBox prefHeight="183.0" prefWidth="156.0" spacing="10.0">
-                                       <children>
-                                          <Label prefHeight="17.0" prefWidth="138.0" text="Age" textFill="#f8f6f6" />
-                                          <JFXCheckBox text="&lt; 25 years" textFill="#fffefe" />
-                                          <JFXCheckBox text="25 - 34 years" textFill="#fffdfd" />
-                                          <JFXCheckBox text="35 - 44 years" textFill="#fdfcfc" />
-                                          <JFXCheckBox text="45 - 54 years" textFill="#f7f1f1" />
-                                          <JFXCheckBox text="&gt; 54 years" textFill="#faf9f9" />
-                                       </children>
-                                       <padding>
-                                          <Insets left="10.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                    <VBox prefHeight="131.0" prefWidth="156.0" spacing="10.0">
-                                       <children>
-                                          <Label prefHeight="17.0" prefWidth="133.0" text="Income" textFill="#f8f7f7" />
-                                          <JFXCheckBox text="Low" textFill="#f8f7f7" />
-                                          <JFXCheckBox text="Medium" textFill="#f8f7f7" />
-                                          <JFXCheckBox text="High" textFill="#f8f7f7" />
-                                       </children>
-                                       <padding>
-                                          <Insets left="10.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                    <VBox prefHeight="236.0" prefWidth="156.0" spacing="10.0">
-                                       <children>
-                                          <Label prefHeight="17.0" prefWidth="143.0" text="Context" textFill="#fdfafa" />
-                                          <JFXCheckBox text="Shopping" textFill="#fdfafa" />
-                                          <JFXCheckBox text="News" textFill="#fdfafa" />
-                                          <JFXCheckBox text="Blog" textFill="#fdfafa" />
-                                          <JFXCheckBox text="Social Media" textFill="#fdfafa" />
-                                          <JFXCheckBox text="Hobbies" textFill="#fdfafa" />
-                                          <JFXCheckBox text="Travel" textFill="#fdfafa" />
-                                       </children>
-                                       <padding>
-                                          <Insets left="10.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-               </tabs>
-            </TabPane>
+            <VBox alignment="TOP_CENTER" prefHeight="718.0" prefWidth="176.0" spacing="20.0" style="-fx-background-color: #5988FF;">
+               <padding>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Label text="Filter" textFill="#f5f4f4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox prefHeight="97.0" prefWidth="156.0" spacing="10.0">
+                     <children>
+                        <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" text="Gender" textFill="WHITE" />
+                        <JFXCheckBox fx:id="femaleCheckBox" text="Female" textFill="WHITE" />
+                        <JFXCheckBox fx:id="maleCheckbox" text="Male" textFill="#f7f3f3" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="183.0" prefWidth="156.0" spacing="10.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="138.0" text="Age" textFill="#f8f6f6" />
+                        <JFXCheckBox fx:id="age1Checkbox" text="&lt; 25 years" textFill="#fffefe" />
+                        <JFXCheckBox fx:id="age2Checkbox" text="25 - 34 years" textFill="#fffdfd" />
+                        <JFXCheckBox fx:id="age3Checkbox" text="35 - 44 years" textFill="#fdfcfc" />
+                        <JFXCheckBox fx:id="age4Checkbox" text="45 - 54 years" textFill="#f7f1f1" />
+                        <JFXCheckBox fx:id="age5Checkbox" text="&gt; 54 years" textFill="#faf9f9" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="131.0" prefWidth="156.0" spacing="10.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="133.0" text="Income" textFill="#f8f7f7" />
+                        <JFXCheckBox fx:id="lowIncomeCheckbox" text="Low" textFill="#f8f7f7" />
+                        <JFXCheckBox fx:id="MediumIncomeCheckbox" text="Medium" textFill="#f8f7f7" />
+                        <JFXCheckBox fx:id="highIncomeCheckbox" text="High" textFill="#f8f7f7" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="236.0" prefWidth="156.0" spacing="10.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="143.0" text="Context" textFill="#fdfafa" />
+                        <JFXCheckBox fx:id="shoppingCheckbox" text="Shopping" textFill="#fdfafa" />
+                        <JFXCheckBox fx:id="newsCheckbox" text="News" textFill="#fdfafa" />
+                        <JFXCheckBox fx:id="blogCheckbox" text="Blog" textFill="#fdfafa" />
+                        <JFXCheckBox fx:id="socialMCheckbox" text="Social Media" textFill="#fdfafa" />
+                        <JFXCheckBox fx:id="hobbiesCheckbox" text="Hobbies" textFill="#fdfafa" />
+                        <JFXCheckBox fx:id="travelCheckbox" text="Travel" textFill="#fdfafa" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <JFXButton fx:id="applyFilterButton" buttonType="RAISED" onAction="#applyFilter" prefHeight="38.0" prefWidth="127.0" style="-fx-background-color: #ffffff;" text="Apply" />
+                  <JFXButton fx:id="clearFilterButton" buttonType="RAISED" onAction="#clearFilter" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #ffffff;" text="Clear Filter" textFill="#110f0f" />
+               </children>
+            </VBox>
          </children>
       </VBox>
    </children>
