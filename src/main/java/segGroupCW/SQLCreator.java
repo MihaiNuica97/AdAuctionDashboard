@@ -177,6 +177,18 @@ public class SQLCreator {
         return date + "=> TIMESTAMP '" + start + "' AND " + date + " <= '" + end + "'";
     }
 
+    public String userGender(String table, String gender) {
+        return "JOIN USERS ON " + table + ".ID = USERS.ID WHERE GENDER = '" + gender + "'";
+    }
+
+    public String userAge(String table, String age) {
+        return "JOIN USERS ON " + table + ".ID = USERS.ID WHERE AGE = '" + age + "'";
+    }
+
+    public String userIncome(String table, String income) {
+        return "JOIN USERS ON " + table + ".ID = USERS.ID WHERE INCOME = '" + income + "'";
+    }
+
     //CUSTOM builders
     /**
      * SQL statement for the total impressions between 2 dates. Both dates should be in YYYY-MM-DD [HH:MM:SS] format.
@@ -346,6 +358,10 @@ public class SQLCreator {
         result.add(betweenDateBouncesTime(start, end, unit, time));
         result.add(betweenDateClicks(start, end));
         return result;
+    }
+
+    public String genderImps(String gender) {
+        return "SELECT * FROM IMPRESSIONS " + userGender("IMPRESSIONS", gender) + ";";
     }
 
     /**
