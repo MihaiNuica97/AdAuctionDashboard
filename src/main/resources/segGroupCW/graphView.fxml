@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -9,6 +10,8 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -21,34 +24,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="952.0" prefWidth="938.0" stylesheets="@css/theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.DashboardController">
    <children>
-      <VBox fx:id="campaignVBox" layoutX="1.0" layoutY="100.0" prefHeight="848.0" prefWidth="151.0" spacing="20.0" style="-fx-background-color: #5988FF;">
-         <children>
-            <Label fx:id="campaignLabel" prefHeight="34.0" prefWidth="151.0" text="  CAMPAIGNS">
-               <font>
-                  <Font name="Verdana Bold" size="12.0" />
-               </font>
-            </Label>
-            <JFXButton fx:id="campaign1Button" mnemonicParsing="false" styleClass="btn-primary" text="Campaign 1">
-
-            </JFXButton>
-            <Separator prefWidth="200.0" />
-            <JFXButton fx:id="campaign2Button" mnemonicParsing="false" styleClass="btn-primary" text="Campaign 2">
-
-            </JFXButton>
-            <Separator prefWidth="200.0" />
-         </children>
-         <padding>
-            <Insets bottom="20.0" top="20.0" />
-         </padding>
-         <effect>
-            <DropShadow />
-         </effect>
-      </VBox>
       <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="938.0" style="-fx-background-color: 5988FF;">
          <children>
             <Pane prefHeight="100.0" prefWidth="246.0">
                <children>
-                  <Label fx:id="mainMetricLabel" layoutX="-80.0" layoutY="15.0" prefHeight="70.0" prefWidth="285.0" styleClass="text-primary" text="No of Impressions">
+                  <Label fx:id="mainMetricLabel" layoutX="-80.0" layoutY="15.0" prefHeight="70.0" prefWidth="285.0" style="-fx-background-color: #5bc0be;" styleClass="text-primary" text="No of Impressions" textFill="#f7f1f1">
                      <font>
                         <Font name="Verdana" size="24.0" />
                      </font>
@@ -66,7 +46,7 @@
             <Pane prefHeight="100.0" prefWidth="220.0">
                <children>
                   <JFXButton fx:id="changeCampaignButton" layoutX="72.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="123.0" styleClass="btn-submit" text="Change Campaign" />
-                  <JFXButton buttonType="RAISED" layoutX="105.0" layoutY="50.0" onAction="#dashboardReturn" prefHeight="42.0" prefWidth="57.0" ripplerFill="#fdfdfd" text=" ">
+                  <JFXButton buttonType="RAISED" layoutX="105.0" layoutY="50.0" mnemonicParsing="false" onAction="#dashboardReturn" prefHeight="42.0" prefWidth="57.0" ripplerFill="#fdfdfd" text=" ">
                      <cursor>
                         <Cursor fx:constant="NONE" />
                      </cursor>
@@ -97,94 +77,93 @@
             </LineChart>
          </children>
       </Pane>
-      <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="563.0" prefHeight="70.0" prefWidth="752.0" spacing="20.0" style="-fx-background-color: #5bc0be;">
+      <HBox alignment="CENTER_LEFT" layoutX="174.0" layoutY="552.0" prefHeight="46.0" prefWidth="752.0" spacing="20.0" style="-fx-background-color: #5bc0be;">
          <children>
-            <Label alignment="CENTER" prefHeight="70.0" prefWidth="147.0" text="Time">
+            <Label alignment="CENTER" prefHeight="70.0" prefWidth="147.0" text="Type pf graph">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
-            <JFXRadioButton fx:id="hoursRadioButoon" text="Hours">
+            <JFXRadioButton fx:id="hoursRadioButoon" text="Line Chart">
                <toggleGroup>
                   <ToggleGroup fx:id="timeToggle" />
                </toggleGroup>
             </JFXRadioButton>
-            <JFXRadioButton fx:id="daysRadioButton" text="Days" toggleGroup="$timeToggle" />
-            <JFXRadioButton fx:id="weeksRadioButton" text="Weeks" toggleGroup="$timeToggle" />
-            <JFXRadioButton fx:id="monthsRadioButton" text="Months" toggleGroup="$timeToggle" />
+            <JFXRadioButton fx:id="daysRadioButton" text="Pie Chart" toggleGroup="$timeToggle" />
+            <JFXRadioButton fx:id="weeksRadioButton" text="Histogram" toggleGroup="$timeToggle" />
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="682.0" prefHeight="201.0" prefWidth="752.0" spacing="10.0" style="-fx-background-color: #5bc0be;">
+      <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="682.0" prefHeight="201.0" prefWidth="752.0" spacing="10.0" style="-fx-background-color: #ffffff;">
          <padding>
-            <Insets left="70.0" right="10.0" />
+            <Insets left="70.0" right="10.0" top="10.0" />
          </padding>
          <children>
-            <VBox prefHeight="201.0" prefWidth="143.0" spacing="10.0">
+            <VBox prefHeight="177.0" prefWidth="140.0" spacing="8.0" style="-fx-background-color: #5bc0be;">
                <children>
                   <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" text="Gender" />
-                  <JFXRadioButton text="Female">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </JFXRadioButton>
-                  <JFXRadioButton text="Male" />
+                  <JFXCheckBox text="Female" />
+                  <JFXCheckBox text="Male" />
                </children>
                <padding>
                   <Insets left="10.0" top="10.0" />
                </padding>
+               <effect>
+                  <DropShadow />
+               </effect>
             </VBox>
-            <VBox prefHeight="201.0" prefWidth="143.0" spacing="10.0">
+            <VBox prefHeight="201.0" prefWidth="143.0" spacing="8.0" style="-fx-background-color: #5bc0be;">
                <children>
                   <Label prefHeight="17.0" prefWidth="138.0" text="Age" />
-                  <JFXRadioButton text="&lt; 25 years" />
-                  <JFXRadioButton text="25 - 34 years" />
-                  <JFXRadioButton text="35 - 44 years" />
-                  <JFXRadioButton text="45 - 54 years" />
-                  <JFXRadioButton text="&gt; 54 years" />
+                  <JFXCheckBox text="&lt; 25 years" />
+                  <JFXCheckBox text="25 - 34 years" />
+                  <JFXCheckBox text="35 - 44 years" />
+                  <JFXCheckBox text="45 - 54 years" />
+                  <JFXCheckBox text="&gt; 54 years" />
                </children>
                <padding>
                   <Insets left="10.0" top="10.0" />
                </padding>
+               <effect>
+                  <DropShadow />
+               </effect>
             </VBox>
-            <VBox prefHeight="201.0" prefWidth="143.0" spacing="10.0">
+            <VBox prefHeight="201.0" prefWidth="143.0" spacing="8.0" style="-fx-background-color: #5bc0be;">
                <children>
                   <Label prefHeight="17.0" prefWidth="133.0" text="Income" />
-                  <JFXRadioButton text="Low" />
-                  <JFXRadioButton text="Medium" />
-                  <JFXRadioButton text="High" />
+                  <JFXCheckBox text="Low" />
+                  <JFXCheckBox text="Medium" />
+                  <JFXCheckBox text="High" />
                </children>
                <padding>
                   <Insets left="10.0" top="10.0" />
                </padding>
+               <effect>
+                  <DropShadow />
+               </effect>
             </VBox>
-            <VBox prefHeight="201.0" prefWidth="143.0" spacing="10.0">
+            <VBox prefHeight="202.0" prefWidth="143.0" spacing="8.0" style="-fx-background-color: #5bc0be;">
                <children>
                   <Label prefHeight="17.0" prefWidth="143.0" text="Context" />
-                  <JFXRadioButton text="Blog" />
-                  <JFXRadioButton text="News" />
-                  <JFXRadioButton text="Shopping" />
-                  <JFXRadioButton text="Social Media" />
-                  <JFXRadioButton text="News" />
+                  <JFXCheckBox text="Shopping" />
+                  <JFXCheckBox text="News" />
+                  <JFXCheckBox text="Blog" />
+                  <JFXCheckBox text="Social Media" />
+                  <JFXCheckBox text="Hobbies" />
+                  <JFXCheckBox text="Travel" />
                </children>
                <padding>
                   <Insets left="10.0" top="10.0" />
                </padding>
+               <effect>
+                  <DropShadow />
+               </effect>
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="175.0" layoutY="636.0" prefHeight="46.0" prefWidth="752.0" style="-fx-background-color: #5bc0be;">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="280.0" text="Comparison" textAlignment="CENTER">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="185.0" layoutY="573.0" prefHeight="70.0" prefWidth="752.0" spacing="20.0" style="-fx-background-color: #5bc0be;">
+      <HBox alignment="CENTER_LEFT" layoutX="174.0" layoutY="511.0" prefHeight="42.0" prefWidth="752.0" spacing="20.0" style="-fx-background-color: #5bc0be;">
          <children>
             <Label alignment="CENTER" prefHeight="70.0" prefWidth="147.0" text="Time">
                <font>
@@ -204,6 +183,117 @@
             <Insets left="10.0" right="10.0" />
          </padding>
       </HBox>
+      <VBox fx:id="testPane" layoutX="-2.0" layoutY="109.0" prefHeight="772.0" prefWidth="176.0" style="-fx-background-color: #5988FF;">
+         <children>
+            <TabPane prefHeight="775.0" prefWidth="176.0" style="-fx-background-color: #5988FF;" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Campaigns">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="312.0" prefWidth="176.0">
+                           <children>
+                              <VBox fx:id="campaignVBox" prefHeight="848.0" prefWidth="169.0" spacing="20.0" style="-fx-background-color: #5988FF;">
+                                 <children>
+                                    <Label fx:id="campaignLabel" prefHeight="34.0" prefWidth="151.0" text="  CAMPAIGNS">
+                                       <font>
+                                          <Font name="Verdana Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXButton fx:id="campaign1Button" mnemonicParsing="false" styleClass="btn-primary" text="Campaign 1">
+
+            </JFXButton>
+                                    <Separator prefWidth="200.0" />
+                                    <JFXButton fx:id="campaign2Button" mnemonicParsing="false" styleClass="btn-primary" text="Campaign 2">
+
+            </JFXButton>
+                                    <Separator prefWidth="200.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </padding>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Filter">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="705.0" prefWidth="176.0">
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="718.0" prefWidth="176.0" spacing="20.0" style="-fx-background-color: #5988FF;">
+                  
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                 <children>
+                                    <VBox prefHeight="97.0" prefWidth="156.0" spacing="10.0">
+                                       <children>
+                                          <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" text="Gender" textFill="WHITE" />
+                                          <JFXCheckBox text="Female" textFill="WHITE" />
+                                          <JFXCheckBox text="Male" textFill="#f7f3f3" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                    <VBox prefHeight="183.0" prefWidth="156.0" spacing="10.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="138.0" text="Age" textFill="#f8f6f6" />
+                                          <JFXCheckBox text="&lt; 25 years" textFill="#fffefe" />
+                                          <JFXCheckBox text="25 - 34 years" textFill="#fffdfd" />
+                                          <JFXCheckBox text="35 - 44 years" textFill="#fdfcfc" />
+                                          <JFXCheckBox text="45 - 54 years" textFill="#f7f1f1" />
+                                          <JFXCheckBox text="&gt; 54 years" textFill="#faf9f9" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                    <VBox prefHeight="131.0" prefWidth="156.0" spacing="10.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="133.0" text="Income" textFill="#f8f7f7" />
+                                          <JFXCheckBox text="Low" textFill="#f8f7f7" />
+                                          <JFXCheckBox text="Medium" textFill="#f8f7f7" />
+                                          <JFXCheckBox text="High" textFill="#f8f7f7" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                    <VBox prefHeight="236.0" prefWidth="156.0" spacing="10.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="143.0" text="Context" textFill="#fdfafa" />
+                                          <JFXCheckBox text="Shopping" textFill="#fdfafa" />
+                                          <JFXCheckBox text="News" textFill="#fdfafa" />
+                                          <JFXCheckBox text="Blog" textFill="#fdfafa" />
+                                          <JFXCheckBox text="Social Media" textFill="#fdfafa" />
+                                          <JFXCheckBox text="Hobbies" textFill="#fdfafa" />
+                                          <JFXCheckBox text="Travel" textFill="#fdfafa" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </VBox>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="411.0" layoutY="630.0" prefHeight="18.0" prefWidth="268.0" style="-fx-background-color: #5bc0be;" text="Comparison" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Label>
 
    </children>
 </AnchorPane>
