@@ -47,7 +47,7 @@ public class FileLoadController {
 //		ThemeController.addStyle("@/css/fileUpload.css");
 //		ThemeController.getStyles();
 //		System.out.println(App.getScene().getStylesheets().toString());
-
+//		App.themeController.changeTheme("dark.css");
 		fileChooser = new FileChooser();
         browseClicksBtn.setOnAction( e -> browseFiles(clicksPathLabel,"Clicks Log"));
 		browseImprBtn.setOnAction( e -> browseFiles(imprPathLabel,"Impressions"));
@@ -91,6 +91,10 @@ public class FileLoadController {
 		return true;
 	}
 
+	@FXML
+	private void test(){
+		App.themeController.changeTheme("dark.css");
+	}
 
 	private void loadFilesToDB() throws IOException, SQLException {
 		dbHandler.sendSQL(csvParser.parseImpression(fileMap.get("Impressions")));

@@ -14,8 +14,8 @@ import java.io.IOException;
 public class App extends Application {
 
 
-	private static Scene scene;
-	private ThemeController themeController = new ThemeController();
+	public static Scene scene;
+	public static ThemeController themeController;
 
 	public static Scene getScene(){
 		return scene;
@@ -23,14 +23,18 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
 		scene = new Scene(loadFXML("fileUpload"));
-		scene.getStylesheets().add(this.getClass().getResource(themeController.getMainTheme()).toExternalForm());
-		
+		themeController = new ThemeController("css/themes/");
 		stage.setScene(scene);
 		stage.show();
 		stage.setHeight(500);
 		stage.setWidth(560);
 	}
-	
+
+
+
+	public static void changeTheme(String newTheme){
+		themeController.changeTheme(newTheme);
+	}
 
  	static void setRoot(String fxml) throws IOException {
 		scene.setRoot(loadFXML(fxml));
