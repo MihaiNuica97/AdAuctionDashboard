@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="550.0" stylesheets="@css/theme.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.FileLoadController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.FileLoadController">
    <stylesheets>
       <URL value="@css/fileUpload.css" />
    </stylesheets>
@@ -29,21 +29,21 @@
          <children>
             <TextField fx:id="clicksPathLabel" prefHeight="25.0" prefWidth="195.0" promptText="click_log.csv" />
             <JFXButton fx:id="browseClicksBtn" alignment="CENTER" buttonType="RAISED" styleClass="btn-primary" text="Browse..." />
-            <Label text="   click_log.csv" />
+            <Label styleClass="text-secondary" text="   click_log.csv" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" layoutX="17.0" layoutY="234.0" prefHeight="30.0" prefWidth="503.0" spacing="30.0">
          <children>
             <TextField fx:id="imprPathLabel" prefHeight="25.0" prefWidth="194.0" promptText="impression_log.csv" />
             <JFXButton fx:id="browseImprBtn" alignment="CENTER" buttonType="RAISED" styleClass="btn-primary" text="Browse..." />
-            <Label text="   impression_log.csv" />
+            <Label styleClass="text-secondary" text="   impression_log.csv" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" layoutX="17.0" layoutY="284.0" prefHeight="30.0" prefWidth="503.0" spacing="30.0">
          <children>
             <TextField fx:id="serverPathLabel" prefHeight="25.0" prefWidth="194.0" promptText="server_log.csv" />
             <JFXButton fx:id="browseServerBtn" alignment="CENTER" buttonType="RAISED" styleClass="btn-primary" text="Browse..." />
-            <Label text="   server_log.csv" />
+            <Label styleClass="text-secondary" text="   server_log.csv" />
          </children>
       </HBox>
       <Pane layoutX="26.0" layoutY="95.0" prefHeight="30.0" prefWidth="485.0">
@@ -57,7 +57,7 @@
       </Pane>
       <HBox alignment="CENTER" layoutX="24.0" layoutY="409.0" prefHeight="40.0" prefWidth="503.0">
          <children>
-            <JFXButton mnemonicParsing="false" styleClass="btn, btn-primary" text="Load previous campaign" />
+            <JFXButton onAction="#test" mnemonicParsing="false" styleClass="btn, btn-primary" text="Load previous campaign" />
          </children>
       </HBox>
    </children>

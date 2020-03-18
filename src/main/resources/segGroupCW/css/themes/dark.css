@@ -1,9 +1,9 @@
 .root{
-    -main-bg-color: #F2F4F4;
-    -primary: #5988FF;
-    -secondary: white;
-    -text-primary: #5988FF;
-    -text-secondary: #63788F;
+    -main-bg-color: #1b262c;
+    -primary: #0f4c75;
+    -secondary: #bbe1fa;
+    -text-primary: #3282b8;
+    -text-secondary: #bbe1fa;
     -success: #55CF5A;
     -error: red;
     -fx-background-color: -main-bg-color;
@@ -23,6 +23,10 @@
     -fx-text-fill: -text-primary;
 }
 
+.text-secondary{
+    -fx-text-fill: -text-secondary;
+}
+
 .btn-submit{
     -fx-background-color: -success;
     -fx-text-fill: -secondary;
@@ -38,4 +42,11 @@
 .card-corners{
     -fx-background-color: -secondary;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+.page-title{
+    -fx-effect: null;
+    -fx-text-fill: -text-primary;
+    -fx-font-size: 2em;
+
 }
