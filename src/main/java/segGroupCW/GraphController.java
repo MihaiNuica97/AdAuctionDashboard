@@ -1,29 +1,134 @@
 package segGroupCW;
 
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTabPane;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GraphController implements Initializable
 {
     @FXML
-    private VBox testPane;
+    private Label mainMetricLabel;
 
     @FXML
-    private JFXComboBox<String> genderBox;
+    private JFXButton changeCampaignButton, settingsButton;
 
+    @FXML
+    private Pane chartPane;
+
+    @FXML
+    private LineChart<?, ?> mainChart;
+
+    @FXML
+    private JFXRadioButton lineChartButton, pieChartButton, histogramChartButton;
+
+    @FXML
+    private JFXRadioButton hoursRadioButoon1, daysRadioButton1, weeksRadioButton1, monthsRadioButton1;
+
+    @FXML
+    private JFXCheckBox femaleCheckBox, maleCheckbox, age1Checkbox, age2Checkbox, age3Checkbox, age4Checkbox, age5Checkbox, lowIncomeCheckbox, MediumIncomeCheckbox;
+
+    @FXML
+    private JFXCheckBox highIncomeCheckbox, shoppingCheckbox, newsCheckbox, blogCheckbox, socialMCheckbox, hobbiesCheckbox, travelCheckbox;
+
+    @FXML
+    private JFXButton addFilterButton;
+
+    /**
+     * VBox for applied filters
+     */
+    @FXML
+    private VBox filterVbox;
+
+    /**
+     * list that holds all the filter checkboxes
+     */
+    List<JFXCheckBox> checkBoxList;
+
+    private PieChart pieChart;
+
+    //histogram features
+    final CategoryAxis xAxis = new CategoryAxis();
+    final NumberAxis yAxis = new NumberAxis();
+    final BarChart<String,Number> histogram = new BarChart<>(xAxis,yAxis);
+
+    /**
+     * Button that adds filters to the HBox
+     * @param event
+     */
+    @FXML
+    void addFilterButton(ActionEvent event) {
+        HBox hbox = new HBox();
+        hbox.setSpacing(10);
+        Label filter = new Label("Filters: ");
+        hbox.getChildren().add(filter);
+        for (JFXCheckBox checkBox : checkBoxList) {
+            if (checkBox.isSelected()) {
+                Label label = new Label();
+                label.setText(checkBox.getText());
+                hbox.getChildren().add(label);
+
+            }
+        }
+        JFXButton button = new JFXButton();
+        button.setStyle("-fx-background-color: #ff0000");
+        button.setButtonType(JFXButton.ButtonType.RAISED);
+        button.setText("X");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                filterVbox.getChildren().remove(hbox);
+            }
+        });
+        hbox.getChildren().add(button);
+        filterVbox.getChildren().add(hbox);
+
+        //deleting the selected checkboxes after adding them
+        for (JFXCheckBox checkBox : checkBoxList) {
+            if (checkBox.isSelected()) {
+                checkBox.setSelected(false);
+            }
+        }
+    }
+
+    /**
+     * Returns to the dashboard page
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void dashboardReturn(ActionEvent event) throws IOException {
+        App.setRoot("dashboard");
+    }
+
+    /**
+     * Returns to the settings page
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void settingsPage(ActionEvent event) throws IOException {
+        App.setRoot("settings");
+    }
 
     /**
      * Brings you to the main Input page
@@ -34,34 +139,76 @@ public class GraphController implements Initializable
         App.setRoot("fileUpload");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    /**
+     * Change total cost chart to pie chart
+     */
+    @FXML
+    void pieChartChange() {
+        chartPane.getChildren().clear();
 
-       // genderBox.getItems().removeAll(genderBox.getItems());
-        //genderBox.getItems().setAll("Female", "Male");
-       // genderBox.getSelectionModel().select("Male");
-
-        ObservableList<String> elements = FXCollections.observableArrayList(
-                new String("Element 1"),
-                new String("Element 2")
-        );
-/*
-
-        genderBox.setItems(elements);
-        genderBox.setVisible(true);
-
-
-        Label label = new Label("Label");
-        testPane.getChildren().add(label);
-        TabPane tabPane = new TabPane();
-        Tab tab1 = new Tab("Tab 1");
-
-        tabPane.getTabs().add(tab1);
-
-        testPane.getChildren().add(tabPane);
-*/
+        ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                        new PieChart.Data("Click Cost", 13),
+                        new PieChart.Data("Impression Cost", 25));
+        pieChart = new PieChart(pieChartData);
+        chartPane.getChildren().add(pieChart);
     }
 
+    /**
+     * Change total cost chart to histogram
+     * @param event
+     */
+    @FXML
+    void histogramChange(ActionEvent event) {
+        chartPane.getChildren().clear();
+        chartPane.getChildren().remove(mainChart);
 
+        histogram.setCategoryGap(0);
+        histogram.setBarGap(0);
 
+        xAxis.setLabel("Time");
+        yAxis.setLabel("Total Cost");
+
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("Histogram");
+        //series1.getData().add(new XYChart.Data("0-10", group[0]));
+        histogram.getData().addAll(series1);
+
+        chartPane.getChildren().add(histogram);
+    }
+
+    /**
+     * Change total cost chart to line chart
+     */
+    @FXML
+    void lineChartChange() {
+        chartPane.getChildren().clear();
+        chartPane.getChildren().add(mainChart);
+    }
+
+    /**
+     *
+     * @param url
+     * @param resourceBundle
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        checkBoxList = new ArrayList<JFXCheckBox>();
+        checkBoxList.add(femaleCheckBox);
+        checkBoxList.add(maleCheckbox);
+        checkBoxList.add(age1Checkbox);
+        checkBoxList.add(age2Checkbox);
+        checkBoxList.add(age3Checkbox);
+        checkBoxList.add(age4Checkbox);
+        checkBoxList.add(age5Checkbox);
+        checkBoxList.add(lowIncomeCheckbox);
+        checkBoxList.add(MediumIncomeCheckbox);
+        checkBoxList.add(highIncomeCheckbox);
+        checkBoxList.add(shoppingCheckbox);
+        checkBoxList.add(newsCheckbox);
+        checkBoxList.add(blogCheckbox);
+        checkBoxList.add(socialMCheckbox);
+        checkBoxList.add(hobbiesCheckbox);
+        checkBoxList.add(travelCheckbox);
+    }
 }
