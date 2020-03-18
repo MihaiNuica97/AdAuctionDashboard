@@ -29,217 +29,76 @@ import java.util.ResourceBundle;
 public class DashboardController implements Initializable {
 
     @FXML
-    private Label dashBoardLabel;
+    private JFXButton changeCampaignButton;   //do we want this?
 
     @FXML
-    private JFXButton campaign1Button;
-
-    @FXML
-    private JFXButton campaign2Button;
-
-    @FXML
-    private JFXButton changeCampaignButton;
-
-    @FXML
-    private Label noImprLabel;
-
-    @FXML
-    private Label noClicksLabel;
-
-    @FXML
-    private Label noUniqueLabel;
-
-    @FXML
-    private Label noBounceLabel;
+    private Label noImprLabel, noClicksLabel, noUniqueLabel, noBounceLabel, noConversionLabel, totalCostLabel, ctrLabel, cpaLabel, cpcLabel, cpmLabel, bounceRateLabel;
 
     @FXML
     private JFXButton bounceDefinitionButton;
 
     @FXML
-    private Label noConversionLabel;
+    private Pane noImprPane, noClicksPane, noOfUniques, noBouncePane, noOfConversionsPane, totalCostPane, ctrPane, cpaPane;
 
     @FXML
-    private Label totalCostLabel;
+    private LineChart<?, ?> NoImpressionsChart, noOfClicksChart, NoUniquesChart, NoBouncesChart, NoConversionsChart, totalCostChart, ctrChart, cpaChart;
 
     @FXML
-    private Label ctrLabel;
+    private Pane cpcPane, cpmPane, bounceRatePane;
 
     @FXML
-    private Label cpaLabel;
+    private LineChart<?, ?> cpcChart, cpmChart, bounceRateChart;
 
     @FXML
-    private Label cpcLabel;
-
-    @FXML
-    private Label cpmLabel;
-
-    @FXML
-    private Label bounceRateLabel;
-
-    @FXML
-    private Pane noImprPane;
-
-    @FXML
-    private LineChart<?, ?> NoImpressionsChart;
-
-    @FXML
-    private CategoryAxis x;
-
-    @FXML
-    private NumberAxis y;
-
-    @FXML
-    private Pane noClicksPane;
-
-    @FXML
-    private LineChart<?, ?> noOfClicksChart;
-
-    @FXML
-    private CategoryAxis x1;
-
-    @FXML
-    private NumberAxis y1;
-
-    @FXML
-    private Pane noOfUniques;
-
-    @FXML
-    private LineChart<?, ?> NoUniquesChart;
-
-    @FXML
-    private CategoryAxis x2;
-
-    @FXML
-    private NumberAxis y2;
-
-    @FXML
-    private Pane noBouncePane;
-
-    @FXML
-    private LineChart<?, ?> NoBouncesChart;
-
-    @FXML
-    private CategoryAxis x3;
-
-    @FXML
-    private NumberAxis y3;
-
-    @FXML
-    private Pane noOfConversionsPane;
-
-    @FXML
-    private LineChart<?, ?> NoConversionsChart;
-
-    @FXML
-    private CategoryAxis x31;
-
-    @FXML
-    private NumberAxis y31;
-
-    @FXML
-    private Pane totalCostPane;
-
-    @FXML
-    private LineChart<?, ?> totalCostChart;
-
-    @FXML
-    private JFXRadioButton LineChartRadioGraph;
-
-    @FXML
-    private ToggleGroup group1;
-
-    @FXML
-    private JFXRadioButton pieChartRadioButton;
-
-    @FXML
-    private JFXRadioButton histogramRadioButton;
-
-    @FXML
-    private Pane ctrPane;
-
-    @FXML
-    private LineChart<?, ?> ctrChart;
-
-    @FXML
-    private Pane cpaPane;
-
-    @FXML
-    private LineChart<?, ?> cpaChart;
-
-    @FXML
-    private Pane cpcPane;
-
-    @FXML
-    private LineChart<?, ?> cpcChart;
-
-    @FXML
-    private Pane cpmPane;
-
-    @FXML
-    private LineChart<?, ?> cpmChart;
-
-    @FXML
-    private Pane bounceRatePane;
-
-    @FXML
-    private LineChart<?, ?> bounceRateChart;
+    private JFXRadioButton LineChartRadioGraph, pieChartRadioButton, histogramRadioButton;
 
     List<JFXCheckBox> checkBoxList;
 
     @FXML
-    private JFXCheckBox femaleCheckBox;
+    private JFXCheckBox femaleCheckBox, maleCheckbox, age1Checkbox, age2Checkbox, age3Checkbox, age4Checkbox, age5Checkbox, lowIncomeCheckbox, MediumIncomeCheckbox;
 
     @FXML
-    private JFXCheckBox maleCheckbox;
+    private JFXCheckBox highIncomeCheckbox, shoppingCheckbox, newsCheckbox, blogCheckbox, socialMCheckbox, hobbiesCheckbox, travelCheckbox;
+
 
     @FXML
-    private JFXCheckBox age1Checkbox;
+    private JFXButton applyFilterButton, clearFilterButton;
 
-    @FXML
-    private JFXCheckBox age2Checkbox;
 
-    @FXML
-    private JFXCheckBox age3Checkbox;
+    /**
+     *
+     * @param url
+     * @param resourceBundle
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+//    initLabels();
+//    DONT DELETE ^
 
-    @FXML
-    private JFXCheckBox age4Checkbox;
+        checkBoxList = new ArrayList<JFXCheckBox>();
+        checkBoxList.add(femaleCheckBox);
+        checkBoxList.add(maleCheckbox);
+        checkBoxList.add(age1Checkbox);
+        checkBoxList.add(age2Checkbox);
+        checkBoxList.add(age3Checkbox);
+        checkBoxList.add(age4Checkbox);
+        checkBoxList.add(age5Checkbox);
+        checkBoxList.add(lowIncomeCheckbox);
+        checkBoxList.add(MediumIncomeCheckbox);
+        checkBoxList.add(highIncomeCheckbox);
+        checkBoxList.add(shoppingCheckbox);
+        checkBoxList.add(newsCheckbox);
+        checkBoxList.add(blogCheckbox);
+        checkBoxList.add(socialMCheckbox);
+        checkBoxList.add(hobbiesCheckbox);
+        checkBoxList.add(travelCheckbox);
 
-    @FXML
-    private JFXCheckBox age5Checkbox;
+    }
 
-    @FXML
-    private JFXCheckBox lowIncomeCheckbox;
-
-    @FXML
-    private JFXCheckBox MediumIncomeCheckbox;
-
-    @FXML
-    private JFXCheckBox highIncomeCheckbox;
-
-    @FXML
-    private JFXCheckBox shoppingCheckbox;
-
-    @FXML
-    private JFXCheckBox newsCheckbox;
-
-    @FXML
-    private JFXCheckBox blogCheckbox;
-
-    @FXML
-    private JFXCheckBox socialMCheckbox;
-
-    @FXML
-    private JFXCheckBox hobbiesCheckbox;
-
-    @FXML
-    private JFXCheckBox travelCheckbox;
-
-    @FXML
-    private JFXButton applyFilterButton;
-
-    @FXML
-    private JFXButton clearFilterButton;
-
+    /**
+     * Getting selected filter checkboxes
+     * @param event
+     */
     @FXML
     void applyFilter(ActionEvent event) {
         List<String> selectedCheckBoxes = new ArrayList<String>();
@@ -251,6 +110,10 @@ public class DashboardController implements Initializable {
         }
     }
 
+    /**
+     * Clearing the chosen filters
+     * @param event
+     */
     @FXML
     void clearFilter(ActionEvent event) {
         for (JFXCheckBox checkBox : checkBoxList){
@@ -261,93 +124,15 @@ public class DashboardController implements Initializable {
         }
     }
 
-    private PieChart pieChart;
-
-    final CategoryAxis xAxis = new CategoryAxis();
-    final NumberAxis yAxis = new NumberAxis();
-    final BarChart<String,Number> histogram = new BarChart<>(xAxis,yAxis);
-
 
     /**
-     * Change total cost chart to pie chart
-     */
-    @FXML
-    void pieChartChange() {
-        if (totalCostPane.getChildren() == totalCostChart){
-            totalCostPane.getChildren().remove(totalCostChart);
-        }
-
-        else{
-            totalCostPane.getChildren().remove(histogram);
-        }
-
-        totalCostPane.getChildren().remove(totalCostChart);
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Click Cost", 13),
-                        new PieChart.Data("Impression Cost", 25));
-        pieChart = new PieChart(pieChartData);
-        totalCostPane.getChildren().add(pieChart);
-
-        //pieChart.autosize();
-        pieChart.setMaxHeight(50);
-    }
-
-    /**
-     * Change total cost chart to histogram
+     * Takes user to settings page
      * @param event
+     * @throws IOException
      */
     @FXML
-    void histogramChange(ActionEvent event) {
-        if (totalCostPane.getChildren() == pieChart){
-            totalCostPane.getChildren().remove(pieChart);
-        }
-
-        else {
-            totalCostPane.getChildren().remove(totalCostChart);
-        }
-
-        totalCostPane.getChildren().remove(totalCostChart);
-        histogram.setCategoryGap(0);
-        histogram.setBarGap(0);
-
-        xAxis.setLabel("Time");
-        yAxis.setLabel("Total Cost");
-
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("Histogram");
-        //series1.getData().add(new XYChart.Data("0-10", group[0]));
-        histogram.getData().addAll(series1);
-
-        totalCostPane.getChildren().add(histogram);
-
-        histogram.setMaxHeight(50);
-    }
-
-    /**
-     * Change total cost chart to line chart
-     */
-    void lineChartChange() {
-        if (totalCostPane.getChildren() == pieChart){
-            totalCostPane.getChildren().remove(pieChart);
-        }
-
-        else{
-            totalCostPane.getChildren().remove(histogram);
-        }
-        totalCostPane.getChildren().add(totalCostChart);
-
-        //pieChart.autosize();
-        pieChart.setMaxHeight(50);
-    }
-
-    @FXML
-    void lineChartChange(ActionEvent event) {
-        lineChartChange();
-    }
-
-    public void pieChartOption(ActionEvent actionEvent) {
-        pieChartChange();
+    void settingsPage(ActionEvent event) throws IOException {
+        App.setRoot("settings");
     }
 
 
@@ -402,48 +187,74 @@ public class DashboardController implements Initializable {
 
     }
 
-    /**
-     *
-     * @param url
-     * @param resourceBundle
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-//    initLabels();
-//    DONT DELETE ^
 
-        checkBoxList = new ArrayList<JFXCheckBox>();
-        checkBoxList.add(femaleCheckBox);
-        checkBoxList.add(maleCheckbox);
-        checkBoxList.add(age1Checkbox);
-        checkBoxList.add(age2Checkbox);
-        checkBoxList.add(age3Checkbox);
-        checkBoxList.add(age4Checkbox);
-        checkBoxList.add(age5Checkbox);
-        checkBoxList.add(lowIncomeCheckbox);
-        checkBoxList.add(MediumIncomeCheckbox);
-        checkBoxList.add(highIncomeCheckbox);
-        checkBoxList.add(shoppingCheckbox);
-        checkBoxList.add(newsCheckbox);
-        checkBoxList.add(blogCheckbox);
-        checkBoxList.add(socialMCheckbox);
-        checkBoxList.add(hobbiesCheckbox);
-        checkBoxList.add(travelCheckbox);
-
-    }
 
     /**
-     * Brings you to the graph page by clicking on pane
+     * Brings you to the Impressions graph page by clicking on pane
      * @param event
      * @throws IOException
      */
     @FXML
     void graphViewImpressions(MouseEvent event) throws IOException {
         App.setRoot("graphView");
-
     }
 
 
+    /**
+     * Brings you to the Bounce Rate graph page by clicking on pane
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void graphViewBounceRate(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
+
+    }
+
+    @FXML
+    void graphViewCPA(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
+    }
+
+    @FXML
+    void graphViewCPC(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
+    }
+
+    @FXML
+    void graphViewCPM(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
+    }
+
+    @FXML
+    void graphViewCTR(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
+    }
+
+    @FXML
+    void graphViewNoBounces(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
+    }
+
+    @FXML
+    void graphViewNoClicks(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
+    }
+
+    @FXML
+    void graphViewNoConversions(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
+    }
+
+    @FXML
+    void graphViewNoUniques(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
+    }
+
+    @FXML
+    void graphViewTotalCost(MouseEvent event) throws IOException {
+        App.setRoot("graphView");
+    }
 
     private void initLabels() {
         DatabaseHandler db = new DatabaseHandler();
@@ -575,7 +386,4 @@ public class DashboardController implements Initializable {
         return intervals;
     }
 
-
-    public void switchToSecondary(ActionEvent actionEvent) {
-    }
 }

@@ -43,7 +43,7 @@
             <Pane prefHeight="100.0" prefWidth="220.0">
                <children>
                   <JFXButton fx:id="changeCampaignButton" layoutX="72.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="25.0" prefWidth="123.0" styleClass="btn-submit" text="Change Campaign" />
-                  <JFXButton buttonType="RAISED" layoutX="105.0" layoutY="50.0" mnemonicParsing="false" onAction="#dashboardReturn" prefHeight="42.0" prefWidth="57.0" ripplerFill="#fdfdfd" text=" ">
+                  <JFXButton buttonType="RAISED" layoutX="72.0" layoutY="50.0" mnemonicParsing="false" onAction="#dashboardReturn" prefHeight="42.0" prefWidth="57.0" ripplerFill="#fdfdfd" text=" ">
                      <cursor>
                         <Cursor fx:constant="NONE" />
                      </cursor>
@@ -55,6 +55,18 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
+                  <JFXButton fx:id="settingsButton" buttonType="RAISED" layoutX="134.0" layoutY="50.0" mnemonicParsing="false" onAction="#settingsPage" prefHeight="42.0" prefWidth="57.0" ripplerFill="#fdfdfd" text=" ">
+                     <cursor>
+                        <Cursor fx:constant="NONE" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fx:id="houseImageView1" fitHeight="39.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:/C:/Users/ivash/IdeaProjects/segGroupCW/src/main/resources/assets/app-22-cog-512.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                </children>
             </Pane>
          </children>
@@ -62,7 +74,7 @@
             <DropShadow />
          </effect>
       </HBox>
-      <Pane layoutX="180.0" layoutY="109.0" prefHeight="404.0" prefWidth="746.0" style="-fx-background-color: #5bc0be;">
+      <Pane fx:id="chartPane" layoutX="180.0" layoutY="109.0" prefHeight="404.0" prefWidth="746.0" style="-fx-background-color: #5bc0be;">
          <children>
             <LineChart fx:id="mainChart" layoutX="12.0" layoutY="14.0" prefHeight="371.0" prefWidth="727.0">
               <xAxis>
@@ -81,13 +93,13 @@
                   <Font size="26.0" />
                </font>
             </Label>
-            <JFXRadioButton fx:id="hoursRadioButoon" text="Line Chart">
+            <JFXRadioButton fx:id="lineChartButton" onAction="#lineChartChange" text="Line Chart">
                <toggleGroup>
                   <ToggleGroup fx:id="timeToggle" />
                </toggleGroup>
             </JFXRadioButton>
-            <JFXRadioButton fx:id="daysRadioButton" text="Pie Chart" toggleGroup="$timeToggle" />
-            <JFXRadioButton fx:id="weeksRadioButton" text="Histogram" toggleGroup="$timeToggle" />
+            <JFXRadioButton fx:id="pieChartButton" onAction="#pieChartChange" text="Pie Chart" toggleGroup="$timeToggle" />
+            <JFXRadioButton fx:id="histogramChartButton" onAction="#histogramChange" text="Histogram" toggleGroup="$timeToggle" />
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />

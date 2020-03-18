@@ -7,7 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -30,103 +30,51 @@ public class GraphController implements Initializable
     private Label mainMetricLabel;
 
     @FXML
-    private Pane topHBox;
+    private JFXButton changeCampaignButton, settingsButton;
 
     @FXML
-    private JFXButton changeCampaignButton;
-
-    @FXML
-    private ImageView houseImageView;
+    private Pane chartPane;
 
     @FXML
     private LineChart<?, ?> mainChart;
 
     @FXML
-    private JFXRadioButton hoursRadioButoon;
+    private JFXRadioButton lineChartButton, pieChartButton, histogramChartButton;
 
     @FXML
-    private ToggleGroup timeToggle;
+    private JFXRadioButton hoursRadioButoon1, daysRadioButton1, weeksRadioButton1, monthsRadioButton1;
 
     @FXML
-    private JFXRadioButton daysRadioButton;
+    private JFXCheckBox femaleCheckBox, maleCheckbox, age1Checkbox, age2Checkbox, age3Checkbox, age4Checkbox, age5Checkbox, lowIncomeCheckbox, MediumIncomeCheckbox;
 
     @FXML
-    private JFXRadioButton weeksRadioButton;
-
-    @FXML
-    private JFXRadioButton hoursRadioButoon1;
-
-    @FXML
-    private ToggleGroup timeToggle1;
-
-    @FXML
-    private JFXRadioButton daysRadioButton1;
-
-    @FXML
-    private JFXRadioButton weeksRadioButton1;
-
-    @FXML
-    private JFXRadioButton monthsRadioButton1;
-
-    @FXML
-    private VBox testPane;
-
-    @FXML
-    private JFXCheckBox femaleCheckBox;
-
-    @FXML
-    private JFXCheckBox maleCheckbox;
-
-    @FXML
-    private JFXCheckBox age1Checkbox;
-
-    @FXML
-    private JFXCheckBox age2Checkbox;
-
-    @FXML
-    private JFXCheckBox age3Checkbox;
-
-    @FXML
-    private JFXCheckBox age4Checkbox;
-
-    @FXML
-    private JFXCheckBox age5Checkbox;
-
-    @FXML
-    private JFXCheckBox lowIncomeCheckbox;
-
-    @FXML
-    private JFXCheckBox MediumIncomeCheckbox;
-
-    @FXML
-    private JFXCheckBox highIncomeCheckbox;
-
-    @FXML
-    private JFXCheckBox shoppingCheckbox;
-
-    @FXML
-    private JFXCheckBox newsCheckbox;
-
-    @FXML
-    private JFXCheckBox blogCheckbox;
-
-    @FXML
-    private JFXCheckBox socialMCheckbox;
-
-    @FXML
-    private JFXCheckBox hobbiesCheckbox;
-
-    @FXML
-    private JFXCheckBox travelCheckbox;
-
-    List<JFXCheckBox> checkBoxList;
+    private JFXCheckBox highIncomeCheckbox, shoppingCheckbox, newsCheckbox, blogCheckbox, socialMCheckbox, hobbiesCheckbox, travelCheckbox;
 
     @FXML
     private JFXButton addFilterButton;
 
+    /**
+     * VBox for applied filters
+     */
     @FXML
     private VBox filterVbox;
 
+    /**
+     * list that holds all the filter checkboxes
+     */
+    List<JFXCheckBox> checkBoxList;
+
+    private PieChart pieChart;
+
+    //histogram features
+    final CategoryAxis xAxis = new CategoryAxis();
+    final NumberAxis yAxis = new NumberAxis();
+    final BarChart<String,Number> histogram = new BarChart<>(xAxis,yAxis);
+
+    /**
+     * Button that adds filters to the HBox
+     * @param event
+     */
     @FXML
     void addFilterButton(ActionEvent event) {
         HBox hbox = new HBox();
@@ -153,20 +101,34 @@ public class GraphController implements Initializable
         });
         hbox.getChildren().add(button);
         filterVbox.getChildren().add(hbox);
+
+        //deleting the selected checkboxes after adding them
         for (JFXCheckBox checkBox : checkBoxList) {
             if (checkBox.isSelected()) {
                 checkBox.setSelected(false);
             }
         }
-
-
     }
 
+    /**
+     * Returns to the dashboard page
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void dashboardReturn(ActionEvent event) throws IOException {
         App.setRoot("dashboard");
     }
 
+    /**
+     * Returns to the settings page
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void settingsPage(ActionEvent event) throws IOException {
+        App.setRoot("settings");
+    }
 
     /**
      * Brings you to the main Input page
@@ -177,9 +139,60 @@ public class GraphController implements Initializable
         App.setRoot("fileUpload");
     }
 
+    /**
+     * Change total cost chart to pie chart
+     */
+    @FXML
+    void pieChartChange() {
+        chartPane.getChildren().clear();
+
+        ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                        new PieChart.Data("Click Cost", 13),
+                        new PieChart.Data("Impression Cost", 25));
+        pieChart = new PieChart(pieChartData);
+        chartPane.getChildren().add(pieChart);
+    }
+
+    /**
+     * Change total cost chart to histogram
+     * @param event
+     */
+    @FXML
+    void histogramChange(ActionEvent event) {
+        chartPane.getChildren().clear();
+        chartPane.getChildren().remove(mainChart);
+
+        histogram.setCategoryGap(0);
+        histogram.setBarGap(0);
+
+        xAxis.setLabel("Time");
+        yAxis.setLabel("Total Cost");
+
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("Histogram");
+        //series1.getData().add(new XYChart.Data("0-10", group[0]));
+        histogram.getData().addAll(series1);
+
+        chartPane.getChildren().add(histogram);
+    }
+
+    /**
+     * Change total cost chart to line chart
+     */
+    @FXML
+    void lineChartChange() {
+        chartPane.getChildren().clear();
+        chartPane.getChildren().add(mainChart);
+    }
+
+    /**
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         checkBoxList = new ArrayList<JFXCheckBox>();
         checkBoxList.add(femaleCheckBox);
         checkBoxList.add(maleCheckbox);
@@ -197,6 +210,5 @@ public class GraphController implements Initializable
         checkBoxList.add(socialMCheckbox);
         checkBoxList.add(hobbiesCheckbox);
         checkBoxList.add(travelCheckbox);
-
     }
 }

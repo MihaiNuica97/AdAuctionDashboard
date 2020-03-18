@@ -2,14 +2,13 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,13 +17,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="875.0" prefWidth="938.0" stylesheets="@css/theme.css, @css/dashboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="2011.0" prefWidth="938.0" stylesheets="@css/theme.css, @css/dashboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.DashboardController">
    <children>
       <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="938.0">
          <children>
             <Pane prefHeight="100.0" prefWidth="246.0">
                <children>
-                  <Label fx:id="dashBoardLabel" layoutX="-80.0" layoutY="15.0" prefHeight="70.0" prefWidth="285.0" styleClass="text-primary" text="Dashboard">
+                  <Label fx:id="dashBoardLabel" layoutX="-30.0" layoutY="15.0" prefHeight="70.0" prefWidth="285.0" styleClass="text-primary" text="Dashboard">
                      <font>
                         <Font name="Verdana" size="48.0" />
                      </font>
@@ -35,10 +34,24 @@
                   <Label layoutX="130.0" layoutY="36.0" prefHeight="17.0" prefWidth="176.0" styleClass="campaign-title" text="Campaign 1" />
                </children>
             </Pane>
-            <Pane prefHeight="100.0" prefWidth="220.0" />
+            <Pane prefHeight="100.0" prefWidth="162.0">
+               <children>
+                  <JFXButton fx:id="settingsButton" buttonType="RAISED" layoutX="85.0" layoutY="27.0" mnemonicParsing="false" onAction="#settingsPage" prefHeight="42.0" prefWidth="57.0" ripplerFill="#fdfdfd" text=" ">
+                     <cursor>
+                        <Cursor fx:constant="NONE" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fx:id="houseImageView1" fitHeight="39.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:/C:/Users/ivash/IdeaProjects/segGroupCW/src/main/resources/assets/app-22-cog-512.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children></Pane>
          </children>
       </HBox>
-      <ScrollPane layoutX="176.0" layoutY="100.0" prefHeight="772.0" prefWidth="763.0">
+      <ScrollPane layoutX="176.0" layoutY="100.0" prefHeight="1898.0" prefWidth="763.0">
          <content>
             <VBox prefHeight="1144.0" prefWidth="788.0">
                <children>
@@ -227,7 +240,7 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane fx:id="noClicksPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="noClicksPane" onMouseClicked="#graphViewNoClicks" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="noOfClicksChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-8.0" layoutY="-1.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
@@ -239,7 +252,7 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane fx:id="noOfUniques" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="noOfUniques" onMouseClicked="#graphViewNoUniques" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="NoUniquesChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-12.0" layoutY="-1.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
@@ -251,7 +264,7 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane fx:id="noBouncePane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="noBouncePane" onMouseClicked="#graphViewNoBounces" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="NoBouncesChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-12.0" layoutY="-1.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
@@ -263,7 +276,7 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane fx:id="noOfConversionsPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="noOfConversionsPane" onMouseClicked="#graphViewNoConversions" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="NoConversionsChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-11.0" layoutY="1.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
@@ -275,7 +288,7 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane fx:id="totalCostPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="totalCostPane" onMouseClicked="#graphViewTotalCost" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="totalCostChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
@@ -285,15 +298,9 @@
                                           <NumberAxis side="LEFT" />
                                        </yAxis>
                                     </LineChart>
-                                    <JFXRadioButton fx:id="LineChartRadioGraph" layoutX="497.0" layoutY="24.0" mnemonicParsing="false" onAction="#lineChartChange" text="Line Chart">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="group1" />
-                                       </toggleGroup></JFXRadioButton>
-                                    <JFXRadioButton fx:id="pieChartRadioButton" layoutX="497.0" layoutY="50.0" mnemonicParsing="false" onAction="#pieChartOption" text="Pie Chart" toggleGroup="$group1" />
-                                    <JFXRadioButton fx:id="histogramRadioButton" layoutX="497.0" layoutY="75.0" onAction="#histogramChange" text="Histogram" toggleGroup="$group1" />
                                  </children>
                               </Pane>
-                              <Pane fx:id="ctrPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="ctrPane" onMouseClicked="#graphViewCTR" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="ctrChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
@@ -305,7 +312,7 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane fx:id="cpaPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="cpaPane" onMouseClicked="#graphViewCPA" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="cpaChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
@@ -317,7 +324,7 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane fx:id="cpcPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="cpcPane" onMouseClicked="#graphViewCPC" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="cpcChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
@@ -329,7 +336,7 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane fx:id="cpmPane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="cpmPane" onMouseClicked="#graphViewCPM" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="cpmChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
@@ -341,7 +348,7 @@
                                     </LineChart>
                                  </children>
                               </Pane>
-                              <Pane fx:id="bounceRatePane" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
+                              <Pane fx:id="bounceRatePane" onMouseClicked="#graphViewBounceRate" prefHeight="147.0" prefWidth="504.0" styleClass="card-corners">
                                  <children>
                                     <LineChart fx:id="bounceRateChart" createSymbols="false" horizontalGridLinesVisible="false" layoutX="-7.0" prefHeight="147.0" prefWidth="504.0">
                                        <xAxis>
