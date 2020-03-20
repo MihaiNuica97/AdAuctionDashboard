@@ -201,33 +201,106 @@ public class SQLCreator {
 
     public String addFilters(List<String> filters) {
         String result = "WHERE ";
-        for (String option : filters) {
-            if (genders.contains(option)) {
-                result = result + userGender(option);
-            } else if (income.contains(option)) {
-                result = result + userIncome(option);
-            } else if (ages.contains(option)) {
-                switch (option) {
-                    case "< 25 years":
-                        result = result + userAge("<25");
-                        break;
-                    case "25 - 34 years":
-                        result = result + userAge("25-34");
-                        break;
-                    case "35 - 44 years":
-                        result = result + userAge("35-44");
-                        break;
-                    case "45 - 54 years":
-                        result = result + userAge("45-54");
-                        break;
-                    case "> 54 years":
-                        result = result + userAge(">54");
-                        break;
+        if (filters.containsAll(genders)) {
+            filters.removeAll(genders);
+        }
+        if (filters.containsAll(income)) {
+            filters.removeAll(income);
+        }
+        if (filters.containsAll(ages)) {
+            filters.removeAll(ages);
+        }
+
+        if (filters.size() > 0) {
+            ArrayList<String> filterIncome = new ArrayList<>();
+            ArrayList<String> filterAge = new ArrayList<>();
+
+            for (String option : filters) {
+                if (income.contains(option)) {
+                    filterIncome.add(option);
+                } else if (ages.contains(option)) {
+                    filterAge.add(option);
+                } else if (genders.contains(option)) {
+                    result = result + userGender(option);
+                    result += " AND ";
                 }
             }
-            result += " AND ";
+
+            if (filterAge.size() == 1) {
+                result = result + userAge(convertAge(filterAge.get(0))) + " AND ";
+            } else if (filterAge.size() > 1) {
+                result += "( ";
+                for (String each : filterAge) {
+                    result = result + userAge(convertAge(each));
+                    result += " OR ";
+                }
+                result = result.substring(0, result.length() - 4) + ") AND ";
+            }
+
+            if (filterIncome.size() == 1) {
+                result += userIncome(filterIncome.get(0)) + " AND ";
+            } else if (filterIncome.size() > 1) {
+                result += "( ";
+                for (String each : filterIncome) {
+                    result += userIncome(each);
+                    result += " OR ";
+                }
+                result = result.substring(0, result.length() - 4) + ") AND ";
+            }
+
+            //        for (String option : filters) {
+            //            if (genders.contains(option)) {
+            //                result = result + userGender(option);
+            //            } else if (income.contains(option)) {
+            //                result = result + userIncome(option);
+            //            } else if (ages.contains(option)) {
+            //                switch (option) {
+            //                    case "< 25 years":
+            //                        result = result + userAge("<25");
+            //                        break;
+            //                    case "25 - 34 years":
+            //                        result = result + userAge("25-34");
+            //                        break;
+            //                    case "35 - 44 years":
+            //                        result = result + userAge("35-44");
+            //                        break;
+            //                    case "45 - 54 years":
+            //                        result = result + userAge("45-54");
+            //                        break;
+            //                    case "> 54 years":
+            //                        result = result + userAge(">54");
+            //                        break;
+            //                }
+            //            }
+            //            result += " AND ";
+            //        }
+            return result.substring(0, result.length() - 5);
+        } else {
+            return "";
         }
-        return result.substring(0, result.length() - 5);
+
+    }
+
+    public String convertAge(String wrongAge) {
+        String age = "";
+        switch (wrongAge) {
+            case "< 25 years":
+                age = "<25";
+                break;
+            case "25 - 34 years":
+                age = "25-34";
+                break;
+            case "35 - 44 years":
+                age = "35-44";
+                break;
+            case "45 - 54 years":
+                age = "45-54";
+                break;
+            case "> 54 years":
+                age = ">54";
+                break;
+        }
+        return age;
     }
 
     //CUSTOM builders

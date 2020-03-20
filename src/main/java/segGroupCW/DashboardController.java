@@ -146,6 +146,8 @@ public class DashboardController implements Initializable {
             System.out.println(sql.filterBounceRatePage(selectedCheckBoxes, "2"));
             System.out.println(sql.filterBounceRateTime(selectedCheckBoxes, "Seconds", "30"));
             System.out.println(sql.filterBounceRateConv(selectedCheckBoxes));
+        } else {
+            initLabels();
         }
     }
 
