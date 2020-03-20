@@ -221,18 +221,16 @@ public class SQLCreator {
                 } else if (ages.contains(option)) {
                     filterAge.add(option);
                 } else if (genders.contains(option)) {
-                    result = result + userGender(option);
-                    result += " AND ";
+                    result += userGender(option) + " AND ";
                 }
             }
 
             if (filterAge.size() == 1) {
-                result = result + userAge(convertAge(filterAge.get(0))) + " AND ";
+                result += userAge(convertAge(filterAge.get(0))) + " AND ";
             } else if (filterAge.size() > 1) {
                 result += "( ";
                 for (String each : filterAge) {
-                    result = result + userAge(convertAge(each));
-                    result += " OR ";
+                    result += userAge(convertAge(each)) + " OR ";
                 }
                 result = result.substring(0, result.length() - 4) + ") AND ";
             }
@@ -242,43 +240,14 @@ public class SQLCreator {
             } else if (filterIncome.size() > 1) {
                 result += "( ";
                 for (String each : filterIncome) {
-                    result += userIncome(each);
-                    result += " OR ";
+                    result += userIncome(each) + " OR ";
                 }
                 result = result.substring(0, result.length() - 4) + ") AND ";
             }
-
-            //        for (String option : filters) {
-            //            if (genders.contains(option)) {
-            //                result = result + userGender(option);
-            //            } else if (income.contains(option)) {
-            //                result = result + userIncome(option);
-            //            } else if (ages.contains(option)) {
-            //                switch (option) {
-            //                    case "< 25 years":
-            //                        result = result + userAge("<25");
-            //                        break;
-            //                    case "25 - 34 years":
-            //                        result = result + userAge("25-34");
-            //                        break;
-            //                    case "35 - 44 years":
-            //                        result = result + userAge("35-44");
-            //                        break;
-            //                    case "45 - 54 years":
-            //                        result = result + userAge("45-54");
-            //                        break;
-            //                    case "> 54 years":
-            //                        result = result + userAge(">54");
-            //                        break;
-            //                }
-            //            }
-            //            result += " AND ";
-            //        }
             return result.substring(0, result.length() - 5);
         } else {
             return "";
         }
-
     }
 
     public String convertAge(String wrongAge) {

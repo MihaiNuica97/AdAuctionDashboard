@@ -76,7 +76,7 @@ public class DashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//    initLabels();
+        initLabels();
 //    DONT DELETE ^
 
         checkBoxList = new ArrayList<JFXCheckBox>();
@@ -105,7 +105,7 @@ public class DashboardController implements Initializable {
      */
     @FXML
     void applyFilter(ActionEvent event) {
-        List<String> selectedCheckBoxes = new ArrayList<String>();
+        List<String> selectedCheckBoxes = new ArrayList<>();
         for (JFXCheckBox checkBox : checkBoxList){
             if (checkBox.isSelected()) {
                 selectedCheckBoxes.add(checkBox.getText());
@@ -130,22 +130,6 @@ public class DashboardController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            SQLCreator sql = new SQLCreator();
-            System.out.println(sql.filterImps(selectedCheckBoxes));
-            System.out.println(sql.filterClicks(selectedCheckBoxes));
-            System.out.println(sql.filterUniques(selectedCheckBoxes));
-            System.out.println(sql.filterBouncePages(selectedCheckBoxes, "2"));
-            System.out.println(sql.filterBounceTime(selectedCheckBoxes, "Seconds", "30"));
-            System.out.println(sql.filterBounceConv(selectedCheckBoxes));
-            System.out.println(sql.filterConvs(selectedCheckBoxes));
-            System.out.println(sql.filterTotalCost(selectedCheckBoxes));
-            System.out.println(sql.filterCTR(selectedCheckBoxes));
-            System.out.println(sql.filterCPA(selectedCheckBoxes));
-            System.out.println(sql.filterCPC(selectedCheckBoxes));
-            System.out.println(sql.filterCPM(selectedCheckBoxes));
-            System.out.println(sql.filterBounceRatePage(selectedCheckBoxes, "2"));
-            System.out.println(sql.filterBounceRateTime(selectedCheckBoxes, "Seconds", "30"));
-            System.out.println(sql.filterBounceRateConv(selectedCheckBoxes));
         } else {
             initLabels();
         }
@@ -163,6 +147,7 @@ public class DashboardController implements Initializable {
                // System.out.println(checkBox.getText() + " is cleared" );
             }
         }
+        initLabels();
     }
 
 
@@ -320,49 +305,42 @@ public class DashboardController implements Initializable {
     public void setImpsLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
         ResultSet result = db.querySQL(sql.numOfImps());
         result.first();
-        System.out.println(result.getString(1));
         noImprLabel.setText(result.getString(1));
     }
 
     public void setClicksLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
         ResultSet result = db.querySQL(sql.numOfClicks());
         result.first();
-        System.out.println(result.getString(1));
         noClicksLabel.setText(result.getString(1));
     }
 
     public void setUniquesLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
         ResultSet result = db.querySQL(sql.numOfUniques());
         result.first();
-        System.out.println(result.getString(1));
         noUniqueLabel.setText(result.getString(1));
     }
 
     public void setNoBounceLabelPages(DatabaseHandler db, SQLCreator sql, String pages) throws SQLException {
         ResultSet result = db.querySQL(sql.bounceByPages(pages));
         result.first();
-        System.out.println(result.getString(1));
         noBounceLabel.setText(result.getString(1));
     }
 
     public void setNoBounceLabelTime(DatabaseHandler db, SQLCreator sql, String unit, String time) throws SQLException {
         ResultSet result = db.querySQL(sql.bounceByTime(unit, time));
         result.first();
-        System.out.println(result.getString(1));
         noBounceLabel.setText(result.getString(1));
     }
 
     public void setNoBounceLabelConv(DatabaseHandler db, SQLCreator sql) throws SQLException {
         ResultSet result = db.querySQL(sql.bounceByConv());
         result.first();
-        System.out.println(result.getString(1));
         noBounceLabel.setText(result.getString(1));
     }
 
     public void setNoConvLabel(DatabaseHandler db, SQLCreator sql) throws SQLException {
         ResultSet result = db.querySQL(sql.numOfConvs());
         result.first();
-        System.out.println(result.getString(1));
         noConversionLabel.setText(result.getString(1));
     }
 
@@ -375,7 +353,6 @@ public class DashboardController implements Initializable {
         result.first();
         float totalCost = impCost + result.getFloat(1);
         double total = Math.round(totalCost * 100.0) / 100.0;
-        System.out.println(total);
         totalCostLabel.setText(Double.toString(total));
     }
 
@@ -392,7 +369,6 @@ public class DashboardController implements Initializable {
             int clicks = result.getInt(1);
             float ctr = (float) clicks / imps;
             double ctrRound = Math.round(ctr * 100.0) / 100.0;
-            System.out.println(ctrRound);
             ctrLabel.setText(Double.toString(ctrRound));
         }
     }
@@ -413,8 +389,6 @@ public class DashboardController implements Initializable {
             float totalCost = impCost + result.getFloat(1);
             float cpa = totalCost / convs;
             double cpaRound = Math.round(cpa * 100.0) / 100.0;
-            System.out.println(cpa);
-            System.out.println(cpaRound);
             cpaLabel.setText(Double.toString(cpaRound));
         }
     }
@@ -435,7 +409,6 @@ public class DashboardController implements Initializable {
             float totalCost = impCost + result.getFloat(1);
             float cpc = totalCost / clicks;
             double cpcRound = Math.round(cpc * 100.0) / 100.0;
-            System.out.println(cpcRound);
             cpcLabel.setText(Double.toString(cpcRound));
         }
     }
@@ -456,8 +429,6 @@ public class DashboardController implements Initializable {
             float totalCost = impCost + result.getFloat(1);
             float cpm = totalCost / (imps * 1000);
             double cpmRound = Math.round(cpm * 100.0) / 100.0;
-            System.out.println(cpm);
-            System.out.println(cpmRound);
             cpmLabel.setText(Double.toString(cpmRound));
         }
     }
@@ -475,7 +446,6 @@ public class DashboardController implements Initializable {
             int bounces = result.getInt(1);
             float br = (float) bounces / clicks;
             double brRound = Math.round(br * 100.0) / 100.0;
-            System.out.println(brRound);
             bounceRateLabel.setText(Double.toString(brRound));
         }
     }
@@ -493,7 +463,6 @@ public class DashboardController implements Initializable {
             int bounces = result.getInt(1);
             float br = (float) bounces / clicks;
             double brRound = Math.round(br * 100.0) / 100.0;
-            System.out.println(brRound);
             bounceRateLabel.setText(Double.toString(brRound));
         }
     }
@@ -511,7 +480,6 @@ public class DashboardController implements Initializable {
             int bounces = result.getInt(1);
             float br = (float) bounces / clicks;
             double brRound = Math.round(br * 100.0) / 100.0;
-            System.out.println(brRound);
             bounceRateLabel.setText(Double.toString(brRound));
         }
     }
@@ -519,49 +487,42 @@ public class DashboardController implements Initializable {
     public void setImpsLabel(DatabaseHandler db, SQLCreator sql, List<String> filters) throws SQLException {
         ResultSet result = db.querySQL(sql.filterImps(filters));
         result.first();
-        System.out.println(result.getString(1));
         noImprLabel.setText(result.getString(1));
     }
 
     public void setClicksLabel(DatabaseHandler db, SQLCreator sql, List<String> filters) throws SQLException {
         ResultSet result = db.querySQL(sql.filterClicks(filters));
         result.first();
-        System.out.println(result.getString(1));
         noClicksLabel.setText(result.getString(1));
     }
 
     public void setUniquesLabel(DatabaseHandler db, SQLCreator sql, List<String> filters) throws SQLException {
         ResultSet result = db.querySQL(sql.filterUniques(filters));
         result.first();
-        System.out.println(result.getString(1));
         noUniqueLabel.setText(result.getString(1));
     }
 
     public void setNoBounceLabelPages(DatabaseHandler db, SQLCreator sql, String pages, List<String> filters) throws SQLException {
         ResultSet result = db.querySQL(sql.filterBouncePages(filters, pages));
         result.first();
-        System.out.println(result.getString(1));
         noBounceLabel.setText(result.getString(1));
     }
 
     public void setNoBounceLabelTime(DatabaseHandler db, SQLCreator sql, String unit, String time, List<String> filters) throws SQLException {
         ResultSet result = db.querySQL(sql.filterBounceTime(filters, unit, time));
         result.first();
-        System.out.println(result.getString(1));
         noBounceLabel.setText(result.getString(1));
     }
 
     public void setNoBounceLabelConv(DatabaseHandler db, SQLCreator sql, List<String> filters) throws SQLException {
         ResultSet result = db.querySQL(sql.filterBounceConv(filters));
         result.first();
-        System.out.println(result.getString(1));
         noBounceLabel.setText(result.getString(1));
     }
 
     public void setNoConvLabel(DatabaseHandler db, SQLCreator sql, List<String> filters) throws SQLException {
         ResultSet result = db.querySQL(sql.filterConvs(filters));
         result.first();
-        System.out.println(result.getString(1));
         noConversionLabel.setText(result.getString(1));
     }
 
@@ -574,7 +535,6 @@ public class DashboardController implements Initializable {
         result.first();
         float totalCost = impCost + result.getFloat(1);
         double total = Math.round(totalCost * 100.0) / 100.0;
-        System.out.println(total);
         totalCostLabel.setText(Double.toString(total));
     }
 
@@ -591,7 +551,6 @@ public class DashboardController implements Initializable {
             int clicks = result.getInt(1);
             float ctr = (float) clicks / imps;
             double ctrRound = Math.round(ctr * 100.0) / 100.0;
-            System.out.println(ctrRound);
             ctrLabel.setText(Double.toString(ctrRound));
         }
     }
@@ -612,8 +571,6 @@ public class DashboardController implements Initializable {
             float totalCost = impCost + result.getFloat(1);
             float cpa = totalCost / convs;
             double cpaRound = Math.round(cpa * 100.0) / 100.0;
-            System.out.println(cpa);
-            System.out.println(cpaRound);
             cpaLabel.setText(Double.toString(cpaRound));
         }
     }
@@ -634,7 +591,6 @@ public class DashboardController implements Initializable {
             float totalCost = impCost + result.getFloat(1);
             float cpc = totalCost / clicks;
             double cpcRound = Math.round(cpc * 100.0) / 100.0;
-            System.out.println(cpcRound);
             cpcLabel.setText(Double.toString(cpcRound));
         }
     }
@@ -655,8 +611,6 @@ public class DashboardController implements Initializable {
             float totalCost = impCost + result.getFloat(1);
             float cpm = totalCost / (imps * 1000);
             double cpmRound = Math.round(cpm * 100.0) / 100.0;
-            System.out.println(cpm);
-            System.out.println(cpmRound);
             cpmLabel.setText(Double.toString(cpmRound));
         }
     }
@@ -674,7 +628,6 @@ public class DashboardController implements Initializable {
             int bounces = result.getInt(1);
             float br = (float) bounces / clicks;
             double brRound = Math.round(br * 100.0) / 100.0;
-            System.out.println(brRound);
             bounceRateLabel.setText(Double.toString(brRound));
         }
     }
@@ -692,7 +645,6 @@ public class DashboardController implements Initializable {
             int bounces = result.getInt(1);
             float br = (float) bounces / clicks;
             double brRound = Math.round(br * 100.0) / 100.0;
-            System.out.println(brRound);
             bounceRateLabel.setText(Double.toString(brRound));
         }
     }
@@ -710,7 +662,6 @@ public class DashboardController implements Initializable {
             int bounces = result.getInt(1);
             float br = (float) bounces / clicks;
             double brRound = Math.round(br * 100.0) / 100.0;
-            System.out.println(brRound);
             bounceRateLabel.setText(Double.toString(brRound));
         }
     }
