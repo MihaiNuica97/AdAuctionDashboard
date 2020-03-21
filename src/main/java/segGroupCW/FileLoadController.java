@@ -84,8 +84,8 @@ public class FileLoadController {
 //		 	e.printStackTrace();
 //		 }
 		App.setRoot("dashboard");
-		App.getScene().getWindow().setHeight(900);
-		App.getScene().getWindow().setWidth(968);
+		App.getScene().getWindow().setHeight(925);
+		App.getScene().getWindow().setWidth(1000);
 	}
 	private Boolean isDBReady(){
 		return true;
