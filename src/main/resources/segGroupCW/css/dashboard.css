@@ -1,3 +1,11 @@
 .campaign-title{
     -fx-font-size: 2em;
 }
+.checkbox-text{
+    -fx-text-fill: -text-secondary;
+}
+
+.scroll-pane{
+    -fx-background-color: -main-bg-color;
+    -fx-background: -main-bg-color;
+}
