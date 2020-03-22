@@ -46,9 +46,22 @@
     -fx-text-fill: black;
 }
 
+.card .label{
+    -fx-text-fill: -main-bg-color;
+}
+.card-corners .label{
+    -fx-text-fill: -main-bg-color;
+}
+
+.chart-plot-background{
+    -fx-background-color:  white;
+}
+.axis{
+    -fx-tick-label-fill: -main-bg-color;
+}
+
 .page-title{
     -fx-effect: null;
     -fx-text-fill: -text-primary;
     -fx-font-size: 2em;
-
 }
