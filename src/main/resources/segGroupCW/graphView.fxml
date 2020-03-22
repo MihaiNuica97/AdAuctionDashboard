@@ -1,31 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXRadioButton?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="881.0" prefWidth="938.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.GraphController">
+<AnchorPane stylesheets="@css/graphView.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="881.0" prefWidth="938.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.GraphController">
    <children>
-      <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="938.0" style="-fx-background-color: #5988FF;">
+      <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="938.0">
          <children>
             <Pane prefHeight="100.0" prefWidth="246.0">
                <children>
-                  <Label fx:id="mainMetricLabel" layoutX="-80.0" layoutY="15.0" prefHeight="70.0" prefWidth="285.0" style="-fx-background-color: #5bc0be;" styleClass="text-primary" text="No of Impressions" textFill="#f7f1f1">
+                  <Label fx:id="mainMetricLabel" layoutX="-80.0" layoutY="15.0" prefHeight="70.0" prefWidth="285.0" styleClass="text-primary" text="No of Impressions">
                      <font>
                         <Font name="Verdana" size="24.0" />
                      </font>
@@ -33,20 +22,12 @@
                </children></Pane>
             <Pane fx:id="topHBox" prefHeight="100.0" prefWidth="370.0">
                <children>
-                  <Label layoutX="130.0" layoutY="36.0" prefHeight="17.0" prefWidth="176.0" text="Campaign 1" textFill="#fffefe">
-                     <font>
-                        <Font name="Verdana" size="22.0" />
-                     </font>
-                  </Label>
                </children>
             </Pane>
             <Pane prefHeight="100.0" prefWidth="220.0">
                <children>
                   <JFXButton fx:id="changeCampaignButton" layoutX="72.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="25.0" prefWidth="123.0" styleClass="btn-submit" text="Change Campaign" />
-                  <JFXButton buttonType="RAISED" layoutX="72.0" layoutY="50.0" mnemonicParsing="false" onAction="#dashboardReturn" prefHeight="42.0" prefWidth="57.0" ripplerFill="#fdfdfd" text=" ">
-                     <cursor>
-                        <Cursor fx:constant="NONE" />
-                     </cursor>
+                  <JFXButton buttonType="RAISED" layoutX="72.0" layoutY="50.0" mnemonicParsing="false" onAction="#dashboardReturn" prefHeight="42.0" prefWidth="57.0" text=" ">
                      <graphic>
                         <ImageView fx:id="houseImageView" fitHeight="34.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -55,14 +36,11 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="settingsButton" buttonType="RAISED" layoutX="134.0" layoutY="50.0" mnemonicParsing="false" onAction="#settingsPage" prefHeight="42.0" prefWidth="57.0" ripplerFill="#fdfdfd" text=" ">
-                     <cursor>
-                        <Cursor fx:constant="NONE" />
-                     </cursor>
+                  <JFXButton fx:id="settingsButton" buttonType="RAISED" layoutX="134.0" layoutY="50.0" mnemonicParsing="false" onAction="#settingsPage" prefHeight="42.0" prefWidth="57.0" text=" ">
                      <graphic>
                         <ImageView fx:id="houseImageView1" fitHeight="39.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="file:/C:/Users/ivash/IdeaProjects/segGroupCW/src/main/resources/assets/app-22-cog-512.png" />
+                              <Image url="@/assets/app-22-cog-512.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -70,11 +48,73 @@
                </children>
             </Pane>
          </children>
-         <effect>
-            <DropShadow />
-         </effect>
       </HBox>
-      <Pane fx:id="chartPane" layoutX="180.0" layoutY="109.0" prefHeight="404.0" prefWidth="746.0" style="-fx-background-color: #5bc0be;">
+      <VBox styleClass="checkbox-text" fx:id="testPane" layoutX="-2.0" layoutY="109.0" prefHeight="772.0" prefWidth="176.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="718.0" prefWidth="176.0" spacing="20.0">
+               <padding>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Label styleClass="checkbox-text" text="Filter">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox styleClass="checkbox-text"  prefHeight="97.0" prefWidth="156.0" spacing="10.0">
+                     <children>
+                        <Label  contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" text="Gender" />
+                        <JFXCheckBox fx:id="femaleCheckBox" text="Female"/>
+                        <JFXCheckBox fx:id="maleCheckbox" text="Male" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="183.0" prefWidth="156.0" spacing="10.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="138.0" text="Age" />
+                        <JFXCheckBox fx:id="age1Checkbox" text="&lt; 25 years"/>
+                        <JFXCheckBox fx:id="age2Checkbox" text="25 - 34 years"/>
+                        <JFXCheckBox fx:id="age3Checkbox" text="35 - 44 years"/>
+                        <JFXCheckBox fx:id="age4Checkbox" text="45 - 54 years"/>
+                        <JFXCheckBox fx:id="age5Checkbox" text="&gt; 54 years"/>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="131.0" prefWidth="156.0" spacing="10.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="133.0" text="Income"/>
+                        <JFXCheckBox fx:id="lowIncomeCheckbox" text="Low"/>
+                        <JFXCheckBox fx:id="MediumIncomeCheckbox" text="Medium"/>
+                        <JFXCheckBox fx:id="highIncomeCheckbox" text="High"/>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="236.0" prefWidth="156.0" spacing="10.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="143.0" text="Context"/>
+                        <JFXCheckBox fx:id="shoppingCheckbox" text="Shopping"/>
+                        <JFXCheckBox fx:id="newsCheckbox" text="News"/>
+                        <JFXCheckBox fx:id="blogCheckbox" text="Blog"/>
+                        <JFXCheckBox fx:id="socialMCheckbox" text="Social Media"/>
+                        <JFXCheckBox fx:id="hobbiesCheckbox" text="Hobbies"/>
+                        <JFXCheckBox fx:id="travelCheckbox" text="Travel"/>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <JFXButton styleClass="btn-primary" fx:id="addFilterButton" buttonType="RAISED" onAction="#addFilterButton" prefHeight="25.0" prefWidth="101.0"  text="Add Filter" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <Pane fx:id="chartPane" layoutX="180.0" layoutY="158.0" prefHeight="404.0" prefWidth="746.0" styleClass="card-corners">
          <children>
             <LineChart fx:id="mainChart" layoutX="12.0" layoutY="14.0" prefHeight="371.0" prefWidth="727.0">
               <xAxis>
@@ -86,115 +126,49 @@
             </LineChart>
          </children>
       </Pane>
-      <HBox alignment="CENTER_LEFT" layoutX="180.0" layoutY="552.0" prefHeight="46.0" prefWidth="746.0" spacing="20.0" style="-fx-background-color: #5bc0be;">
+      <Pane layoutX="180.0" layoutY="609.0" prefHeight="156.0" prefWidth="746.0" styleClass="card-corners">
          <children>
-            <Label alignment="CENTER" prefHeight="46.0" prefWidth="183.0" text="Type of graph">
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </Label>
-            <JFXRadioButton fx:id="lineChartButton" onAction="#lineChartChange" text="Line Chart">
-               <toggleGroup>
-                  <ToggleGroup fx:id="timeToggle" />
-               </toggleGroup>
-            </JFXRadioButton>
-            <JFXRadioButton fx:id="pieChartButton" onAction="#pieChartChange" text="Pie Chart" toggleGroup="$timeToggle" />
-            <JFXRadioButton fx:id="histogramChartButton" onAction="#histogramChange" text="Histogram" toggleGroup="$timeToggle" />
-         </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="180.0" layoutY="511.0" prefHeight="42.0" prefWidth="746.0" spacing="20.0" style="-fx-background-color: #5bc0be;">
-         <children>
-            <Label alignment="CENTER" prefHeight="70.0" prefWidth="147.0" text="Time">
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </Label>
-            <JFXRadioButton fx:id="hoursRadioButoon1" text="Hours">
-               <toggleGroup>
-                  <ToggleGroup fx:id="timeToggle1" />
-               </toggleGroup>
-            </JFXRadioButton>
-            <JFXRadioButton fx:id="daysRadioButton1" text="Days" toggleGroup="$timeToggle1" />
-            <JFXRadioButton fx:id="weeksRadioButton1" text="Weeks" toggleGroup="$timeToggle1" />
-            <JFXRadioButton fx:id="monthsRadioButton1" text="Months" toggleGroup="$timeToggle1" />
-         </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </HBox>
-      <VBox fx:id="testPane" layoutX="-2.0" layoutY="109.0" prefHeight="772.0" prefWidth="176.0" style="-fx-background-color: #5988FF;">
-         <children>
-            <VBox alignment="TOP_CENTER" prefHeight="718.0" prefWidth="176.0" spacing="20.0" style="-fx-background-color: #5988FF;">
-               <padding>
-                  <Insets left="10.0" right="10.0" top="10.0" />
-               </padding>
+            <HBox alignment="CENTER_LEFT" layoutY="21.0" prefHeight="42.0" prefWidth="746.0" spacing="20.0">
                <children>
-                  <Label text="Filter" textFill="#f5f4f4">
+                  <Label alignment="CENTER" prefHeight="70.0" prefWidth="147.0" text="Time">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="26.0" />
                      </font>
                   </Label>
-                  <VBox prefHeight="97.0" prefWidth="156.0" spacing="10.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" text="Gender" textFill="WHITE" />
-                        <JFXCheckBox fx:id="femaleCheckBox" text="Female" textFill="WHITE" />
-                        <JFXCheckBox fx:id="maleCheckbox" text="Male" textFill="#f7f3f3" />
-                     </children>
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </VBox>
-                  <VBox prefHeight="183.0" prefWidth="156.0" spacing="10.0">
-                     <children>
-                        <Label prefHeight="17.0" prefWidth="138.0" text="Age" textFill="#f8f6f6" />
-                        <JFXCheckBox fx:id="age1Checkbox" text="&lt; 25 years" textFill="#fffefe" />
-                        <JFXCheckBox fx:id="age2Checkbox" text="25 - 34 years" textFill="#fffdfd" />
-                        <JFXCheckBox fx:id="age3Checkbox" text="35 - 44 years" textFill="#fdfcfc" />
-                        <JFXCheckBox fx:id="age4Checkbox" text="45 - 54 years" textFill="#f7f1f1" />
-                        <JFXCheckBox fx:id="age5Checkbox" text="&gt; 54 years" textFill="#faf9f9" />
-                     </children>
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </VBox>
-                  <VBox prefHeight="131.0" prefWidth="156.0" spacing="10.0">
-                     <children>
-                        <Label prefHeight="17.0" prefWidth="133.0" text="Income" textFill="#f8f7f7" />
-                        <JFXCheckBox fx:id="lowIncomeCheckbox" text="Low" textFill="#f8f7f7" />
-                        <JFXCheckBox fx:id="MediumIncomeCheckbox" text="Medium" textFill="#f8f7f7" />
-                        <JFXCheckBox fx:id="highIncomeCheckbox" text="High" textFill="#f8f7f7" />
-                     </children>
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </VBox>
-                  <VBox prefHeight="236.0" prefWidth="156.0" spacing="10.0">
-                     <children>
-                        <Label prefHeight="17.0" prefWidth="143.0" text="Context" textFill="#fdfafa" />
-                        <JFXCheckBox fx:id="shoppingCheckbox" text="Shopping" textFill="#fdfafa" />
-                        <JFXCheckBox fx:id="newsCheckbox" text="News" textFill="#fdfafa" />
-                        <JFXCheckBox fx:id="blogCheckbox" text="Blog" textFill="#fdfafa" />
-                        <JFXCheckBox fx:id="socialMCheckbox" text="Social Media" textFill="#fdfafa" />
-                        <JFXCheckBox fx:id="hobbiesCheckbox" text="Hobbies" textFill="#fdfafa" />
-                        <JFXCheckBox fx:id="travelCheckbox" text="Travel" textFill="#fdfafa" />
-                     </children>
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </VBox>
-                  <JFXButton fx:id="addFilterButton" buttonType="RAISED" onAction="#addFilterButton" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: #ffffff;" text="Add Filter" />
+                  <JFXRadioButton fx:id="hoursRadioButoon1" text="Hours">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="timeToggle1" />
+                     </toggleGroup>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="daysRadioButton1" text="Days" toggleGroup="$timeToggle1" />
+                  <JFXRadioButton fx:id="weeksRadioButton1" text="Weeks" toggleGroup="$timeToggle1" />
+                  <JFXRadioButton fx:id="monthsRadioButton1" text="Months" toggleGroup="$timeToggle1" />
                </children>
-            </VBox>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutY="78.0" prefHeight="46.0" prefWidth="746.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="183.0" text="Type of graph">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <JFXRadioButton fx:id="lineChartButton" onAction="#lineChartChange" text="Line Chart">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="timeToggle" />
+                     </toggleGroup>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="pieChartButton" onAction="#pieChartChange" text="Pie Chart" toggleGroup="$timeToggle" />
+                  <JFXRadioButton fx:id="histogramChartButton" onAction="#histogramChange" text="Histogram" toggleGroup="$timeToggle" />
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
          </children>
-      </VBox>
-      <VBox fx:id="filterVbox" layoutX="189.0" layoutY="615.0" prefHeight="245.0" prefWidth="736.0" spacing="10.0">
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </VBox>
+      </Pane>
 
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 .root{
     -main-bg-color: #1b262c;
+    -card-bg-color: white;
     -primary: #0f4c75;
     -secondary: #bbe1fa;
     -text-primary: #3282b8;
@@ -33,17 +34,15 @@
 }
 
 .card{
-    -fx-background-color: white;
+    -fx-background-color: -card-bg-color;
     -fx-background-radius: 15%;
     -fx-border-radius: 15%;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
-    -fx-text-fill: black;
 }
 
 .card-corners{
-    -fx-background-color: white;
+    -fx-background-color: -card-bg-color;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
-    -fx-text-fill: black;
 }
 
 .card .label{
@@ -54,10 +53,11 @@
 }
 
 .chart-plot-background{
-    -fx-background-color:  white;
+    -fx-background-color:  -card-bg-color;
 }
 .axis{
     -fx-tick-label-fill: -main-bg-color;
+
 }
 
 .page-title{
