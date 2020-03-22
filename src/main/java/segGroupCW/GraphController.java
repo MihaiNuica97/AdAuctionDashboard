@@ -6,7 +6,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -17,6 +19,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -122,12 +125,16 @@ public class GraphController implements Initializable
 
     /**
      * Returns to the settings page
-     * @param event
      * @throws IOException
      */
     @FXML
-    void settingsPage(ActionEvent event) throws IOException {
-        App.setRoot("settings");
+    void settingsPage() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+        Scene settingsScene = new Scene(loader.load());
+        Stage settingsStage = new Stage();
+        settingsScene.getStylesheets().add(App.themeController.getCurrentThemeUrl());
+        settingsStage.setScene(settingsScene);
+        settingsStage.show();
     }
 
     /**

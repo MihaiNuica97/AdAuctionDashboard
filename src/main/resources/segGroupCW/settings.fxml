@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ToggleGroup?>
 
 
-<AnchorPane prefHeight="485.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.SettingsController">
-   <children>
-      <Pane prefHeight="120.0" prefWidth="602.0">
-         <children>
-            <JFXButton fx:id="dashboardButton" layoutX="505.0" layoutY="48.0" onAction="#backToDashboard" text="Dashboard" />
-            <Label layoutX="23.0" layoutY="41.0" prefHeight="38.0" prefWidth="111.0" text="Settings" />
-         </children>
-      </Pane>
-   </children>
-</AnchorPane>
+<BorderPane stylesheets="@css/settings.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.SettingsController">
+   <top>
+      <Label alignment="CENTER" styleClass="title-text, text-primary" text="Settings" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="30.0" />
+         </BorderPane.margin></Label>
+   </top>
+
+   <center>
+      <VBox fx:id="stylesVBox" alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+
+   <bottom>
+      <JFXButton onAction="#closeWindow" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" styleClass="btn-submit" text="Confirm" BorderPane.alignment="CENTER" />
+   </bottom>
+   <padding>
+      <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+   </padding>
+</BorderPane>

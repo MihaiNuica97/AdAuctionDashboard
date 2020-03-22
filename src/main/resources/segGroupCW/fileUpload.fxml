@@ -56,9 +56,7 @@
          </children>
       </Pane>
       <HBox alignment="CENTER" layoutX="24.0" layoutY="409.0" prefHeight="40.0" prefWidth="503.0">
-         <children>
-            <JFXButton onAction="#test" mnemonicParsing="false" styleClass="btn, btn-primary" text="Load previous campaign" />
-         </children>
+
       </HBox>
    </children>
 </AnchorPane>
