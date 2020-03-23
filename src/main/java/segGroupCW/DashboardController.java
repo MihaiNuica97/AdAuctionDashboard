@@ -111,17 +111,17 @@ public class DashboardController implements Initializable {
         }
         if (!selectedCheckBoxes.isEmpty()) {
             try {
-                setImpsLabel(db, sql, selectedCheckBoxes);
-                setClicksLabel(db, sql, selectedCheckBoxes);
-                setUniquesLabel(db, sql, selectedCheckBoxes);
-                setNoBounceLabelPages(db, sql, "2", selectedCheckBoxes);
-                setNoConvLabel(db, sql, selectedCheckBoxes);
-                setTotalCostLabel(db, sql, selectedCheckBoxes);
-                setCtrLabel(db, sql, selectedCheckBoxes);
-                setCpaLabel(db, sql, selectedCheckBoxes);
-                setCpcLabel(db, sql, selectedCheckBoxes);
-                setCpmLabel(db, sql, selectedCheckBoxes);
-                setBounceRateLabelPages(db, sql, "2", selectedCheckBoxes);
+                setImpsLabel(db, sqlCreator, selectedCheckBoxes);
+                setClicksLabel(db, sqlCreator, selectedCheckBoxes);
+                setUniquesLabel(db, sqlCreator, selectedCheckBoxes);
+                setNoBounceLabelPages(db, sqlCreator, "2", selectedCheckBoxes);
+                setNoConvLabel(db, sqlCreator, selectedCheckBoxes);
+                setTotalCostLabel(db, sqlCreator, selectedCheckBoxes);
+                setCtrLabel(db, sqlCreator, selectedCheckBoxes);
+                setCpaLabel(db, sqlCreator, selectedCheckBoxes);
+                setCpcLabel(db, sqlCreator, selectedCheckBoxes);
+                setCpmLabel(db, sqlCreator, selectedCheckBoxes);
+                setBounceRateLabelPages(db, sqlCreator, "2", selectedCheckBoxes);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
