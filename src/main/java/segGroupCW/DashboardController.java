@@ -320,7 +320,7 @@ public class DashboardController implements Initializable {
         refreshCPAGraph(dates[0],dates[1]);
         refreshCPCGraph(dates[0],dates[1]);
         refreshCPMGraph(dates[0],dates[1]);
-        refreshBRPageGraph(dates[2],dates[3]);
+        //refreshBRPageGraph(dates[2],dates[3]);
 
     }
 
@@ -793,10 +793,11 @@ public class DashboardController implements Initializable {
         cpmChart.getData().add(getSeries(start, end ,"days",1,8));
     }
 
+    /*
     private void refreshBRPageGraph(String start, String end){
         bounceRateChart.getData().add(getBouncePageSeries(start, end ,"days", "2", 1));
     }
-
+*/
 
     /**
      *
@@ -913,6 +914,7 @@ public class DashboardController implements Initializable {
      * @param num
      * @return
      */
+    /*
     private XYChart.Series getBouncePageSeries(String start, String end, String intervalTime, String intervalPage, int num){
         ArrayList<String> dates = iterTimeIntervals(start, end, intervalTime, num);
         XYChart.Series series = new XYChart.Series();
@@ -938,5 +940,5 @@ public class DashboardController implements Initializable {
         }
         return series;
     }
-
+*/
 }
