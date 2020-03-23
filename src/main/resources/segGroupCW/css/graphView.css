@@ -1,7 +1,7 @@
 .campaign-title{
     -fx-font-size: 2em;
 }
-.checkbox-text{
+.checkbox-text .label, .checkbox-text .check-box{
     -fx-text-fill: -text-secondary;
 }
 

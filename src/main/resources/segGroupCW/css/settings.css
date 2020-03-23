@@ -1,0 +1,9 @@
+.title-text{
+    -fx-font-size: 2em;
+}
+.radio-button{
+    -fx-padding: 10px;
+}
+.btn-submit{
+    -fx-padding: 10px;
+}

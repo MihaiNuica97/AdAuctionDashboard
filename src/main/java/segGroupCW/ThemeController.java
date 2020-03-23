@@ -36,6 +36,7 @@ public class ThemeController {
 
 //	updates current theme and applies the new one
 	public void changeTheme(String newTheme){
+		App.scene.getStylesheets().remove(this.getCurrentThemeUrl());
 		this.currentTheme = newTheme;
 		applyTheme(newTheme);
 	}
@@ -48,6 +49,10 @@ public class ThemeController {
 	{
 		return currentTheme;
 	}
+
+	public String getCurrentThemeUrl(){ return themeURLs.get(currentTheme); }
+
+	public String getThemeURL(String themeName){return themeURLs.get(themeName);}
 
 	public ArrayList<String> getThemeNames(){
 		return themeNames;

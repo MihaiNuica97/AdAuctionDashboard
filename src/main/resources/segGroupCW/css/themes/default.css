@@ -9,7 +9,6 @@
     -fx-background-color: -main-bg-color;
     -fx-font-size: 12px;
     -fx-text-fill: -text-secondary;
-
 }
 .primary{
     -fx-color: -primary;
@@ -44,5 +43,4 @@
     -fx-effect: null;
     -fx-text-fill: -text-primary;
     -fx-font-size: 2em;
-
 }
