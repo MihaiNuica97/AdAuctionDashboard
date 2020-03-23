@@ -174,7 +174,7 @@ public class SQLCreator {
      * @return      String of the SQL statement
      */
     public String betweenDate(String date, String start, String end) {
-        return date + "=> TIMESTAMP '" + start + "' AND " + date + " <= '" + end + "'";
+        return date + " BETWEEN '" + start + "' AND '" + end + "'";
     }
 
     public String userGender(String table, String gender) {
@@ -268,8 +268,8 @@ public class SQLCreator {
      */
     public ArrayList<String> betweenDateTotalCost(String start, String end) {
         ArrayList<String> result = new ArrayList<>();
-        result.add("SELECT SUM(COST) FROM IMPRESSIONS" + betweenDate("DATE", start, end) + ";");
-        result.add("SELECT SUM(CLICKCOST) FROM CLICKS" + betweenDate("DATE", start, end) + " ;");
+        result.add("SELECT SUM(COST) FROM IMPRESSIONS WHERE " + betweenDate("DATE", start, end) + ";");
+        result.add("SELECT SUM(CLICKCOST) FROM CLICKS WHERE " + betweenDate("DATE", start, end) + " ;");
         return result;
     }
 
@@ -408,8 +408,7 @@ public class SQLCreator {
      */
     public String FirstLastDate(String table){
         if(table.equals("server")){
-            return "select MIN(EntryDate), max(EntryDate) from server" + System.lineSeparator() +
-                    "select MIN(ExitDate), max(ExitDate) from server";
+            return "select MIN(EntryDate), max(EntryDate), MIN(ExitDate), max(ExitDate) from server;";
         }
         return "select MIN(Date), max(Date) from " + table.toLowerCase();
     }

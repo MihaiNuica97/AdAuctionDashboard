@@ -7,6 +7,8 @@ public class DatabaseHandler {
 
     private Connection conn;
     private Statement sqlcmd;
+    private Statement sqlcmd2;
+    private Statement sqlcmd3;
 
     public DatabaseHandler(){
 
@@ -18,10 +20,15 @@ public class DatabaseHandler {
             * make a connection to the database (at file path: working direction + path to Database folder)
             * if the database doesn't exist, it will create one
              */
-            Connection conn = DriverManager.getConnection("jdbc:h2:" + getWorkingDir() + "/src/main/resources/Database/baseDB","sa","");
+            conn = DriverManager.getConnection("jdbc:h2:" + getWorkingDir() + "/src/main/resources/Database/baseDB","sa","");
 
             //creates a statement object to send to the DB
-            sqlcmd = conn.createStatement();
+            sqlcmd = conn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            sqlcmd2 = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            sqlcmd3 = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
 
         }
@@ -59,6 +66,14 @@ public class DatabaseHandler {
     public void closeSQL() throws SQLException {
         sqlcmd.close();
 
+    }
+
+    public ResultSet tempQuery1(String sql) throws SQLException {
+        return sqlcmd2.executeQuery(sql);
+    }
+
+    public ResultSet tempQuery2(String sql) throws SQLException {
+        return sqlcmd3.executeQuery(sql);
     }
 
 

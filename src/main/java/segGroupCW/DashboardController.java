@@ -3,8 +3,6 @@ package segGroupCW;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,10 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.h2.store.DataHandler;
 
-import javax.xml.crypto.Data;
-import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -96,6 +91,8 @@ public class DashboardController implements Initializable {
         checkBoxList.add(socialMCheckbox);
         checkBoxList.add(hobbiesCheckbox);
         checkBoxList.add(travelCheckbox);
+        initLabels();
+        initGraphs();
 
     }
 
@@ -260,21 +257,66 @@ public class DashboardController implements Initializable {
         App.setRoot("graphView");
     }
 
+    private DatabaseHandler db = new DatabaseHandler();
+    private SQLCreator sqlCreator = new SQLCreator();
+
+    /**
+     * return array - 0: start impressinos, 1: end Imp, 2: start clicks, 3: end clicks
+     * @return
+     */
+    private String[] getFirstLastDates(){
+        String[] dates = new String[10];
+        try {
+            ResultSet rs = db.querySQL(sqlCreator.FirstLastDate("impressions"));
+            rs.first();
+            dates[0] = rs.getString(1).split(" ")[0];
+            dates[1] = rs.getString(2).split(" ")[0];
+
+            rs = db.querySQL(sqlCreator.FirstLastDate("clicks"));
+            rs.first();
+            dates[2] = rs.getString(1).split(" ")[0];
+            dates[3] = rs.getString(2).split(" ")[0];
+
+            rs = db.querySQL(sqlCreator.FirstLastDate("server"));
+            rs.first();
+            dates[4] = rs.getString(1).split(" ")[0];
+            dates[5] = rs.getString(2).split(" ")[0];
+            dates[6] = rs.getString(3).split(" ")[0];
+            dates[7] = rs.getString(4).split(" ")[0];
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dates;
+    }
+
+    private void initGraphs(){
+        String[] dates = getFirstLastDates();
+        refreshImpressionsGraph(dates[0], dates[1]);
+        refreshClicksGraph(dates[2], dates[3]);
+        refreshUniquesGraph(dates[2],dates[3]);
+        refreshConvsGraph(dates[4], dates[5]);
+        refreshTotalCostGraph(dates[0],dates[1]);
+        refreshCTRGraph(dates[2],dates[3]);
+        refreshCPAGraph(dates[0],dates[1]);
+        refreshCPCGraph(dates[0],dates[1]);
+        refreshCPMGraph(dates[0],dates[1]);
+        refreshBRPageGraph(dates[2],dates[3]);
+
+    }
+
     private void initLabels() {
         try {
-            DatabaseHandler db = new DatabaseHandler();
-            SQLCreator sql = new SQLCreator();
-            setImpsLabel(db, sql);
-            setClicksLabel(db, sql);
-            setUniquesLabel(db, sql);
-            setNoBounceLabelPages(db, sql, "2");
-            setNoConvLabel(db, sql);
-            setTotalCostLabel(db, sql);
-            setCtrLabel(db, sql);
-            setCpaLabel(db, sql);
-            setCpcLabel(db, sql);
-            setCpmLabel(db, sql);
-            setBounceRateLabelPages(db, sql, "2");
+            setImpsLabel(db, sqlCreator);
+            setClicksLabel(db, sqlCreator);
+            setUniquesLabel(db, sqlCreator);
+            setNoBounceLabelPages(db, sqlCreator, "2");
+            setNoConvLabel(db, sqlCreator);
+            setTotalCostLabel(db, sqlCreator);
+            setCtrLabel(db, sqlCreator);
+            setCpaLabel(db, sqlCreator);
+            setCpcLabel(db, sqlCreator);
+            setCpmLabel(db, sqlCreator);
+            setBounceRateLabelPages(db, sqlCreator, "2");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -480,30 +522,219 @@ public class DashboardController implements Initializable {
     }
 
     /*
-        * create function that gets first and last dates of tables
-        * recieves time interval and range and creates a list of sql statements, retruns a list of values
-        * turn values intop chart elemetns
+     * create function that gets first and last dates of tables
+     * recieves time interval and range and creates a list of sql statements, retruns a list of values
+     * turn values intop chart elemetns
      */
 
     /**
      *
      * @param start  start date of data required - yyyy-MM-dd
      * @param end    end date of data required - yyyy-MM-dd
-     * @param interval  the array list containing the list of intervals
+     * @param interval  the string indicating the measurement of intervals
+     * @param num    the number of the given measurement, of which we should jump per interval
      * @return
      */
 
-    public static ArrayList<String> iterTimeIntervals(String start, String end, int interval){
+//int for interval num and string for day/month
+    private static ArrayList<String> iterTimeIntervals(String start, String end, String interval, int num){
         ArrayList<String> intervals = new ArrayList<>();
         LocalDate startDate = LocalDate.parse(start);
-        LocalDate endDate = LocalDate.parse(end);
+        LocalDate endDate = LocalDate.parse(end).plusDays(1);
         intervals.add(startDate.toString());
 
-        while (startDate.isBefore(endDate)){
-            startDate = startDate.plusDays(interval);
-            intervals.add(startDate.toString());
+        switch  (interval){
+            case "days":
+                while (startDate.isBefore(endDate)){
+                    startDate = startDate.plusDays(num);
+                    intervals.add(startDate.toString());
+                }
+                break;
+            case "months":
+                while (startDate.isBefore(endDate)){
+                    startDate = startDate.plusMonths(num);
+                    intervals.add(startDate.toString());
+                }
+                break;
+            case "weeks":
+                while (startDate.isBefore(endDate)){
+                    startDate = startDate.plusWeeks(num);
+                    intervals.add(startDate.toString());
+                }
+                break;
         }
         return intervals;
+    }
+
+    private void refreshImpressionsGraph(String start, String end){
+        NoImpressionsChart.getData().add(getSeries(start, end, "days", 1, 0));
+    }
+
+    private void refreshClicksGraph(String start, String end){
+        noOfClicksChart.getData().add(getSeries(start, end ,"days",1,1));
+    }
+
+    private void refreshUniquesGraph(String start, String end){
+        NoUniquesChart.getData().add(getSeries(start, end ,"days",1,2));
+    }
+
+    /*
+    private void refreshBouncePagesGraph(String start, String end){
+        NoUniquesChart.getData().add(getSeries(start, end ,"days",1,));
+    }
+     */
+
+    private void refreshConvsGraph(String start, String end){
+        NoConversionsChart.getData().add(getSeries(start, end ,"days",1,3));
+    }
+
+    private void refreshTotalCostGraph(String start, String end){
+        totalCostChart.getData().add(getSeries(start, end ,"days",1,4));
+    }
+
+    private void refreshCTRGraph(String start, String end){
+        ctrChart.getData().add(getSeries(start, end ,"days",1,5));
+    }
+
+    private void refreshCPAGraph(String start, String end){
+        cpaChart.getData().add(getSeries(start, end ,"days",1,6));
+    }
+
+    private void refreshCPCGraph(String start, String end){
+        cpcChart.getData().add(getSeries(start, end ,"days",1,7));
+    }
+
+    private void refreshCPMGraph(String start, String end){
+        cpmChart.getData().add(getSeries(start, end ,"days",1,8));
+    }
+
+    private void refreshBRPageGraph(String start, String end){
+        bounceRateChart.getData().add(getBouncePageSeries(start, end ,"days", "2", 1));
+    }
+
+
+
+    private XYChart.Series getSeries(String start, String end, String interval, int num, int graphNum){
+        ArrayList<String> dates = iterTimeIntervals(start, end, interval, num);
+        XYChart.Series series = new XYChart.Series();
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        ResultSet rs3 = null;
+
+        for(int i = 0; i < dates.size();i++){
+            try {
+                switch (graphNum) {
+                    case 0:
+                        rs = db.querySQL(sqlCreator.betweenDateImps(dates.get(i), dates.get(i + 1)));
+                        break;
+                    case 1:
+                        rs = db.querySQL(sqlCreator.betweenDateClicks(dates.get(i), dates.get(i + 1)));
+                        break;
+                    case 2:
+                        rs = db.querySQL(sqlCreator.betweenDateUniques(dates.get(i), dates.get(i + 1)));
+                        break;
+                    case 3:
+                        rs = db.querySQL(sqlCreator.betweenDateConvs(dates.get(i), dates.get(i + 1)));
+                        break;
+                    case 4:
+                        rs = db.querySQL(sqlCreator.betweenDateTotalCost(dates.get(i), dates.get(i + 1)).get(0));
+                        rs2 = db.tempQuery1(sqlCreator.betweenDateTotalCost(dates.get(i), dates.get(i + 1)).get(1));
+                        break;
+                    case 5:
+                        rs = db.querySQL(sqlCreator.betweenDateCTR(dates.get(i), dates.get(i + 1)).get(0));
+                        rs2 = db.tempQuery1(sqlCreator.betweenDateCTR(dates.get(i), dates.get(i + 1)).get(1));
+                        break;
+                    case 6:
+                        rs = db.querySQL(sqlCreator.betweenDateCPA(dates.get(i), dates.get(i + 1)).get(0));
+                        rs2 = db.tempQuery1(sqlCreator.betweenDateCPA(dates.get(i), dates.get(i + 1)).get(1));
+                        rs3 = db.tempQuery2(sqlCreator.betweenDateCPA(dates.get(i), dates.get(i + 1)).get(2));
+                        break;
+                    case 7:
+                        rs = db.querySQL(sqlCreator.betweenDateCPC(dates.get(i), dates.get(i + 1)).get(0));
+                        rs2 = db.tempQuery1(sqlCreator.betweenDateCPC(dates.get(i), dates.get(i + 1)).get(1));
+                        rs3 = db.tempQuery2(sqlCreator.betweenDateCPC(dates.get(i), dates.get(i + 1)).get(2));
+                        break;
+                    case 8:
+                        rs = db.querySQL(sqlCreator.betweenDateCPM(dates.get(i), dates.get(i + 1)).get(0));
+                        rs2 = db.tempQuery1(sqlCreator.betweenDateCPM(dates.get(i), dates.get(i + 1)).get(1));
+                        break;
+
+                }
+                if(graphNum == 0 || graphNum == 1 || graphNum == 2 || graphNum == 3) {
+                    while (rs.next()) {
+                        rs.first();
+                        series.getData().add(new XYChart.Data(dates.get(i), rs.getInt(1)));
+                    }
+                }
+                else if (graphNum == 4){
+                    while(rs.next() && rs2.next()){
+                        rs.first();
+                        series.getData().add(new XYChart.Data(dates.get(i), rs.getInt(1) + rs2.getInt(1)));
+                    }
+                }
+                else if (graphNum == 5 || graphNum == 8){
+                    while(rs.next() && rs2.next()){
+                        rs.first();
+                        if(rs2.getInt(1) == 0){
+                            series.getData().add(new XYChart.Data(dates.get(i), 0));
+                        }else {
+                            series.getData().add(new XYChart.Data(dates.get(i), (float) (rs.getInt(1) / rs2.getInt(1))));
+                        }
+                    }
+                }
+                else if (graphNum == 6 || graphNum == 7){
+                    while(rs.next() && rs2.next() && rs3.next()){
+                        rs.first();
+                        if(rs3.getInt(1) == 0){
+                            series.getData().add(new XYChart.Data(dates.get(i), 0));
+                        }else {
+                            series.getData().add(new XYChart.Data(dates.get(i), (float) ((rs.getInt(1) + rs2.getInt(1)) / rs3.getInt(1))));
+                        }
+                    }
+                }
+                else if (graphNum == 8){
+                    while(rs.next() && rs2.next() && rs3.next()){
+                        rs.first();
+                        if(rs3.getInt(1) == 0){
+                            series.getData().add(new XYChart.Data(dates.get(i), 0));
+                        }else {
+                            series.getData().add(new XYChart.Data(dates.get(i), (float) ((rs.getInt(1) + rs2.getInt(1)) / rs3.getInt(1)) * 1000));
+                        }
+                    }
+                }
+
+            }
+            catch (SQLException e) { e.printStackTrace(); }
+            catch (IndexOutOfBoundsException e){}
+            catch (NullPointerException e){e.printStackTrace();}
+        }
+        return series;
+    }
+
+    private XYChart.Series getBouncePageSeries(String start, String end, String intervalTime, String intervalPage, int num){
+        ArrayList<String> dates = iterTimeIntervals(start, end, intervalTime, num);
+        XYChart.Series series = new XYChart.Series();
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+
+        for(int i = 0; i < dates.size();i++) {
+            try {
+                rs = db.querySQL(sqlCreator.betweenDateBRPage(dates.get(i), dates.get(i + 1), intervalPage).get(0));
+                rs2 = db.querySQL(sqlCreator.betweenDateBRPage(dates.get(i), dates.get(i + 1), intervalPage).get(1));
+
+                while(rs.next() && rs2.next()){
+                    if(rs2.getInt(1) == 0){
+                        series.getData().add(new XYChart.Data(dates.get(i), 0));
+                    }else {
+                        series.getData().add(new XYChart.Data(dates.get(i), (float) (rs.getInt(1) / rs2.getInt(1))));
+                    }
+                }
+            }
+            catch (SQLException e) { e.printStackTrace(); }
+            catch (IndexOutOfBoundsException e){}
+            catch (NullPointerException e){e.printStackTrace();}
+        }
+        return series;
     }
 
 }
