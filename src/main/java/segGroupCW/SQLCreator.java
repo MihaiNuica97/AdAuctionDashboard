@@ -1,8 +1,14 @@
 package segGroupCW;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SQLCreator {
+    private List<String> genders = Arrays.asList("Male", "Female");
+    private List<String> ages = Arrays.asList("< 25 years", "25 - 34 years", "35 - 44 years", "45 - 54 years", "> 54 years");
+    private List<String> income = Arrays.asList("Low", "Medium", "High");
+    private List<String> context = Arrays.asList("Blog", "News", "Shopping", "Social Media", "Hobbies", "Travel");
 
     /**
      * SQL statement to calculate the total impressions.
@@ -177,16 +183,93 @@ public class SQLCreator {
         return date + " BETWEEN '" + start + "' AND '" + end + "'";
     }
 
-    public String userGender(String table, String gender) {
-        return "JOIN USERS ON " + table + ".ID = USERS.ID WHERE GENDER = '" + gender + "'";
+    public String userGender(String gender) {
+        return "GENDER = '" + gender + "'";
     }
 
-    public String userAge(String table, String age) {
-        return "JOIN USERS ON " + table + ".ID = USERS.ID WHERE AGE = '" + age + "'";
+    public String userAge(String age) {
+        return "AGE = '" + age + "'";
     }
 
-    public String userIncome(String table, String income) {
-        return "JOIN USERS ON " + table + ".ID = USERS.ID WHERE INCOME = '" + income + "'";
+    public String userIncome(String income) {
+        return "INCOME = '" + income + "'";
+    }
+
+    public String joinUser(String table) {
+        return "JOIN USERS ON " + table + ".ID = USERS.ID";
+    }
+
+    public String addFilters(List<String> filters) {
+        String result = "WHERE ";
+        if (filters.containsAll(genders)) {
+            filters.removeAll(genders);
+        }
+        if (filters.containsAll(income)) {
+            filters.removeAll(income);
+        }
+        if (filters.containsAll(ages)) {
+            filters.removeAll(ages);
+        }
+
+        if (filters.size() > 0) {
+            ArrayList<String> filterIncome = new ArrayList<>();
+            ArrayList<String> filterAge = new ArrayList<>();
+
+            for (String option : filters) {
+                if (income.contains(option)) {
+                    filterIncome.add(option);
+                } else if (ages.contains(option)) {
+                    filterAge.add(option);
+                } else if (genders.contains(option)) {
+                    result += userGender(option) + " AND ";
+                }
+            }
+
+            if (filterAge.size() == 1) {
+                result += userAge(convertAge(filterAge.get(0))) + " AND ";
+            } else if (filterAge.size() > 1) {
+                result += "( ";
+                for (String each : filterAge) {
+                    result += userAge(convertAge(each)) + " OR ";
+                }
+                result = result.substring(0, result.length() - 4) + ") AND ";
+            }
+
+            if (filterIncome.size() == 1) {
+                result += userIncome(filterIncome.get(0)) + " AND ";
+            } else if (filterIncome.size() > 1) {
+                result += "( ";
+                for (String each : filterIncome) {
+                    result += userIncome(each) + " OR ";
+                }
+                result = result.substring(0, result.length() - 4) + ") AND ";
+            }
+            return result.substring(0, result.length() - 5);
+        } else {
+            return "";
+        }
+    }
+
+    public String convertAge(String wrongAge) {
+        String age = "";
+        switch (wrongAge) {
+            case "< 25 years":
+                age = "<25";
+                break;
+            case "25 - 34 years":
+                age = "25-34";
+                break;
+            case "35 - 44 years":
+                age = "35-44";
+                break;
+            case "45 - 54 years":
+                age = "45-54";
+                break;
+            case "> 54 years":
+                age = ">54";
+                break;
+        }
+        return age;
     }
 
     //CUSTOM builders
@@ -246,6 +329,10 @@ public class SQLCreator {
      */
     public String betweenDateBouncesTime(String start, String end, String unit, String time) {
         return "SELECT COUNT(*) FROM SERVER WHERE DATEDIFF(" + unit + ", ENTRYDATE, EXITDATE) < " + time + " AND " + betweenDate("ENTRYDATE", start, end) + ";";
+    }
+
+    public String betweenDateBouncesConv(String start, String end) {
+        return "SELECT COUNT(*) FROM SERVER WHERE CONVERSION = FALSE AND " + betweenDate("ENTRYDATE", start, end) + ";";
     }
 
     /**
@@ -342,7 +429,7 @@ public class SQLCreator {
         result.add(betweenDateBouncesPage(start, end, pages));
         result.add(betweenDateClicks(start, end));
         return result;
-    }
+   }
 
     /**
      * SQL statements for the bounce rate between 2 dates using the time definition.
@@ -360,9 +447,97 @@ public class SQLCreator {
         return result;
     }
 
-    public String genderImps(String gender) {
-        return "SELECT * FROM IMPRESSIONS " + userGender("IMPRESSIONS", gender) + ";";
+    public ArrayList<String> betweenDateBRConv(String start, String end) {
+        ArrayList<String> result = new ArrayList<>();
+        result.add(betweenDateBouncesConv(start, end));
+        result.add(betweenDateClicks(start, end));
+        return result;
     }
+
+    public String filterImps(List<String> filters) {
+        return "SELECT COUNT(*) FROM IMPRESSIONS " + joinUser("IMPRESSIONS") + " " + addFilters(filters) + ";";
+    }
+
+    public String filterClicks(List<String> filters) {
+       return "SELECT COUNT(*) FROM CLICKS " + joinUser("CLICKS") + " " + addFilters(filters) + ";";
+    }
+
+    public String filterUniques(List<String> filters) {
+        return "SELECT COUNT(DISTINCT(CLICKS.ID)) FROM CLICKS " + joinUser("CLICKS") + " " + addFilters(filters) + ";";
+    }
+
+    public String filterBouncePages(List<String> filters, String pages) {
+        return "SELECT COUNT(*) FROM SERVER " + joinUser("SERVER") + " " + addFilters(filters) + " AND PAGESVIEWED = " + pages + ";";
+    }
+
+    public String filterBounceTime(List<String> filters, String unit, String time) {
+        return "SELECT COUNT(*) FROM SERVER " + joinUser("SERVER") + " " + addFilters(filters) + " AND DATEDIFF(" + unit + ", ENTRYDATE, EXITDATE) < " + time + ";";
+    }
+
+    public String filterBounceConv(List<String> filters) {
+        return "SELECT COUNT (*) FROM SERVER " + joinUser("SERVER") + " " + addFilters(filters) + " AND CONVERSION = FALSE;";
+    }
+
+    public String filterConvs(List<String> filters) {
+        return "SELECT COUNT(*) FROM SERVER " + joinUser("SERVER") + " " + addFilters(filters) + " AND CONVERSION = TRUE;";
+    }
+
+    public ArrayList<String> filterTotalCost(List<String> filters) {
+        ArrayList<String> result = new ArrayList<>();
+        result.add("SELECT SUM(COST) FROM IMPRESSIONS " + joinUser("IMPRESSIONS") + " " + addFilters(filters) + ";");
+        result.add("SELECT SUM(CLICKCOST) FROM CLICKS " + joinUser("CLICKS") + " " + addFilters(filters) + ";");
+        return result;
+    }
+
+    public ArrayList<String> filterCTR(List<String> filters) {
+        ArrayList<String> result = new ArrayList<>();
+        result.add(filterClicks(filters));
+        result.add(filterImps(filters));
+        return result;
+    }
+
+    public ArrayList<String> filterCPA(List<String> filters) {
+        ArrayList<String> result = new ArrayList<>();
+        result.addAll(filterTotalCost(filters));
+        result.add(filterConvs(filters));
+        return result;
+    }
+
+    public ArrayList<String> filterCPC(List<String> filters) {
+        ArrayList<String> result = new ArrayList<>();
+        result.addAll(filterTotalCost(filters));
+        result.add(filterClicks(filters));
+        return result;
+    }
+
+    public ArrayList<String> filterCPM(List<String> filters) {
+        ArrayList<String> result = new ArrayList<>();
+        result.addAll(filterTotalCost(filters));
+        result.add(filterImps(filters));
+        return result;
+    }
+
+    public ArrayList<String> filterBounceRatePage(List<String> filters, String pages){
+        ArrayList<String> result = new ArrayList<>();
+        result.add(filterBouncePages(filters, pages));
+        result.add(filterClicks(filters));
+        return result;
+    }
+
+    public ArrayList<String> filterBounceRateTime(List<String> filters, String unit, String time){
+        ArrayList<String> result = new ArrayList<>();
+        result.add(filterBounceTime(filters, unit, time));
+        result.add(filterClicks(filters));
+        return result;
+    }
+
+    public ArrayList<String> filterBounceRateConv(List<String> filters) {
+        ArrayList<String> result = new ArrayList<>();
+        result.add(filterBounceConv(filters));
+        result.add(filterClicks(filters));
+        return result;
+    }
+
 
     /**
      * SQL statements to remove old tables if they exist and create new ones for the new database.

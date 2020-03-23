@@ -81,7 +81,7 @@ public class FileLoadController {
 		 	loadFilesToDB();
 		 } catch (SQLException e) {
 		  System.out.println("Database not created");
-	 	e.printStackTrace();
+	 		e.printStackTrace();
 		 }
 		App.setRoot("dashboard");
 		App.getScene().getWindow().setHeight(900);
