@@ -613,7 +613,15 @@ public class DashboardController implements Initializable {
     }
 
 
-
+    /**
+     *
+     * @param start
+     * @param end
+     * @param interval
+     * @param num
+     * @param graphNum
+     * @return
+     */
     private XYChart.Series getSeries(String start, String end, String interval, int num, int graphNum){
         ArrayList<String> dates = iterTimeIntervals(start, end, interval, num);
         XYChart.Series series = new XYChart.Series();
@@ -711,6 +719,15 @@ public class DashboardController implements Initializable {
         return series;
     }
 
+    /**
+     * 
+     * @param start
+     * @param end
+     * @param intervalTime
+     * @param intervalPage
+     * @param num
+     * @return
+     */
     private XYChart.Series getBouncePageSeries(String start, String end, String intervalTime, String intervalPage, int num){
         ArrayList<String> dates = iterTimeIntervals(start, end, intervalTime, num);
         XYChart.Series series = new XYChart.Series();
