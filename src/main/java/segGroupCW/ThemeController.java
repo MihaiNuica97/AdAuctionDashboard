@@ -3,27 +3,40 @@ package segGroupCW;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class ThemeController {
 	private String currentTheme;
 	private HashMap<String, String> themeURLs = new HashMap<>();
 	private ArrayList<String> themeNames;
+	private Boolean packaged;
 
 	//	gets initialized when App is initialized
 //	grabs all filenames from the themes folder and puts them in a HashMap along with their urls
 	public ThemeController(String themeFolder) {
+		this.packaged = App.packaged;
 		currentTheme = "default.css";
-		getFilenamesFromFolder(themeFolder);
 		themeNames = new ArrayList<>();
 //	    grab all files from theme folder
-
-		ArrayList<String> fileNames = getFilenamesFromFolder(themeFolder);
-		for(String name: fileNames){
-			String resource = getClass().getResource(themeFolder+name).toExternalForm();
-			themeURLs.put(name, resource);
-			themeNames.add(name);
+		if(!packaged) {
+			ArrayList<String> fileNames = getFilenamesFromFolder(themeFolder);
+			for(String name: fileNames){
+				String resource = getClass().getResource(themeFolder+name).toExternalForm();
+				themeURLs.put(name, resource);
+				themeNames.add(name);
+			}
 		}
+		else{
+			File[] fileList = getFilenamesFromSystem(themeFolder);
+			for(File file:fileList){
+				String filename = file.getName();
+				themeURLs.put(filename, file.toURI().toString());
+//				themeURLs.put(filename, "file:///" + file.getAbsolutePath().replace("\\", "/").replace(" ","%"));
+				themeNames.add(filename);
+			}
+		}
+
 
 		this.applyTheme(currentTheme);
 	}
@@ -70,6 +83,15 @@ public class ThemeController {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		return fileNames;
+	}
+	private File[] getFilenamesFromSystem(String folderName){
+		File[] fileNames;
+		File aux = new File("");
+		String folderPath = aux.getAbsolutePath()+folderName;
+		aux = new File(folderPath);
+		fileNames = aux.listFiles();
+		System.out.println(Arrays.toString(aux.listFiles()));
 
 		return fileNames;
 	}

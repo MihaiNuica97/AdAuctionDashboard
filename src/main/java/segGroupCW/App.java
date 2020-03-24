@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -16,6 +17,7 @@ public class App extends Application {
 
 	public static Scene scene;
 	public static ThemeController themeController;
+	public static Boolean packaged = false;
 
 	public static Scene getScene(){
 		return scene;
@@ -23,7 +25,11 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
 		scene = new Scene(loadFXML("fileUpload"));
-		themeController = new ThemeController("css/themes/");
+		if(packaged) {
+			themeController = new ThemeController(File.separator+"css" + File.separator + "themes" + File.separator);
+		}else{
+			themeController = new ThemeController("css/themes/");
+		}
 		stage.setScene(scene);
 		stage.show();
 		stage.setHeight(500);
