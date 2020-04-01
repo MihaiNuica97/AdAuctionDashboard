@@ -1,11 +1,32 @@
 .campaign-title{
     -fx-font-size: 2em;
 }
-.checkbox-text{
-    -fx-text-fill: -text-secondary;
+
+.HBox{
+    -fx-background-color: -primary;
+    -fx-text-fill: -secondary;
+}
+
+.check-box{
+    -fx-text-fill: -primary;
 }
 
 .scroll-pane{
-    -fx-background-color: -main-bg-color;
-    -fx-background: -main-bg-color;
+    -fx-background-color: -primary;
+}
+
+#leftVBox{
+    -fx-background-color: -secondary;
+}
+
+#graphVBox{
+
+    -fx-background-color: -primary;
+}
+
+#blueSeparator{
+
+    -fx-border-color: #3b57a5;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
 }

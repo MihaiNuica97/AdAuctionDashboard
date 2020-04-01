@@ -1,7 +1,8 @@
 .root{
-    -main-bg-color: #F2F4F4;
-    -primary: #5988FF;
-    -secondary: white;
+    -main-bg-color: #f9f9f9;
+    -secondary-bg-color: #5988FF;
+    -primary: #f9f9f9;
+    -secondary: #5988FF;
     -text-primary: #5988FF;
     -text-secondary: #63788F;
     -success: #55CF5A;
@@ -10,12 +11,26 @@
     -fx-font-size: 12px;
     -fx-text-fill: -text-secondary;
 }
+
 .primary{
     -fx-color: -primary;
 }
 .btn-primary{
+
+    -fx-border-color: -primary;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-background-color: -secondary;
+    -fx-text-fill: -primary;
+}
+
+.btn-primary:hover{
+
+    -fx-border-color: -primary;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
     -fx-background-color: -primary;
-    -fx-text-fill: -secondary;
+    -fx-text-fill: #63788F;
 }
 
 .text-primary{
@@ -28,14 +43,14 @@
 }
 
 .card{
-    -fx-background-color: -secondary;
+    -fx-background-color: -primary;
     -fx-background-radius: 15%;
     -fx-border-radius: 15%;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
 .card-corners{
-    -fx-background-color: -secondary;
+    -fx-background-color: -primary;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
@@ -44,3 +59,5 @@
     -fx-text-fill: -text-primary;
     -fx-font-size: 2em;
 }
+
+
