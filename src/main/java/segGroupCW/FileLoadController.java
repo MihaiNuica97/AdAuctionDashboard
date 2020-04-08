@@ -76,16 +76,16 @@ public class FileLoadController {
 	private void goToDashboard() throws IOException
 	{
 		System.out.println("Dashboard button clicked");
-		 try {
-		 	dbHandler.sendSQL(sqlcreator.createDB());
-		 	loadFilesToDB();
-		 } catch (SQLException e) {
-		  System.out.println("Database not created");
-	 		e.printStackTrace();
-		 }
+//		 try {
+//		 	dbHandler.sendSQL(sqlcreator.createDB());
+//		 	loadFilesToDB();
+//		 } catch (SQLException e) {
+//		  System.out.println("Database not created");
+//	 		e.printStackTrace();
+//		 }
 		App.setRoot("dashboard");
-		App.getScene().getWindow().setHeight(925);
-		App.getScene().getWindow().setWidth(1000);
+//		App.getScene().getWindow().setHeight(925);
+//		App.getScene().getWindow().setWidth(1000);
 	}
 	private Boolean isDBReady(){
 		return true;
