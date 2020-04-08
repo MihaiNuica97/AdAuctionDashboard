@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,6 +69,8 @@ public class DashboardController implements Initializable {
     @FXML
     private JFXButton applyFilterButton, clearFilterButton;
 
+    @FXML
+    private VBox leftVBox;
 
     /**
      *
@@ -77,6 +81,9 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initLabels();
 //    DONT DELETE ^
+
+        leftVBox.getChildren().addAll(GlyphsDude.createIcon(FontAwesomeIcons.COG,"40px"));
+
 
         checkBoxList = new ArrayList<JFXCheckBox>();
         checkBoxList.add(femaleCheckBox);
