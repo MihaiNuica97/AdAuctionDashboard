@@ -18,6 +18,7 @@ public class App extends Application {
 	public static Scene scene;
 	public static ThemeController themeController;
 	public static Boolean packaged = false;
+	private static Stage thisStage;
 
 	public static Scene getScene(){
 		return scene;
@@ -30,6 +31,7 @@ public class App extends Application {
 		}else{
 			themeController = new ThemeController("css/themes/");
 		}
+		thisStage = stage;
 		stage.setScene(scene);
 		stage.show();
 		stage.setHeight(500);
@@ -44,7 +46,7 @@ public class App extends Application {
 
  	static void setRoot(String fxml) throws IOException {
 		scene.setRoot(loadFXML(fxml));
-		
+		thisStage.sizeToScene();
 
 	}
 	
