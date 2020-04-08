@@ -3,6 +3,7 @@ package segGroupCW;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -193,6 +194,10 @@ public class DashboardController implements Initializable {
         JFXRadioButton bounceDefinition2 = new JFXRadioButton("Number of pages viewed is below a threshold");
         JFXRadioButton bounceDefinition3 = new JFXRadioButton("Conversion did not take place");
 
+        JFXSlider definition1Slider = new JFXSlider(0, 360, 60);
+
+        JFXSlider definition2Slider = new JFXSlider(0, 10, 2);
+
         bounceDefinition1.setToggleGroup(bounceToggle);
         bounceDefinition2.setToggleGroup(bounceToggle);
         bounceDefinition3.setToggleGroup(bounceToggle);
@@ -204,7 +209,9 @@ public class DashboardController implements Initializable {
         box.getChildren().add(bounceDefinition3);
 
         pane1.getChildren().add(bounceDefinition1);
+        pane1.getChildren().add(definition1Slider);
         pane2.getChildren().add(bounceDefinition2);
+        pane2.getChildren().add(definition2Slider);
         pane3.getChildren().add(bounceDefinition3);
 
 

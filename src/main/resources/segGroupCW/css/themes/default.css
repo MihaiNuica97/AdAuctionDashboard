@@ -3,18 +3,21 @@
     -secondary-bg-color: #5988FF;
     -primary: #f9f9f9;
     -secondary: #5988FF;
-    -text-primary: #5988FF;
+    -text-primary: #f9f9f9;
     -text-secondary: #63788F;
     -success: #55CF5A;
     -error: red;
     -fx-background-color: -main-bg-color;
     -fx-font-size: 12px;
     -fx-text-fill: -text-secondary;
+    -label: #5988FF
 }
 
 .primary{
     -fx-color: -primary;
 }
+
+
 .btn-primary{
 
     -fx-border-color: -primary;
@@ -39,7 +42,7 @@
 
 .btn-submit{
     -fx-background-color: -success;
-    -fx-text-fill: -secondary;
+    -fx-text-fill: -text-primary;
 }
 
 .card{

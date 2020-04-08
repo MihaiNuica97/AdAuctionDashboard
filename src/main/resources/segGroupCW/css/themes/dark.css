@@ -1,23 +1,45 @@
 .root{
     -main-bg-color: #1b262c;
     -card-bg-color: white;
-    -primary: #0f4c75;
-    -secondary: #bbe1fa;
-    -text-primary: #3282b8;
+    -primary: #1b262c;
+    -secondary: #0f4c75;
+    -text-primary: #a9a9a9;
     -text-secondary: #bbe1fa;
     -success: #55CF5A;
     -error: red;
     -fx-background-color: -main-bg-color;
     -fx-font-size: 12px;
     -fx-text-fill: -text-secondary;
+    -label: white
 
 }
-.primary{
-    -fx-color: -primary;
+.primary {
+    -fx-color: -main-bg-color;
 }
+
 .btn-primary{
-    -fx-background-color: -primary;
+    -fx-background-color: -main-bg-color;
+    -fx-text-fill: -text-primary;
+    -fx-border-color: -primary;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}
+
+.btn-primary:hover{
+    -fx-border-color: -text-primary;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-background-color: -text-primary;
     -fx-text-fill: -secondary;
+}
+
+.HBox{
+    -fx-background-color: -main-bg-color;
+    -fx-text-fill: -secondary;
+}
+
+#leftVBox{
+    -fx-background-color: -primary;
 }
 
 .text-primary{

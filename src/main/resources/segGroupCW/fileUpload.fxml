@@ -13,7 +13,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="95.0" prefWidth="550.0">
          <children>
-            <Label prefHeight="90.0" prefWidth="541.0" styleClass="text-primary" text="   AD AUCTION DASHBOARD" textAlignment="CENTER">
+            <Label prefHeight="90.0" prefWidth="541.0" styleClass="title-text" text="   AD AUCTION DASHBOARD" textAlignment="CENTER">
                <font>
                   <Font size="40.0" />
                </font>

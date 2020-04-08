@@ -351,21 +351,20 @@
                      <graphic>
                         <ImageView fx:id="houseImageView1" fitHeight="39.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@/assets/app-22-cog-512.png" />
+                              <Image url="@/assets/153268.svg" />
                            </image>
-                        </ImageView>
-                     </graphic>
+                        </ImageView>                     </graphic>
                   </JFXButton>
                </children></Pane>
             <Separator fx:id="blueSeparator" prefHeight="0.0" prefWidth="156.0" />
-            <Label styleClass="checkbox-text" text="Filter">
+            <Label fx:id="filterLabel" styleClass="checkbox-text" text="Filter">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
             <VBox prefHeight="97.0" prefWidth="156.0" spacing="10.0">
                <children>
-                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="checkbox-text" />
+                  <Label fx:id="genderLabel" contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="checkbox-text" text="Gender" />
                   <JFXCheckBox fx:id="femaleCheckBox" styleClass="checkbox-text" text="Female" />
                   <JFXCheckBox fx:id="maleCheckbox" styleClass="checkbox-text" text="Male" />
                </children>
@@ -375,7 +374,7 @@
             </VBox>
             <VBox prefHeight="183.0" prefWidth="156.0" spacing="10.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="138.0" styleClass="checkbox-text" text="Age" />
+                  <Label fx:id="ageLabel" prefHeight="17.0" prefWidth="138.0" styleClass="checkbox-text" text="Age" />
                   <JFXCheckBox fx:id="age1Checkbox" styleClass="checkbox-text" text="&lt; 25 years" />
                   <JFXCheckBox fx:id="age2Checkbox" styleClass="checkbox-text" text="25 - 34 years" />
                   <JFXCheckBox fx:id="age3Checkbox" styleClass="checkbox-text" text="35 - 44 years" />
@@ -388,7 +387,7 @@
             </VBox>
             <VBox prefHeight="131.0" prefWidth="156.0" spacing="10.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="133.0" styleClass="checkbox-text" text="Income" />
+                  <Label fx:id="incomeLabel" prefHeight="17.0" prefWidth="133.0" styleClass="checkbox-text" text="Income" />
                   <JFXCheckBox fx:id="lowIncomeCheckbox" styleClass="checkbox-text" text="Low" />
                   <JFXCheckBox fx:id="MediumIncomeCheckbox" styleClass="checkbox-text" text="Medium" />
                   <JFXCheckBox fx:id="highIncomeCheckbox" styleClass="checkbox-text" text="High" />
@@ -399,7 +398,7 @@
             </VBox>
             <VBox prefHeight="236.0" prefWidth="156.0" spacing="10.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="143.0" styleClass="checkbox-text" text="Context" />
+                  <Label fx:id="contextLabel" prefHeight="17.0" prefWidth="143.0" styleClass="checkbox-text" text="Context" />
                   <JFXCheckBox fx:id="shoppingCheckbox" styleClass="checkbox-text" text="Shopping" />
                   <JFXCheckBox fx:id="newsCheckbox" styleClass="checkbox-text" text="News" />
                   <JFXCheckBox fx:id="blogCheckbox" styleClass="checkbox-text" text="Blog" />

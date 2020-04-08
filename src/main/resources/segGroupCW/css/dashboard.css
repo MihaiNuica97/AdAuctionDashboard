@@ -1,5 +1,10 @@
 .campaign-title{
     -fx-font-size: 2em;
+    -fx-text-fill: -text-primary;
+}
+
+#dashBoardLabel{
+    -fx-text-fill: -label;
 }
 
 .HBox{
@@ -8,7 +13,7 @@
 }
 
 .check-box{
-    -fx-text-fill: -primary;
+    -fx-text-fill: -text-primary;
 }
 
 .scroll-pane{
@@ -17,6 +22,27 @@
 
 #leftVBox{
     -fx-background-color: -secondary;
+
+}
+
+#genderLabel{
+    -fx-text-fill: -text-primary;
+}
+
+#ageLabel{
+    -fx-text-fill: -text-primary;
+}
+
+#incomeLabel{
+    -fx-text-fill: -text-primary;
+}
+
+#contextLabel{
+    -fx-text-fill: -text-primary;
+}
+
+#filterLabel{
+    -fx-text-fill: -text-primary;
 }
 
 #graphVBox{

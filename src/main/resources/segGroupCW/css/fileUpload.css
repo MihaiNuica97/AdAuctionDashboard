@@ -1,6 +1,7 @@
 .btn-submit{
     -fx-padding: 10px;
+    -fx-text-fill: -text-primary;
 }
 .title-text{
-    -fx-font-size: 2em;
+    -fx-text-fill: #5988FF;
 }
