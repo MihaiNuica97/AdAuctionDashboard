@@ -82,7 +82,7 @@ public class DashboardController implements Initializable {
         initLabels();
 //    DONT DELETE ^
 
-        leftVBox.getChildren().addAll(GlyphsDude.createIcon(FontAwesomeIcons.COG,"40px"));
+//        leftVBox.getChildren().addAll(GlyphsDude.createIcon(FontAwesomeIcons.COG,"40px"));
 
 
         checkBoxList = new ArrayList<JFXCheckBox>();

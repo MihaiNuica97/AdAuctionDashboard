@@ -8,8 +8,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.shape.SVGPath?>
-<?import com.jfoenix.svg.SVGGlyph?>
 <BorderPane stylesheets="@css/dashboard.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="segGroupCW.DashboardController">
 
    <top>
@@ -104,7 +102,7 @@
 
 
    <center>
-      <ScrollPane BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
          <content>
             <VBox fx:id="graphVBox" prefWidth="788.0">
                <children>
