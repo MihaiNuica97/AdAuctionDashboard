@@ -1,6 +1,6 @@
 .root{
     -main-bg-color: #1b262c;
-    -card-bg-color: white;
+    -card-bg-color: #e7e7e7;
     -primary: #1b262c;
     -secondary: #0f4c75;
     -text-primary: #a9a9a9;
@@ -10,7 +10,8 @@
     -fx-background-color: -main-bg-color;
     -fx-font-size: 12px;
     -fx-text-fill: -text-secondary;
-    -label: white
+    -label: white;
+    -icons: #a9a9a9;
 
 }
 .primary {

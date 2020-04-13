@@ -10,7 +10,8 @@
     -fx-background-color: -main-bg-color;
     -fx-font-size: 12px;
     -fx-text-fill: -text-secondary;
-    -label: #5988FF
+    -label: #5988FF;
+    -icons: black;
 }
 
 .primary{

@@ -5,23 +5,32 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
 import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Shadow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -40,10 +49,10 @@ public class DashboardController implements Initializable {
     private Label noImprLabel, noClicksLabel, noUniqueLabel, noBounceLabel, noConversionLabel, totalCostLabel, ctrLabel, cpaLabel, cpcLabel, cpmLabel, bounceRateLabel;
 
     @FXML
-    private JFXButton bounceDefinitionButton;
+    private JFXButton bounceDefinitionButton, settingsButton, homeButton;
 
     @FXML
-    private Pane noImprPane, noClicksPane, noOfUniques, noBouncePane, noOfConversionsPane, totalCostPane, ctrPane, cpaPane;
+    private Pane noImprPane, noClicksPane, noOfUniques, noBouncePane, noOfConversionsPane, totalCostPane, ctrPane, cpaPane, topPane;
 
     @FXML
     private LineChart<?, ?> NoImpressionsChart, noOfClicksChart, NoUniquesChart, NoBouncesChart, NoConversionsChart, totalCostChart, ctrChart, cpaChart;
@@ -82,8 +91,14 @@ public class DashboardController implements Initializable {
         initLabels();
 //    DONT DELETE ^
 
-        leftVBox.getChildren().addAll(GlyphsDude.createIcon(FontAwesomeIcons.COG,"40px"));
+        Text settingsIcon = GlyphsDude.createIcon(FontAwesomeIcons.COG, "40px");
+        settingsButton.setGraphic(settingsIcon);
 
+        Text homeIcon = GlyphsDude.createIcon(FontAwesomeIcons.HOME, "40px");
+        homeButton.setGraphic(homeIcon);
+
+        Text bounceIcon = GlyphsDude.createIcon(FontAwesomeIcons.PENCIL, "20px");
+        bounceDefinitionButton.setGraphic(bounceIcon);
 
         checkBoxList = new ArrayList<JFXCheckBox>();
         checkBoxList.add(femaleCheckBox);
@@ -171,6 +186,16 @@ public class DashboardController implements Initializable {
         settingsStage.show();
     }
 
+
+    /**
+     * Brings you to the main Input page
+     * @throws IOException
+     */
+    @FXML
+    private void switchToSecondary() throws IOException {
+        App.setRoot("fileUpload");
+    }
+
     /**
      * Functionality for changing bounce change
      * @param event
@@ -182,28 +207,107 @@ public class DashboardController implements Initializable {
         newStage.initModality(Modality.APPLICATION_MODAL);
         newStage.setTitle("Bounce Change");
 
-        VBox box = new VBox(10);
+        VBox box = new VBox(20);
+        box.setAlignment(Pos.CENTER);
+        javafx.geometry.Insets insets = new javafx.geometry.Insets(0,10,10,10);
+        box.setPadding(insets);
         Label label = new Label("Choose bounce definition:");
+        label.setStyle("-fx-font-size: 2em; -fx-text-fill: #5988FF");
         box.getChildren().add(label);
 
-        Pane pane1 = new Pane();
-        //hBox1.setPrefHeight(150);
-        Pane pane2 = new Pane();
-        Pane pane3 = new Pane();
+        HBox pane1 = new HBox();
+        pane1.setSpacing(10);
+        HBox pane2 = new HBox();
+        pane2.setSpacing(10);
+        HBox pane3 = new HBox();
+        HBox pane4 = new HBox();
+        pane4.setAlignment(Pos.CENTER);
 
         box.getChildren().add(pane1);
         box.getChildren().add(pane2);
         box.getChildren().add(pane3);
+        box.getChildren().add(pane4);
 
         ToggleGroup bounceToggle = new ToggleGroup();
 
-        JFXRadioButton bounceDefinition1 = new JFXRadioButton("Entry date & exit date are too close together");
-        JFXRadioButton bounceDefinition2 = new JFXRadioButton("Number of pages viewed is below a threshold");
-        JFXRadioButton bounceDefinition3 = new JFXRadioButton("Conversion did not take place");
-
         JFXSlider definition1Slider = new JFXSlider(0, 360, 60);
+        definition1Slider.setDisable(true);
+        definition1Slider.valueProperty().addListener((obs, oldval, newVal) ->
+                definition1Slider.setValue(Math.round(newVal.doubleValue())));
 
         JFXSlider definition2Slider = new JFXSlider(0, 10, 2);
+        definition2Slider.setDisable(true);
+        definition2Slider.valueProperty().addListener((obs, oldval, newVal) ->
+                definition2Slider.setValue(Math.round(newVal.doubleValue())));
+        definition2Slider.setBlockIncrement(1);
+
+        EventHandler<ActionEvent> disableEvent1 = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
+                definition1Slider.setDisable(false);
+                definition2Slider.setDisable(true);
+            }
+        };
+
+        EventHandler<ActionEvent> disableEvent2 = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
+                definition2Slider.setDisable(false);
+                definition1Slider.setDisable(true);
+            }
+        };
+
+        EventHandler<ActionEvent> disableEvent3 = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
+                definition2Slider.setDisable(true);
+                definition1Slider.setDisable(true);
+            }
+        };
+
+        JFXRadioButton bounceDefinition1 = new JFXRadioButton("Entry date & exit date are too close together: ");
+        bounceDefinition1.setStyle("-fx-font-size: 15;");
+        bounceDefinition1.setOnAction(disableEvent1);
+        JFXRadioButton bounceDefinition2 = new JFXRadioButton("Number of pages viewed is below a threshold: ");
+        bounceDefinition2.setStyle("-fx-font-size: 15;");
+        bounceDefinition2.setOnAction(disableEvent2);
+        JFXRadioButton bounceDefinition3 = new JFXRadioButton("Conversion did not take place");
+        bounceDefinition3.setStyle("-fx-font-size: 15;");
+        bounceDefinition3.setOnAction(disableEvent3);
+
+
+        JFXButton save = new JFXButton("Save");
+        save.setButtonType(JFXButton.ButtonType.RAISED);
+        save.setStyle("-fx-background-color: #55CF5A; -fx-text-fill: white; -fx-font-size: 15;" );
+        save.setPrefSize(100, 20);
+        // action event
+        EventHandler<ActionEvent> saveEvent = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
+
+                if(bounceToggle.getSelectedToggle().equals(bounceDefinition1)){
+                    //Entry date & exit date are too close together
+                    Double bounce1 = definition1Slider.getValue();
+                    System.out.println(bounce1);
+                }
+                else if(bounceToggle.getSelectedToggle().equals(bounceDefinition2)){
+                    //Number of pages viewed is below a threshold
+                    Double bounce2 = definition2Slider.getValue();
+                    System.out.println(bounce2);
+                }
+                else{
+                    //Conversion didn't take place
+                }
+                newStage.close();
+            }
+        };
+        save.setOnAction(saveEvent);
+
+
+        Label seconds = new Label("(Seconds)");
+        seconds.setStyle("-fx-font-size: 10;");
+        Label pages = new Label("(Pages)");
+        pages.setStyle("-fx-font-size: 10;");
 
         bounceDefinition1.setToggleGroup(bounceToggle);
         bounceDefinition2.setToggleGroup(bounceToggle);
@@ -215,19 +319,17 @@ public class DashboardController implements Initializable {
         box.getChildren().add(bounceDefinition2);
         box.getChildren().add(bounceDefinition3);
 
-        pane1.getChildren().add(bounceDefinition1);
-        pane1.getChildren().add(definition1Slider);
-        pane2.getChildren().add(bounceDefinition2);
-        pane2.getChildren().add(definition2Slider);
+        pane1.getChildren().addAll(bounceDefinition1, definition1Slider, seconds );
+        pane2.getChildren().addAll(bounceDefinition2, definition2Slider, pages);
         pane3.getChildren().add(bounceDefinition3);
+        pane4.getChildren().add(save);
 
 
-        Scene newScene = new Scene(box, 350, 120);
+        Scene newScene = new Scene(box, 600, 300);
         newStage.setScene(newScene);
         newStage.showAndWait();
 
     }
-
 
 
     /**

@@ -12,6 +12,10 @@
     -fx-text-fill: -secondary;
 }
 
+.glyph-icon{
+    -fx-fill: -icons;
+}
+
 .check-box{
     -fx-text-fill: -text-primary;
 }
