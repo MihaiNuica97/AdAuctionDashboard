@@ -18,8 +18,6 @@ public class FileLoadController {
 	private HashMap<String, File> fileMap = new HashMap<String, File>(3);
 
 	private CSVParser csvParser = new CSVParser();
-	private SQLCreator sqlcreator = new SQLCreator();
-	private DatabaseHandler dbHandler = new DatabaseHandler();
 
 	private Scene scene;
 	@FXML
@@ -66,9 +64,9 @@ public class FileLoadController {
 		File file = fileChooser.showOpenDialog(App.getScene().getWindow());
 		fileMap.put(fileType, file);
 		field.setText(file.getAbsolutePath());
-		if(isDBReady()){
-			dashboardBtn.setDisable(false);
-		}
+
+		dashboardBtn.setDisable(false);
+
 		return file;
 	}
 	
@@ -87,9 +85,6 @@ public class FileLoadController {
 		App.getScene().getWindow().setHeight(925);
 //		App.getScene().getWindow().setWidth(1000);
 	}
-	private Boolean isDBReady(){
-		return true;
-	}
 
 	@FXML
 	private void test(){
@@ -97,9 +92,6 @@ public class FileLoadController {
 	}
 
 	private void loadFilesToDB() throws IOException, SQLException {
-		dbHandler.sendSQL(csvParser.parseImpression(fileMap.get("Impressions")));
-		dbHandler.sendSQL(csvParser.parseClicks(fileMap.get("Clicks Log")));
-		dbHandler.sendSQL(csvParser.parseServer(fileMap.get("Server Log")));
 	}
 
 
