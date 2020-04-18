@@ -1,56 +1,62 @@
 package segGroupCW;
 
 import java.io.*;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CSVParser {
 
     private BufferedReader csvReader;
     private String row;
-    //private String[] data;
-    private String sqlStatement = "";
 
-    // Parses 3 csvs and inserts into tables
+    // Parses 3 csvs and inserts into Lists
 
-    public String parseImpression(File file) throws IOException {
+    public List<Object> parseImpression(File file) throws IOException {
         //ID, Date, Gender, Age range, Income, Context, Impression cost
-        sqlStatement = "";
+        List<User> users = new ArrayList<>();
+        List<Impression> impressions = new ArrayList<>();
         csvReader = new BufferedReader(new FileReader(file));
         row = csvReader.readLine();
         String[] data = row.split(",");
         System.out.println(row);
         if (!data[0].equals("Date")) {  // Includes first line if it isn't the headings
-            //sqlStatement += "MERGE INTO users(ID, Gender, Age, Income) VALUES (" + data[1] + ", '" + data[2] + "', '" + data[3] + "', '" + data[4] + "' );";
-            //sqlStatement += "INSERT INTO impressions(ID, Date, Context, Cost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', '" + data[5] + "', " + data[6] + ");";
+            users.add(new User(data[1], data[2], data[3], data[4]));
+            impressions.add(new Impression(data[1], data[0], data[5], data[6]));
         }
         while ((row = csvReader.readLine()) != null) {
             data = row.split(",");
-            //sqlStatement += "MERGE INTO users(ID, Gender, Age, Income) VALUES (" + data[1] + ", '" + data[2] + "', '" + data[3] + "', '" + data[4] + "' );";
-            //sqlStatement += "INSERT INTO impressions(ID, Date, Context, Cost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', '" + data[5] + "', " + data[6] + ");";
+            String id = data[1];
+            if (users.stream().noneMatch(p -> p.getId().equals(id))) {
+                users.add(new User(data[1], data[2], data[3], data[4]));
+            }
+            impressions.add(new Impression(data[1], data[0], data[5], data[6]));
         }
-        System.out.println(sqlStatement);
-        return sqlStatement;
+        List<Object> list = new ArrayList<>();
+        list.add(users);
+        list.add(impressions);
+        return list;
+        // return is [users, impressions]
     }
 
-    public String parseClicks(File file) throws IOException {
+    public List<Click> parseClicks(File file) throws IOException {
         //Date, ID, Click Cost
-        sqlStatement = "";
+        List<Click> clicks = new ArrayList<>();
         csvReader = new BufferedReader(new FileReader(file));
         row = csvReader.readLine();
         String[] data = row.split(",");
         if (!data[0].equals("Date")) {  // Includes first line if it isn't the headings
-            //sqlStatement += "INSERT INTO clicks(ID, Date, ClickCost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[2] + ");";
+            clicks.add(new Click(data[1], data[0], data[2]));
         }
         while ((row = csvReader.readLine()) != null) {
             data = row.split(",");
-            //sqlStatement += "INSERT INTO clicks(ID, Date, ClickCost) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', "  + data[2] + ");";
+            clicks.add(new Click(data[1], data[0], data[2]));
         }
-        return sqlStatement;
+        return clicks;
     }
 
-    public String parseServer(File file) throws IOException {
+    public List<Server> parseServer(File file) throws IOException {
         // EntryDate, ID, ExitDate, Pages viewed, Conversion
-        sqlStatement = "";
+        List<Server> servers = new ArrayList<>();
         csvReader = new BufferedReader(new FileReader(file));
         row = csvReader.readLine();
         String[] data = row.split(",");
@@ -60,9 +66,9 @@ public class CSVParser {
                 conv = "TRUE";
             }
             if (data[2].equals("n/a")) {  // If no valid exit date, skip it
-                //sqlStatement += "INSERT INTO server(ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[3] + ", " + conv + ");";
+                servers.add(new Server(data[1], data[0], data[3], conv));
             } else {
-                //sqlStatement += "INSERT INTO server(ID, EntryDate, ExitDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', TIMESTAMP '" + data[2] + "', " + data[3] + ", " + conv + ");";
+                servers.add(new Server(data[1], data[0], data[2], data[3], conv));
             }
         }
         while ((row = csvReader.readLine()) != null) {
@@ -73,14 +79,11 @@ public class CSVParser {
                 conv = "FALSE";
             }
             if (data[2].equals("n/a")) {  // If no valid exit date, skip it
-                //sqlStatement += "INSERT INTO server(ID, EntryDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', " + data[3] + ", " + conv + ");";
+                servers.add(new Server(data[1], data[0], data[3], conv));
             } else {
-                //sqlStatement += "INSERT INTO server(ID, EntryDate, ExitDate, PagesViewed, Conversion) VALUES (" + data[1] + ", TIMESTAMP '" + data[0] + "', TIMESTAMP '" + data[2] + "', " + data[3] + ", " + conv + ");";
+                servers.add(new Server(data[1], data[0], data[2], data[3], conv));
             }
         }
-        return sqlStatement;
+        return servers;
     }
-
-
-
 }
