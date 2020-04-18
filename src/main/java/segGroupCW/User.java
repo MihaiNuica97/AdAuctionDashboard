@@ -5,10 +5,10 @@ import java.util.Date;
 public class User {
     private String id;
     private String gender;
-    private int age;
+    private String age;
     private String income;
 
-    public User(String id, String gender, int age, String income) {
+    public User(String id, String gender, String age, String income) {
         this.id = id;
         this.gender = gender;
         this.age = age;
@@ -19,7 +19,7 @@ public class User {
 
     public String getGender(){ return gender; }
 
-    public int getAge(){ return age; }
+    public String getAge(){ return age; }
 
     public String getIncome() { return income; }
 
@@ -33,7 +33,7 @@ public class User {
         return gender;
     }
 
-    public int setAge(int age){
+    public String setAge(String age){
         this.age = age;
         return age;
     }
