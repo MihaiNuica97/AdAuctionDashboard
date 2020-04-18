@@ -17,6 +17,14 @@ public class Server {
         this.conversion = Boolean.parseBoolean(conversion);
     }
 
+    public Server(String id, String entryDate, String pages, String conversion) {
+        this.id = id;
+        this.entryDate = DateFormat.convertDate(entryDate);
+        this.exitDate = null;
+        this.pages = Integer.parseInt(pages);
+        this.conversion = Boolean.parseBoolean(conversion);
+    }
+
     public String getId(){ return id; }
 
     public Date getEntryDate(){ return entryDate; }
