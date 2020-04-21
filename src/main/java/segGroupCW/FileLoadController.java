@@ -73,14 +73,7 @@ public class FileLoadController {
 	@FXML
 	private void goToDashboard() throws IOException
 	{
-//		System.out.println("Dashboard button clicked");
-//		 try {
-//		 	dbHandler.sendSQL(sqlcreator.createDB());
-//		 	loadFilesToDB();
-//		 } catch (SQLException e) {
-//		  System.out.println("Database not created");
-//	 		e.printStackTrace();
-//		 }
+		loadFiles();
 		App.setRoot("dashboard");
 		App.getScene().getWindow().setHeight(925);
 //		App.getScene().getWindow().setWidth(1000);
@@ -91,8 +84,8 @@ public class FileLoadController {
 		App.themeController.changeTheme("dark.css");
 	}
 
-	private void loadFilesToDB() throws IOException, SQLException {
+	private void loadFiles() {
+		App.dataHandler = new DataHandler(fileMap.get("Impressions"), fileMap.get("Clicks Log"), fileMap.get("Server Log"));
+		System.out.println("Data loaded from files");
 	}
-
-
 }
