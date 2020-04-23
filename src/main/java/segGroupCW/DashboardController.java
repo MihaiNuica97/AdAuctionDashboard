@@ -89,6 +89,7 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initLabels();
+        //initGraphs();
 //    DONT DELETE ^
 
         Text settingsIcon = GlyphsDude.createIcon(FontAwesomeIcons.COG, "40px");
@@ -117,8 +118,6 @@ public class DashboardController implements Initializable {
         checkBoxList.add(socialMCheckbox);
         checkBoxList.add(hobbiesCheckbox);
         checkBoxList.add(travelCheckbox);
-        initGraphs();
-
     }
 
     /**
@@ -427,7 +426,7 @@ public class DashboardController implements Initializable {
     }
 
     private void initLabels() {
-        App.dataHandler.applyFilters(null);
+        //App.dataHandler.applyFilters(null);
         noImprLabel.setText(Integer.toString(App.dataHandler.calcImpressions()));
 
         /*

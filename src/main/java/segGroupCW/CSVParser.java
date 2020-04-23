@@ -15,7 +15,6 @@ public class CSVParser {
         BufferedReader csvReader = new BufferedReader(new FileReader(file));
         String row = csvReader.readLine();
         String[] data = row.split(",");
-        System.out.println(row);
         if (!data[0].equals("Date")) {  // Includes first line if it isn't the headings
             users.add(new User(data[1], data[2], data[3], data[4]));
             impressions.add(new Impression(data[1], data[0], data[5], data[6]));
