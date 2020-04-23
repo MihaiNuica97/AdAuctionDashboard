@@ -9,8 +9,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -58,7 +56,7 @@
             </Label>
             <VBox prefHeight="97.0" prefWidth="156.0" spacing="10.0">
                <children>
-                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="checkbox-text" />
+                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="checkbox-text" text="Gender" />
                   <JFXCheckBox fx:id="femaleCheckBox" styleClass="checkbox-text" text="Female" />
                   <JFXCheckBox fx:id="maleCheckbox" styleClass="checkbox-text" text="Male" />
                </children>
@@ -122,7 +120,7 @@
                            <children>
                               <Pane fx:id="pane1" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF IMPRESSIONS" wrapText="true">
+                                    <Label fx:id="noImprTitle" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF IMPRESSIONS" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
@@ -136,7 +134,7 @@
                               </Pane>
                               <Pane fx:id="pane2" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF CLICKS" wrapText="true">
+                                    <Label fx:id="noClicksTitle" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF CLICKS" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
@@ -150,7 +148,7 @@
                               </Pane>
                               <Pane fx:id="pane3" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF UNIQUES" wrapText="true">
+                                    <Label fx:id="noUniqueTitle" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF UNIQUES" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
@@ -164,7 +162,7 @@
                               </Pane>
                               <Pane fx:id="pane4" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF BOUNCES" wrapText="true">
+                                    <Label fx:id="noBounceTitle" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF BOUNCES" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
@@ -180,7 +178,7 @@
                               </Pane>
                               <Pane fx:id="pane5" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF CONVERSIONS" wrapText="true">
+                                    <Label fx:id="noConversionTitle" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="NO. OF CONVERSIONS" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
@@ -194,7 +192,7 @@
                               </Pane>
                               <Pane fx:id="pane6" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="TOTAL COST" wrapText="true">
+                                    <Label fx:id="totalCostTitle" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="TOTAL COST" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
@@ -208,7 +206,7 @@
                               </Pane>
                               <Pane fx:id="pane61" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="10.0" layoutY="14.0" prefHeight="53.0" prefWidth="144.0" text="CTR (Click-Through-Rate)" wrapText="true">
+                                    <Label fx:id="ctrTitle" layoutX="10.0" layoutY="14.0" prefHeight="53.0" prefWidth="144.0" text="CTR (Click-Through-Rate)" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
@@ -222,7 +220,7 @@
                               </Pane>
                               <Pane fx:id="pane62" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="CPA (Cost-Per-Acquisition)" wrapText="true">
+                                    <Label fx:id="cpaTitle" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="CPA (Cost-Per-Acquisition)" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
@@ -236,7 +234,7 @@
                               </Pane>
                               <Pane fx:id="pane63" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="CPC (Cost-Per-Click)" wrapText="true">
+                                    <Label fx:id="cpcTitle" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="CPC (Cost-Per-Click)" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
@@ -250,7 +248,7 @@
                               </Pane>
                               <Pane fx:id="pane64" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="CPM (Cost-Per-Thousand Impressions)" wrapText="true">
+                                    <Label fx:id="cpmTitle" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="CPM (Cost-Per-Thousand Impressions)" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
@@ -264,7 +262,7 @@
                               </Pane>
                               <Pane fx:id="pane65" prefHeight="147.0" prefWidth="153.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="BOUNCE RATE" wrapText="true">
+                                    <Label fx:id="bounceRateTitle" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="132.0" text="BOUNCE RATE" wrapText="true">
                                        <font>
                                           <Font name="Verdana Bold" size="12.0" />
                                        </font>
