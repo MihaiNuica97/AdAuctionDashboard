@@ -428,7 +428,7 @@ public class DashboardController implements Initializable {
     private void initLabels() {
         //App.dataHandler.applyFilters(null);
         noImprLabel.setText(Integer.toString(App.dataHandler.calcImpressions()));
-
+        noClicksLabel.setText(Integer.toString(App.dataHandler.calcClicks()));
         /*
         try {
             setImpsLabel(db, sqlCreator);
