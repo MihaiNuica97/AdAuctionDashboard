@@ -49,7 +49,7 @@ public class DataHandler {
 
     public int calcUniques() { return (int) clicks.stream().filter(distinctByKey(Click::getId)).count(); }
 
-    public int calcBouncePage(int pages) { return (int) serverLogs.stream().filter(p -> p.getPages() > pages).count(); }
+    public int calcBouncePage(int pages) { return (int) serverLogs.stream().filter(p -> p.getPages() <= pages).count(); }
 
     public int calcBounceConv() {return (int) serverLogs.stream().filter(p -> !p.getConversion()).count(); }
 
@@ -118,8 +118,6 @@ public class DataHandler {
     public double calcBounceRateTime(List<Server> serverLogs, List<Click> clicks, int time) { return Math.round( ((double) calcBounceTime(serverLogs, time) / calcClicks(clicks)) * 100.0) / 100.0; }
 
     // Calculations that take values instead of calling methods again
-
-    public double calcTotalCost(double clickCost, double impCost) { return Math.round( (impCost + clickCost) * 100.0) / 100.0; }
 
     public double calcCTR(int clicks, int impressions) { return Math.round( ((double) clicks / impressions * 100.0)) / 100.0; }
 

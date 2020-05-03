@@ -81,6 +81,10 @@ public class DashboardController implements Initializable {
     @FXML
     private VBox leftVBox;
 
+    //Page, Conv, or time
+    private String bounceMethod = "Page";
+    private int bounceValue = 1;
+
     /**
      *
      * @param url
@@ -427,28 +431,39 @@ public class DashboardController implements Initializable {
 
     private void initLabels() {
         //App.dataHandler.applyFilters(null);
-        noImprLabel.setText(Integer.toString(App.dataHandler.calcImpressions()));
-        noClicksLabel.setText(Integer.toString(App.dataHandler.calcClicks()));
-        /*
-        try {
-            setImpsLabel(db, sqlCreator);
-            setClicksLabel(db, sqlCreator);
-            setUniquesLabel(db, sqlCreator);
-            setNoBounceLabelPages(db, sqlCreator, "2");
-            setNoConvLabel(db, sqlCreator);
-            setTotalCostLabel(db, sqlCreator);
-            setCtrLabel(db, sqlCreator);
-            setCpaLabel(db, sqlCreator);
-            setCpcLabel(db, sqlCreator);
-            setCpmLabel(db, sqlCreator);
-            setBounceRateLabelPages(db, sqlCreator, "2");
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        int impressions = App.dataHandler.calcImpressions();
+        noImprLabel.setText(Integer.toString(impressions));
+        int clicks = App.dataHandler.calcClicks();
+        noClicksLabel.setText(Integer.toString(clicks));
+        noUniqueLabel.setText(Integer.toString(App.dataHandler.calcUniques()));
+        int bounces;
+        switch (bounceMethod) {
+            case "Page":
+                bounces = App.dataHandler.calcBouncePage(bounceValue);
+                noBounceLabel.setText(Integer.toString(bounces));
+                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRatePages(bounces, clicks)));
+                break;
+            case "Conv":
+                bounces = App.dataHandler.calcBounceConv();
+                noBounceLabel.setText(Integer.toString(bounces));
+                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateConv(bounces, clicks)));
+                break;
+            case "Time":
+                bounces = App.dataHandler.calcBounceTime(bounceValue);
+                noBounceLabel.setText(Integer.toString(bounces));
+                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateTime(bounces, clicks)));
+            default:
+                bounces = 0;
+                noBounceLabel.setText("n/a");
         }
-
-             */
+        int convs = App.dataHandler.calcConversions();
+        noConversionLabel.setText(Integer.toString(convs));
+        double totalCost = App.dataHandler.calcTotalCost();
+        totalCostLabel.setText(Double.toString(totalCost));
+        ctrLabel.setText(Double.toString(App.dataHandler.calcCTR(clicks, impressions)));
+        cpaLabel.setText(Double.toString(App.dataHandler.calcCPA(totalCost, convs)));
+        cpcLabel.setText(Double.toString(App.dataHandler.calcCPC(totalCost, clicks)));
+        cpmLabel.setText(Double.toString(App.dataHandler.calcCPM(totalCost, impressions)));
     }
 
     public void setImpsLabel() throws SQLException {
