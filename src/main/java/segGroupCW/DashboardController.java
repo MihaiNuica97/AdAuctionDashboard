@@ -37,6 +37,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -83,7 +84,7 @@ public class DashboardController implements Initializable {
 
     //Page, Conv, or time
     private String bounceMethod = "Page";
-    private int bounceValue = 1;
+    private Double bounceValue = 1.0;
 
     /**
      *
@@ -138,24 +139,61 @@ public class DashboardController implements Initializable {
             }
         }
         if (!selectedCheckBoxes.isEmpty()) {
-            /*
-            try {
-                setImpsLabel(db, sqlCreator, selectedCheckBoxes);
-                setClicksLabel(db, sqlCreator, selectedCheckBoxes);
-                setUniquesLabel(db, sqlCreator, selectedCheckBoxes);
-                setNoBounceLabelPages(db, sqlCreator, "2", selectedCheckBoxes);
-                setNoConvLabel(db, sqlCreator, selectedCheckBoxes);
-                setTotalCostLabel(db, sqlCreator, selectedCheckBoxes);
-                setCtrLabel(db, sqlCreator, selectedCheckBoxes);
-                setCpaLabel(db, sqlCreator, selectedCheckBoxes);
-                setCpcLabel(db, sqlCreator, selectedCheckBoxes);
-                setCpmLabel(db, sqlCreator, selectedCheckBoxes);
-                setBounceRateLabelPages(db, sqlCreator, "2", selectedCheckBoxes);
-            } catch (SQLException e) {
-                e.printStackTrace();
+
+            if (selectedCheckBoxes.containsAll(DataHandler.genders)) {
+                selectedCheckBoxes.removeAll(DataHandler.genders);
+            }
+            if (selectedCheckBoxes.containsAll(DataHandler.income)) {
+                selectedCheckBoxes.removeAll(DataHandler.income);
+            }
+            if (selectedCheckBoxes.containsAll(DataHandler.ages)) {
+                selectedCheckBoxes.removeAll(DataHandler.ages);
             }
 
-             */
+            if (!selectedCheckBoxes.isEmpty()) {
+                List<String> users = App.dataHandler.filterUsers(selectedCheckBoxes);
+                List<Impression> impressions = App.dataHandler.filterImpressions(users);
+                List<Server> server = App.dataHandler.filterServers(users);
+                List<Click> clicks = App.dataHandler.filterClicks(users);
+
+                int noImps = App.dataHandler.calcImpressions(impressions);
+                noImprLabel.setText(Integer.toString(noImps));
+                int noClicks = App.dataHandler.calcClicks(clicks);
+                noClicksLabel.setText(Integer.toString(noClicks));
+                noUniqueLabel.setText(Integer.toString(App.dataHandler.calcUniques(clicks)));
+                int bounces;
+                switch (bounceMethod) {
+                    case "Page":
+                        bounces = App.dataHandler.calcBouncePage(server, bounceValue);
+                        noBounceLabel.setText(Integer.toString(bounces));
+                        bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRatePages(bounces, noClicks)));
+                        break;
+                    case "Conv":
+                        bounces = App.dataHandler.calcBounceConv(server);
+                        noBounceLabel.setText(Integer.toString(bounces));
+                        bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateConv(bounces, noClicks)));
+                        break;
+                    case "Time":
+                        bounces = App.dataHandler.calcBounceTime(server, bounceValue);
+                        noBounceLabel.setText(Integer.toString(bounces));
+                        bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateTime(bounces, noClicks)));
+                    default:
+                        bounces = 0;
+                        noBounceLabel.setText("n/a");
+                        bounceRateLabel.setText("n/a");
+                }
+                int convs = App.dataHandler.calcConversions(server);
+                noConversionLabel.setText(Integer.toString(convs));
+                double totalCost = App.dataHandler.calcTotalCost(clicks, impressions);
+                totalCostLabel.setText(Double.toString(totalCost));
+                ctrLabel.setText(Double.toString(App.dataHandler.calcCTR(noClicks, noImps)));
+                cpaLabel.setText(Double.toString(App.dataHandler.calcCPA(totalCost, convs)));
+                cpcLabel.setText(Double.toString(App.dataHandler.calcCPC(totalCost, noClicks)));
+                cpmLabel.setText(Double.toString(App.dataHandler.calcCPM(totalCost, noImps)));
+            } else {
+                initLabels();
+            }
+
         } else {
             initLabels();
         }
@@ -214,7 +252,7 @@ public class DashboardController implements Initializable {
 
         VBox box = new VBox(20);
         box.setAlignment(Pos.CENTER);
-        javafx.geometry.Insets insets = new javafx.geometry.Insets(0,10,10,10);
+        Insets insets = new Insets(0,10,10,10);
         box.setPadding(insets);
         Label label = new Label("Choose bounce definition:");
         label.setStyle("-fx-font-size: 2em; -fx-text-fill: #5988FF");
@@ -294,15 +332,21 @@ public class DashboardController implements Initializable {
                     //Entry date & exit date are too close together
                     Double bounce1 = definition1Slider.getValue();
                     System.out.println(bounce1);
+                    bounceMethod = "Time";
+                    bounceValue = bounce1;
                 }
                 else if(bounceToggle.getSelectedToggle().equals(bounceDefinition2)){
                     //Number of pages viewed is below a threshold
                     Double bounce2 = definition2Slider.getValue();
                     System.out.println(bounce2);
+                    bounceMethod = "Page";
+                    bounceValue = bounce2;
                 }
                 else{
                     //Conversion didn't take place
+                    bounceMethod = "Conv";
                 }
+                refreshBounceLabels();
                 newStage.close();
             }
         };
@@ -430,7 +474,6 @@ public class DashboardController implements Initializable {
     }
 
     private void initLabels() {
-        //App.dataHandler.applyFilters(null);
         int impressions = App.dataHandler.calcImpressions();
         noImprLabel.setText(Integer.toString(impressions));
         int clicks = App.dataHandler.calcClicks();
@@ -464,6 +507,29 @@ public class DashboardController implements Initializable {
         cpaLabel.setText(Double.toString(App.dataHandler.calcCPA(totalCost, convs)));
         cpcLabel.setText(Double.toString(App.dataHandler.calcCPC(totalCost, clicks)));
         cpmLabel.setText(Double.toString(App.dataHandler.calcCPM(totalCost, impressions)));
+    }
+
+    void refreshBounceLabels() {
+        int bounces;
+        switch (bounceMethod) {
+            case "Page":
+                bounces = App.dataHandler.calcBouncePage(bounceValue);
+                noBounceLabel.setText(Integer.toString(bounces));
+                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRatePages(bounceValue)));
+                break;
+            case "Conv":
+                bounces = App.dataHandler.calcBounceConv();
+                noBounceLabel.setText(Integer.toString(bounces));
+                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateConv()));
+                break;
+            case "Time":
+                bounces = App.dataHandler.calcBounceTime(bounceValue);
+                noBounceLabel.setText(Integer.toString(bounces));
+                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateTime(bounceValue)));
+            default:
+                noBounceLabel.setText("n/a");
+                bounceRateLabel.setText("n/a");
+        }
     }
 
     public void setImpsLabel() throws SQLException {
