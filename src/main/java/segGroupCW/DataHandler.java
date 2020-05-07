@@ -118,12 +118,24 @@ public class DataHandler {
         return impressions.stream().filter(p -> ids.contains(p.getId())).collect(Collectors.toList());
     }
 
+    public List<Impression> filterImpressions(List<String> ids, ArrayList<String> contexts) {
+        return impressions.stream().filter(p -> ids.contains(p.getId()) && contexts.contains(p.getContext())).collect(Collectors.toList());
+    }
+
     public List<Server> filterServers(List<String> ids) {
         return serverLogs.stream().filter(p -> ids.contains(p.getId())).collect(Collectors.toList());
     }
 
+    public List<Click> filterClicks(List<String> users, List<Impression> impressions) {
+        return null;
+    }
+
     public List<Click> filterClicks(List<String> ids) {
         return clicks.stream().filter(p -> ids.contains(p.getId())).collect(Collectors.toList());
+    }
+
+    public List<Server> filterServers(List<String> users, List<Impression> impressions) {
+        return null;
     }
 
     //Normal Calculations
@@ -223,5 +235,4 @@ public class DataHandler {
         Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
-
 }

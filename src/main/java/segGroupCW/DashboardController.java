@@ -149,13 +149,35 @@ public class DashboardController implements Initializable {
             if (selectedCheckBoxes.containsAll(DataHandler.ages)) {
                 selectedCheckBoxes.removeAll(DataHandler.ages);
             }
+            ArrayList<String> contexts = new ArrayList<>();
+            if (selectedCheckBoxes.containsAll(DataHandler.context)) {
+                selectedCheckBoxes.removeAll(DataHandler.context);
+            } else {
+                for (String each : selectedCheckBoxes) {
+                    if (DataHandler.context.contains(each)) {
+                        contexts.add(each);
+                    }
+                }
+            }
 
             if (!selectedCheckBoxes.isEmpty()) {
                 List<String> users = App.dataHandler.filterUsers(selectedCheckBoxes);
-                List<Impression> impressions = App.dataHandler.filterImpressions(users);
-                List<Server> server = App.dataHandler.filterServers(users);
-                List<Click> clicks = App.dataHandler.filterClicks(users);
-
+                List<Impression> impressions;
+                List<Server> server;
+                List<Click> clicks;
+                impressions = App.dataHandler.filterImpressions(users);
+                server = App.dataHandler.filterServers(users);
+                clicks = App.dataHandler.filterClicks(users);
+                /*if (!contexts.isEmpty()) {
+                    impressions = App.dataHandler.filterImpressions(users, contexts);
+                    server = App.dataHandler.filterServers(users, impressions);
+                    clicks = App.dataHandler.filterClicks(users, impressions);
+                } else {
+                    impressions = App.dataHandler.filterImpressions(users);
+                    server = App.dataHandler.filterServers(users);
+                    clicks = App.dataHandler.filterClicks(users);
+                }
+                */
                 int noImps = App.dataHandler.calcImpressions(impressions);
                 noImprLabel.setText(Integer.toString(noImps));
                 int noClicks = App.dataHandler.calcClicks(clicks);
@@ -529,254 +551,6 @@ public class DashboardController implements Initializable {
             default:
                 noBounceLabel.setText("n/a");
                 bounceRateLabel.setText("n/a");
-        }
-    }
-
-    public void setImpsLabel() throws SQLException {
-        noImprLabel.setText(null);
-    }
-
-    public void setClicksLabel() throws SQLException {
-        noClicksLabel.setText(null);
-    }
-
-    public void setUniquesLabel() throws SQLException {
-        noUniqueLabel.setText(null);
-    }
-
-    public void setNoBounceLabelPages(String pages) throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoBounceLabelTime(String unit, String time) throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoBounceLabelConv() throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoConvLabel() throws SQLException {
-        noConversionLabel.setText(null);
-    }
-
-    public void setTotalCostLabel() throws SQLException {
-        float impCost = 0;
-        float totalCost = impCost + 0;
-        double total = Math.round(totalCost * 100.0) / 100.0;
-        totalCostLabel.setText(Double.toString(total));
-    }
-
-    public void setCtrLabel() throws SQLException {
-        int imps = 0;
-        if (imps == 0) {
-            ctrLabel.setText("N/A");
-        } else {
-            int clicks = 0;
-            float ctr = (float) clicks / imps;
-            double ctrRound = Math.round(ctr * 100.0) / 100.0;
-            ctrLabel.setText(Double.toString(ctrRound));
-        }
-    }
-
-    public void setCpaLabel() throws SQLException {
-        int convs = 0;
-        if (convs == 0) {
-            cpaLabel.setText("N/A");
-        } else {
-            float impCost = 0;
-            float totalCost = 0;
-            float cpa = totalCost / convs;
-            double cpaRound = Math.round(cpa * 100.0) / 100.0;
-            cpaLabel.setText(Double.toString(cpaRound));
-        }
-    }
-
-    public void setCpcLabel() throws SQLException {
-        int clicks = 0;
-        if (clicks == 0) {
-            cpcLabel.setText("N/A");
-        } else {
-            float impCost = 0;
-            float totalCost = 0;
-            float cpc = totalCost / clicks;
-            double cpcRound = Math.round(cpc * 100.0) / 100.0;
-            cpcLabel.setText(Double.toString(cpcRound));
-        }
-    }
-
-    public void setCpmLabel() throws SQLException {
-        int imps = 0;
-        if (imps == 0) {
-            cpmLabel.setText("N/A");
-        } else {
-            float impCost = 0;
-            float totalCost = 0;
-            float cpm = totalCost / (imps * 1000);
-            double cpmRound = Math.round(cpm * 100.0) / 100.0;
-            cpmLabel.setText(Double.toString(cpmRound));
-        }
-    }
-
-    public void setBounceRateLabelPages(String pages) throws SQLException {
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    public void setBounceRateLabelTime(String unit, String time) throws SQLException{
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    public void setBounceRateLabelConv() throws SQLException {
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    public void setImpsLabel(List<String> filters) throws SQLException {
-        noImprLabel.setText(null);
-    }
-
-    public void setClicksLabel(List<String> filters) throws SQLException {
-        noClicksLabel.setText(null);
-    }
-
-    public void setUniquesLabel(List<String> filters) throws SQLException {
-        noUniqueLabel.setText(null);
-    }
-
-    public void setNoBounceLabelPages(String pages, List<String> filters) throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoBounceLabelTime(String unit, String time, List<String> filters) throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoBounceLabelConv(List<String> filters) throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoConvLabel(List<String> filters) throws SQLException {
-        noConversionLabel.setText(null);
-    }
-
-    public void setTotalCostLabel(List<String> filters) throws SQLException {
-        float impCost = 0;
-        float totalCost = 0;
-        double total = Math.round(totalCost * 100.0) / 100.0;
-        totalCostLabel.setText(Double.toString(total));
-    }
-
-    public void setCtrLabel(List<String> filters) throws SQLException {
-        int imps = 0;
-        if (imps == 0) {
-            ctrLabel.setText("N/A");
-        } else {
-            int clicks = 0;
-            float ctr = (float) clicks / imps;
-            double ctrRound = Math.round(ctr * 100.0) / 100.0;
-            ctrLabel.setText(Double.toString(ctrRound));
-        }
-    }
-
-    public void setCpaLabel(List<String> filters) throws SQLException {
-        int convs = 0;
-        if (convs == 0) {
-            cpaLabel.setText("N/A");
-        } else {
-            float impCost = 0;
-            float totalCost = 0;
-            float cpa = totalCost / convs;
-            double cpaRound = Math.round(cpa * 100.0) / 100.0;
-            cpaLabel.setText(Double.toString(cpaRound));
-        }
-    }
-
-    public void setCpcLabel(List<String> filters) throws SQLException {
-        int clicks = 0;
-        if (clicks == 0) {
-            cpcLabel.setText("N/A");
-        } else {
-
-            float impCost = 0;
-            float totalCost = 0;
-            float cpc = totalCost / clicks;
-            double cpcRound = Math.round(cpc * 100.0) / 100.0;
-            cpcLabel.setText(Double.toString(cpcRound));
-        }
-    }
-
-    public void setCpmLabel(List<String> filters) throws SQLException {
-
-        int imps = 0;
-        if (imps == 0) {
-            cpmLabel.setText("N/A");
-        } else {
-
-            float impCost = 0;
-            float totalCost = 0;
-            float cpm = totalCost / (imps * 1000);
-            double cpmRound = Math.round(cpm * 100.0) / 100.0;
-            cpmLabel.setText(Double.toString(cpmRound));
-        }
-    }
-
-    public void setBounceRateLabelPages(String pages, List<String> filters) throws SQLException {
-
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    public void setBounceRateLabelTime(String unit, String time, List<String> filters) throws SQLException{
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    public void setBounceRateLabelConv( List<String> filters) throws SQLException {
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
         }
     }
 
