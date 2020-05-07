@@ -29,6 +29,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import org.w3c.dom.CDATASection;
 
 import java.awt.*;
 import java.io.IOException;
@@ -36,10 +37,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
 
@@ -86,6 +85,8 @@ public class DashboardController implements Initializable {
     private String bounceMethod = "Page";
     private Double bounceValue = 1.0;
 
+    private static DateFormat dateformat = new DateFormat();
+
     /**
      *
      * @param url
@@ -94,7 +95,7 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initLabels();
-        //initGraphs();
+        initGraphs();
 //    DONT DELETE ^
 
         Text settingsIcon = GlyphsDude.createIcon(FontAwesomeIcons.COG, "40px");
@@ -253,7 +254,7 @@ public class DashboardController implements Initializable {
         VBox box = new VBox(20);
         box.setAlignment(Pos.CENTER);
         Insets insets = new Insets(0,10,10,10);
-        box.setPadding(insets);
+        //box.setPadding(insets);
         Label label = new Label("Choose bounce definition:");
         label.setStyle("-fx-font-size: 2em; -fx-text-fill: #5988FF");
         box.getChildren().add(label);
@@ -459,16 +460,15 @@ public class DashboardController implements Initializable {
     }
 
     private void initGraphs(){
-        String[] dates = getFirstLastDates();
-        refreshImpressionsGraph(dates[0], dates[1]);
-        refreshClicksGraph(dates[2], dates[3]);
-        refreshUniquesGraph(dates[2],dates[3]);
-        refreshConvsGraph(dates[4], dates[5]);
-        refreshTotalCostGraph(dates[0],dates[1]);
-        refreshCTRGraph(dates[2],dates[3]);
-        refreshCPAGraph(dates[0],dates[1]);
-        refreshCPCGraph(dates[0],dates[1]);
-        refreshCPMGraph(dates[0],dates[1]);
+        refreshImpressionsGraph();
+        refreshClicksGraph();
+        refreshUniquesGraph();
+        refreshConvsGraph();
+        refreshTotalCostGraph();
+        refreshCTRGraph();
+        refreshCPAGraph();
+        refreshCPCGraph();
+        refreshCPMGraph();
         //refreshBRPageGraph(dates[2],dates[3]);
 
     }
@@ -786,55 +786,32 @@ public class DashboardController implements Initializable {
      * turn values intop chart elemetns
      */
 
-    /**
-     *
-     * @param start  start date of data required - yyyy-MM-dd
-     * @param end    end date of data required - yyyy-MM-dd
-     * @param interval  the string indicating the measurement of intervals
-     * @param num    the number of the given measurement, of which we should jump per interval
-     * @return
-     */
 
-//int for interval num and string for day/month
-    private static ArrayList<String> iterTimeIntervals(String start, String end, String interval, int num){
-        ArrayList<String> intervals = new ArrayList<>();
-        LocalDate startDate = LocalDate.parse(start);
-        LocalDate endDate = LocalDate.parse(end).plusDays(1);
-        intervals.add(startDate.toString());
-
-        switch  (interval){
-            case "days":
-                while (startDate.isBefore(endDate)){
-                    startDate = startDate.plusDays(num);
-                    intervals.add(startDate.toString());
-                }
-                break;
-            case "months":
-                while (startDate.isBefore(endDate)){
-                    startDate = startDate.plusMonths(num);
-                    intervals.add(startDate.toString());
-                }
-                break;
-            case "weeks":
-                while (startDate.isBefore(endDate)){
-                    startDate = startDate.plusWeeks(num);
-                    intervals.add(startDate.toString());
-                }
-                break;
+    private void refreshImpressionsGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date, App.dataHandler.impressionsAtDate(date)));
         }
-        return intervals;
+        NoImpressionsChart.getData().add(series);
     }
 
-    private void refreshImpressionsGraph(String start, String end){
-        NoImpressionsChart.getData().add(null);
+    private void refreshClicksGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialClicksTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date, App.dataHandler.clicksAtDate(date)));
+        }
+        noOfClicksChart.getData().add(series);
     }
 
-    private void refreshClicksGraph(String start, String end){
-        noOfClicksChart.getData().add(null);
-    }
-
-    private void refreshUniquesGraph(String start, String end){
-        NoUniquesChart.getData().add(null);
+    private void refreshUniquesGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date, App.dataHandler.uniquesAtDate(date)));
+        }
+        NoUniquesChart.getData().add(series);
     }
 
     /*
@@ -843,28 +820,58 @@ public class DashboardController implements Initializable {
     }
      */
 
-    private void refreshConvsGraph(String start, String end){
-        NoConversionsChart.getData().add(null);
+    private void refreshConvsGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialServerTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date, App.dataHandler.conversionsAtDate(date)));
+        }
+        NoConversionsChart.getData().add(series);
     }
 
-    private void refreshTotalCostGraph(String start, String end){
-        totalCostChart.getData().add(null);
+    private void refreshTotalCostGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date, App.dataHandler.totalCostAtDate(date)));
+        }
+        totalCostChart.getData().add(series);
     }
 
-    private void refreshCTRGraph(String start, String end){
-        ctrChart.getData().add(null);
+    private void refreshCTRGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialClicksTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date, App.dataHandler.ctrAtDate(date)));
+        }
+        ctrChart.getData().add(series);
     }
 
-    private void refreshCPAGraph(String start, String end){
-        cpaChart.getData().add(null);
+    private void refreshCPAGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date, App.dataHandler.cpaAtDate(date)));
+        }
+        cpaChart.getData().add(series);
     }
 
-    private void refreshCPCGraph(String start, String end){
-        cpcChart.getData().add(null);
+    private void refreshCPCGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date, App.dataHandler.cpcAtDate(date)));
+        }
+        cpcChart.getData().add(series);
     }
 
-    private void refreshCPMGraph(String start, String end){
-        cpmChart.getData().add(null);
+    private void refreshCPMGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date, App.dataHandler.cpmAtDate(date)));
+        }
+        cpmChart.getData().add(series);
     }
 
     /*
