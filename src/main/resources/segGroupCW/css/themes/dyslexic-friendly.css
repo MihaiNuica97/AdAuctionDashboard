@@ -1,18 +1,19 @@
 .root{
     -main-bg-color: #f9f9f9;
-    -secondary-bg-color: #ff9842;
+    -secondary-bg-color: #f8d4d4;
     -primary: #f9f9f9;
-    -secondary: #ff9842;
-    -text-primary: #272838;
+    -secondary: #f8d4d4;
+    -text-primary: #7D314C;
     -text-secondary: #7e7f9a;
     -success: #55CF5A;
     -error: red;
     -fx-background-color: -main-bg-color;
     -fx-font-size: 12px;
     -fx-text-fill: -text-secondary;
-    -label: #ff9842;
-    -icons: #ff9842;
-    -card: #f3de8a;
+    -label: #7D314C;
+    -icons: #7D314C;
+    -card: #f8d4d4;
+    -tg: #ff9842;
 
 }
 
@@ -71,10 +72,10 @@
     -fx-background-color:  -card;
 }
 .axis{
-    -fx-tick-label-fill: #272838;
+    -fx-tick-label-fill: #7D314C;
 
 }
 
 .card .label{
-    -fx-text-fill: -text-primary;
+    -fx-text-fill: -label;
 }

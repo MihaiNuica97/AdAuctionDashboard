@@ -54,7 +54,7 @@ public class DashboardController implements Initializable {
     private Label noClicksTitle, noImprTitle, noUniqueTitle, noBounceTitle, noConversionTitle, totalCostTitle, ctrTitle, cpaTitle, cpcTitle, cpmTitle, bounceRateTitle;
 
     @FXML
-    private JFXButton bounceDefinitionButton, settingsButton, homeButton;
+    private JFXButton bounceDefinitionButton, settingsButton, homeButton, printButton;
 
     @FXML
     private Pane noImprPane, noClicksPane, noOfUniques, noBouncePane, noOfConversionsPane, totalCostPane, ctrPane, cpaPane, topPane;
@@ -104,6 +104,9 @@ public class DashboardController implements Initializable {
 
         Text bounceIcon = GlyphsDude.createIcon(FontAwesomeIcons.PENCIL, "20px");
         bounceDefinitionButton.setGraphic(bounceIcon);
+
+        Text printIcon = GlyphsDude.createIcon(FontAwesomeIcons.PRINT, "40px");
+        printButton.setGraphic(printIcon);
 
         Tooltip tooltip = new Tooltip("Change definition of a Bounce");
         tooltip.setShowDelay(Duration.seconds(0.05));
@@ -245,6 +248,11 @@ public class DashboardController implements Initializable {
     @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("fileUpload");
+    }
+
+    @FXML
+    void print(ActionEvent event) {
+
     }
 
     /**

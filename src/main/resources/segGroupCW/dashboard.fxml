@@ -28,7 +28,7 @@
                   <Separator layoutY="85.0" prefHeight="3.0" prefWidth="802.0" />
                   <JFXButton fx:id="homeButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="42.0" prefWidth="57.0" text=" " />
                </children></Pane>
-            <Pane prefHeight="100.0">
+            <Pane prefHeight="100.0" prefWidth="621.0">
                <children>
                   <Label fx:id="dashBoardLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="269.0" layoutY="7.0" prefHeight="70.0" styleClass="HBox" text="Dashboard">
                      <font>
@@ -36,6 +36,11 @@
                      </font>
                   </Label>
                   <Separator layoutY="85.0" prefHeight="3.0" prefWidth="802.0" />
+               </children>
+            </Pane>
+            <Pane prefHeight="0.0" prefWidth="200.0">
+               <children>
+                  <JFXButton fx:id="printButton" layoutX="108.0" layoutY="23.0" mnemonicParsing="false" onAction="#print" prefHeight="42.0" prefWidth="57.0" text=" " />
                </children>
             </Pane>
          </children>
@@ -49,14 +54,14 @@
             <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
          </padding>
          <children>
-            <Label styleClass="checkbox-text" text="Filter">
+            <Label fx:id="filterLabel" styleClass="checkbox-text" text="Filter">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
             <VBox prefHeight="97.0" prefWidth="156.0" spacing="10.0">
                <children>
-                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="checkbox-text" text="Gender" />
+                  <Label fx:id="genderLabel" contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="checkbox-text" text="Gender" />
                   <JFXCheckBox fx:id="femaleCheckBox" styleClass="checkbox-text" text="Female" />
                   <JFXCheckBox fx:id="maleCheckbox" styleClass="checkbox-text" text="Male" />
                </children>
@@ -66,7 +71,7 @@
             </VBox>
             <VBox prefHeight="183.0" prefWidth="156.0" spacing="10.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="138.0" styleClass="checkbox-text" text="Age" />
+                  <Label fx:id="ageLabel" prefHeight="17.0" prefWidth="138.0" styleClass="checkbox-text" text="Age" />
                   <JFXCheckBox fx:id="age1Checkbox" styleClass="checkbox-text" text="&lt; 25 years" />
                   <JFXCheckBox fx:id="age2Checkbox" styleClass="checkbox-text" text="25 - 34 years" />
                   <JFXCheckBox fx:id="age3Checkbox" styleClass="checkbox-text" text="35 - 44 years" />
@@ -79,7 +84,7 @@
             </VBox>
             <VBox prefHeight="131.0" prefWidth="156.0" spacing="10.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="133.0" styleClass="checkbox-text" text="Income" />
+                  <Label fx:id="incomeLabel" prefHeight="17.0" prefWidth="133.0" styleClass="checkbox-text" text="Income" />
                   <JFXCheckBox fx:id="lowIncomeCheckbox" styleClass="checkbox-text" text="Low" />
                   <JFXCheckBox fx:id="MediumIncomeCheckbox" styleClass="checkbox-text" text="Medium" />
                   <JFXCheckBox fx:id="highIncomeCheckbox" styleClass="checkbox-text" text="High" />
@@ -90,7 +95,7 @@
             </VBox>
             <VBox prefHeight="236.0" prefWidth="156.0" spacing="10.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="143.0" styleClass="checkbox-text" text="Context" />
+                  <Label fx:id="contextLabel" prefHeight="17.0" prefWidth="143.0" styleClass="checkbox-text" text="Context" />
                   <JFXCheckBox fx:id="shoppingCheckbox" styleClass="checkbox-text" text="Shopping" />
                   <JFXCheckBox fx:id="newsCheckbox" styleClass="checkbox-text" text="News" />
                   <JFXCheckBox fx:id="blogCheckbox" styleClass="checkbox-text" text="Blog" />

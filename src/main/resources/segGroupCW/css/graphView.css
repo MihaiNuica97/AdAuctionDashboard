@@ -1,11 +1,47 @@
-.campaign-title{
-    -fx-font-size: 2em;
-}
-.checkbox-text .label, .checkbox-text .check-box{
-    -fx-text-fill: -text-secondary;
-}
 
 .scroll-pane{
     -fx-background-color: -main-bg-color;
     -fx-background: -main-bg-color;
+}
+
+#dashBoardLabel{
+    -fx-text-fill: -label;
+}
+
+
+.HBox{
+    -fx-background-color: -primary;
+    -fx-text-fill: -secondary;
+}
+
+.glyph-icon{
+    -fx-fill: -icons;
+}
+
+.check-box{
+    -fx-text-fill: -text-primary;
+}
+
+.scroll-pane{
+    -fx-background-color: -primary;
+}
+
+#VBoxPane{
+    -fx-background-color: -secondary;
+}
+
+.label{
+    -fx-text-fill: -text-primary;
+}
+
+#timeLabel{
+    -fx-text-fill: -tg;
+}
+
+#graphLabel{
+    -fx-text-fill: -tg;
+}
+
+.radio-button{
+    -fx-text-fill: -tg;
 }

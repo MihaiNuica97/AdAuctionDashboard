@@ -1,18 +1,19 @@
 .root{
     -main-bg-color: #f9f9f9;
-    -secondary-bg-color: #7e7f9a;
+    -secondary-bg-color: #FFB300;
     -primary: #f9f9f9;
-    -secondary: #7e7f9a;
-    -text-primary: black;
-    -text-secondary: #7e7f9a;
+    -secondary: #FFB300;
+    -text-primary: #27408B;
+    -text-secondary: #FFB300;
     -success: #55CF5A;
     -error: red;
     -fx-background-color: -main-bg-color;
     -fx-font-size: 12px;
     -fx-text-fill: -text-secondary;
-    -label: #5bc0be;
-    -icons: #7e7f9a;
-    -card: #5bc0be;
+    -label: #FFB300;
+    -icons: #27408B;
+    -card: #FFB300;
+    -tg: #27408B;
 
 }
 
@@ -70,11 +71,13 @@
 .chart-plot-background{
     -fx-background-color:  -card;
 }
+
 .axis{
-    -fx-tick-label-fill: black;
+    -fx-tick-label-fill: #27408B;
 
 }
 
 .card .label{
     -fx-text-fill: -text-primary;
 }
+

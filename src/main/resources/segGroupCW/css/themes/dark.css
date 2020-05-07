@@ -12,6 +12,7 @@
     -fx-text-fill: -text-secondary;
     -label: white;
     -icons: #a9a9a9;
+    -tg: white;
 
 }
 .primary {
@@ -87,4 +88,16 @@
     -fx-effect: null;
     -fx-text-fill: -text-primary;
     -fx-font-size: 2em;
+}
+
+#timeHbox{
+    -fx-background-color: -main-bg-color;
+}
+
+#graphHbox{
+    -fx-background-color: -main-bg-color;
+}
+
+#tgPane{
+    -fx-background-color: -main-bg-color;
 }

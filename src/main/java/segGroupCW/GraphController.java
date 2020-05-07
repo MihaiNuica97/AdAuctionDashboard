@@ -1,6 +1,8 @@
 package segGroupCW;
 
 import com.jfoenix.controls.*;
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,16 +12,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,10 +31,10 @@ import java.util.ResourceBundle;
 public class GraphController implements Initializable
 {
     @FXML
-    private Label mainMetricLabel;
+    private Label mainMetricLabel, timeLabel, graphLabel;
 
     @FXML
-    private JFXButton changeCampaignButton, settingsButton;
+    private JFXButton changeCampaignButton, settingsButton, homeButton, backButton, printButton;
 
     @FXML
     private Pane chartPane;
@@ -74,6 +75,73 @@ public class GraphController implements Initializable
     final NumberAxis yAxis = new NumberAxis();
     final BarChart<String,Number> histogram = new BarChart<>(xAxis,yAxis);
 
+
+    /**
+     *
+     * @param url
+     * @param resourceBundle
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Text settingsIcon = GlyphsDude.createIcon(FontAwesomeIcons.COG, "40px");
+        settingsButton.setGraphic(settingsIcon);
+
+        Text homeIcon = GlyphsDude.createIcon(FontAwesomeIcons.HOME, "40px");
+        homeButton.setGraphic(homeIcon);
+
+        Text backIcon = GlyphsDude.createIcon(FontAwesomeIcons.ARROW_LEFT, "40px");
+        backButton.setGraphic(backIcon);
+
+        Text printIcon = GlyphsDude.createIcon(FontAwesomeIcons.PRINT, "40px");
+        printButton.setGraphic(printIcon);
+
+        Tooltip tooltipSettings = new Tooltip("Change dashboard theme");
+        tooltipSettings.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipHome = new Tooltip("Return to file upload");
+        tooltipHome.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipBack = new Tooltip("Return to dashboard");
+        tooltipBack.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipPrint = new Tooltip("Print view");
+        tooltipPrint.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipAddFilter = new Tooltip("Add a filtered line to graph");
+        tooltipAddFilter.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipTime = new Tooltip("Change time scale of graph");
+        tooltipTime.setStyle("-fx-font-size: 10");
+        tooltipTime.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipGraph = new Tooltip("Change type of graph");
+        tooltipGraph.setStyle("-fx-font-size: 10");
+        tooltipGraph.setShowDelay(Duration.seconds(0.05));
+
+        //All labels popup
+        //buttons
+        settingsButton.setTooltip(tooltipSettings);
+        homeButton.setTooltip(tooltipHome);
+        backButton.setTooltip(tooltipBack);
+        printButton.setTooltip(tooltipPrint);
+        addFilterButton.setTooltip(tooltipAddFilter);
+        timeLabel.setTooltip(tooltipTime);
+        graphLabel.setTooltip(tooltipGraph);
+
+        checkBoxList = new ArrayList<JFXCheckBox>();
+        checkBoxList.add(femaleCheckBox);
+        checkBoxList.add(maleCheckbox);
+        checkBoxList.add(age1Checkbox);
+        checkBoxList.add(age2Checkbox);
+        checkBoxList.add(age3Checkbox);
+        checkBoxList.add(age4Checkbox);
+        checkBoxList.add(age5Checkbox);
+        checkBoxList.add(lowIncomeCheckbox);
+        checkBoxList.add(MediumIncomeCheckbox);
+        checkBoxList.add(highIncomeCheckbox);
+        checkBoxList.add(shoppingCheckbox);
+        checkBoxList.add(newsCheckbox);
+        checkBoxList.add(blogCheckbox);
+        checkBoxList.add(socialMCheckbox);
+        checkBoxList.add(hobbiesCheckbox);
+        checkBoxList.add(travelCheckbox);
+    }
+
     /**
      * Button that adds filters to the HBox
      * @param event
@@ -83,10 +151,12 @@ public class GraphController implements Initializable
         HBox hbox = new HBox();
         hbox.setSpacing(10);
         Label filter = new Label("Filters: ");
+        filter.setStyle("-fx-text-fill: -label");
         hbox.getChildren().add(filter);
         for (JFXCheckBox checkBox : checkBoxList) {
             if (checkBox.isSelected()) {
                 Label label = new Label();
+                label.setStyle("-fx-text-fill: -label");
                 label.setText(checkBox.getText());
                 hbox.getChildren().add(label);
 
@@ -118,8 +188,9 @@ public class GraphController implements Initializable
      * @param event
      * @throws IOException
      */
+
     @FXML
-    void dashboardReturn(ActionEvent event) throws IOException {
+    void goHome(ActionEvent event) throws IOException {
         App.setRoot("dashboard");
     }
 
@@ -193,29 +264,9 @@ public class GraphController implements Initializable
         chartPane.getChildren().add(mainChart);
     }
 
-    /**
-     *
-     * @param url
-     * @param resourceBundle
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        checkBoxList = new ArrayList<JFXCheckBox>();
-        checkBoxList.add(femaleCheckBox);
-        checkBoxList.add(maleCheckbox);
-        checkBoxList.add(age1Checkbox);
-        checkBoxList.add(age2Checkbox);
-        checkBoxList.add(age3Checkbox);
-        checkBoxList.add(age4Checkbox);
-        checkBoxList.add(age5Checkbox);
-        checkBoxList.add(lowIncomeCheckbox);
-        checkBoxList.add(MediumIncomeCheckbox);
-        checkBoxList.add(highIncomeCheckbox);
-        checkBoxList.add(shoppingCheckbox);
-        checkBoxList.add(newsCheckbox);
-        checkBoxList.add(blogCheckbox);
-        checkBoxList.add(socialMCheckbox);
-        checkBoxList.add(hobbiesCheckbox);
-        checkBoxList.add(travelCheckbox);
+    @FXML
+    void print(ActionEvent event) {
+
     }
+
 }
