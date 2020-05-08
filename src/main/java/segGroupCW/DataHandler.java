@@ -2,7 +2,6 @@ package segGroupCW;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,24 +42,29 @@ public class DataHandler {
     }
 
     public List<String> filterUsers(List<String> filters) {
-        ArrayList<String> filterIncome = new ArrayList<>();
-        ArrayList<String> filterAge = new ArrayList<>();
-        String filterGender = "NULL";
-
-        for (String option : filters) {
-            if (income.contains(option)) {
-                filterIncome.add(option);
-            } else if (ages.contains(option)) {
-                filterAge.add(convertAge(option));
-            } else if (genders.contains(option)) {
-                filterGender = option;
-            }
-        }
-
-        if (filterGender.equals("NULL")) {
-            return users.stream().filter(userFilterPredicate(filterIncome, filterAge)).map(User::getId).collect(Collectors.toList());
+        filters.removeAll(context);
+        if (filters.isEmpty()) {
+            return users.stream().map(User::getId).collect(Collectors.toList());
         } else {
-            return users.stream().filter(userFilterPredicate(filterIncome, filterAge, filterGender)).map(User::getId).collect(Collectors.toList());
+            ArrayList<String> filterIncome = new ArrayList<>();
+            ArrayList<String> filterAge = new ArrayList<>();
+            String filterGender = "NULL";
+
+            for (String option : filters) {
+                if (income.contains(option)) {
+                    filterIncome.add(option);
+                } else if (ages.contains(option)) {
+                    filterAge.add(convertAge(option));
+                } else if (genders.contains(option)) {
+                    filterGender = option;
+                }
+            }
+
+            if (filterGender.equals("NULL")) {
+                return users.stream().filter(userFilterPredicate(filterIncome, filterAge)).map(User::getId).collect(Collectors.toList());
+            } else {
+                return users.stream().filter(userFilterPredicate(filterIncome, filterAge, filterGender)).map(User::getId).collect(Collectors.toList());
+            }
         }
     }
 
@@ -119,7 +123,14 @@ public class DataHandler {
     }
 
     public List<Impression> filterImpressions(List<String> ids, ArrayList<String> contexts) {
-        return impressions.stream().filter(p -> ids.contains(p.getId()) && contexts.contains(p.getContext())).collect(Collectors.toList());
+        System.out.println(impressions.size());
+        List<Impression> temp = impressions.stream().filter(p -> ids.contains(p.getId()) && contexts.contains(p.getContext())).collect(Collectors.toList());
+        System.out.println(temp.size());
+        return temp;
+    }
+
+    public List<Click> filterClicks(List<String> ids) {
+        return clicks.stream().filter(p -> ids.contains(p.getId())).collect(Collectors.toList());
     }
 
     public List<Server> filterServers(List<String> ids) {
@@ -127,15 +138,25 @@ public class DataHandler {
     }
 
     public List<Click> filterClicks(List<String> users, List<Impression> impressions) {
-        return null;
-    }
-
-    public List<Click> filterClicks(List<String> ids) {
-        return clicks.stream().filter(p -> ids.contains(p.getId())).collect(Collectors.toList());
+        System.out.println(clicks.size());
+        List<Click> temp = clicks.stream().filter(compareCToImpressions(impressions) ).collect(Collectors.toList());
+        System.out.println(temp.size());
+        return temp;
     }
 
     public List<Server> filterServers(List<String> users, List<Impression> impressions) {
-        return null;
+        System.out.println(serverLogs.size());
+        List<Server> temp = serverLogs.stream().filter(compareSToImpressions(impressions) ).collect(Collectors.toList());
+        System.out.println(temp.size());
+        return temp;
+    }
+
+    private Predicate<Click> compareCToImpressions(List<Impression> imps) {
+        return p -> imps.stream().anyMatch(t -> t.getId().equals(p.getId()) && (t.getDate().getTime() - p.getDate().getTime() < 300000 ));
+    }
+
+    private Predicate<Server> compareSToImpressions(List<Impression> imps) {
+        return p -> imps.stream().anyMatch(t -> t.getId().equals(p.getId()) && (t.getDate().getTime() - p.getEntryDate().getTime() < 300000 ));
     }
 
     //Normal Calculations

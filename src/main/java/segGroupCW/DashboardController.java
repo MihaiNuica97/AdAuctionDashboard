@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,11 +34,8 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -135,7 +133,6 @@ public class DashboardController implements Initializable {
         for (JFXCheckBox checkBox : checkBoxList){
             if (checkBox.isSelected()) {
                 selectedCheckBoxes.add(checkBox.getText());
-               // System.out.println(checkBox.getText());
             }
         }
         if (!selectedCheckBoxes.isEmpty()) {
@@ -165,10 +162,8 @@ public class DashboardController implements Initializable {
                 List<Impression> impressions;
                 List<Server> server;
                 List<Click> clicks;
-                impressions = App.dataHandler.filterImpressions(users);
-                server = App.dataHandler.filterServers(users);
-                clicks = App.dataHandler.filterClicks(users);
-                /*if (!contexts.isEmpty()) {
+                if (!contexts.isEmpty()) {
+
                     impressions = App.dataHandler.filterImpressions(users, contexts);
                     server = App.dataHandler.filterServers(users, impressions);
                     clicks = App.dataHandler.filterClicks(users, impressions);
@@ -177,7 +172,6 @@ public class DashboardController implements Initializable {
                     server = App.dataHandler.filterServers(users);
                     clicks = App.dataHandler.filterClicks(users);
                 }
-                */
                 int noImps = App.dataHandler.calcImpressions(impressions);
                 noImprLabel.setText(Integer.toString(noImps));
                 int noClicks = App.dataHandler.calcClicks(clicks);
