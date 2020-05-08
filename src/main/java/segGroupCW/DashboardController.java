@@ -163,10 +163,9 @@ public class DashboardController implements Initializable {
                 List<Server> server;
                 List<Click> clicks;
                 if (!contexts.isEmpty()) {
-
                     impressions = App.dataHandler.filterImpressions(users, contexts);
-                    server = App.dataHandler.filterServers(users, impressions);
-                    clicks = App.dataHandler.filterClicks(users, impressions);
+                    server = App.dataHandler.filterCServers(impressions);
+                    clicks = App.dataHandler.filterCClicks(impressions);
                 } else {
                     impressions = App.dataHandler.filterImpressions(users);
                     server = App.dataHandler.filterServers(users);

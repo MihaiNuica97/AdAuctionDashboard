@@ -123,10 +123,7 @@ public class DataHandler {
     }
 
     public List<Impression> filterImpressions(List<String> ids, ArrayList<String> contexts) {
-        System.out.println(impressions.size());
-        List<Impression> temp = impressions.stream().filter(p -> ids.contains(p.getId()) && contexts.contains(p.getContext())).collect(Collectors.toList());
-        System.out.println(temp.size());
-        return temp;
+        return impressions.stream().filter(p -> ids.contains(p.getId()) && contexts.contains(p.getContext())).collect(Collectors.toList());
     }
 
     public List<Click> filterClicks(List<String> ids) {
@@ -137,18 +134,12 @@ public class DataHandler {
         return serverLogs.stream().filter(p -> ids.contains(p.getId())).collect(Collectors.toList());
     }
 
-    public List<Click> filterClicks(List<String> users, List<Impression> impressions) {
-        System.out.println(clicks.size());
-        List<Click> temp = clicks.stream().filter(compareCToImpressions(impressions) ).collect(Collectors.toList());
-        System.out.println(temp.size());
-        return temp;
+    public List<Click> filterCClicks(List<Impression> impressions) {
+        return clicks.stream().filter(compareCToImpressions(impressions) ).collect(Collectors.toList());
     }
 
-    public List<Server> filterServers(List<String> users, List<Impression> impressions) {
-        System.out.println(serverLogs.size());
-        List<Server> temp = serverLogs.stream().filter(compareSToImpressions(impressions) ).collect(Collectors.toList());
-        System.out.println(temp.size());
-        return temp;
+    public List<Server> filterCServers(List<Impression> impressions) {
+        return serverLogs.stream().filter(compareSToImpressions(impressions) ).collect(Collectors.toList());
     }
 
     private Predicate<Click> compareCToImpressions(List<Impression> imps) {
