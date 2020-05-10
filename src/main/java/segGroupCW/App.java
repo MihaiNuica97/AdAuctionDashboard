@@ -18,7 +18,7 @@ public class App extends Application {
 	public static Scene scene;
 	public static ThemeController themeController;
 	public static Boolean packaged = false;
-	private static Stage thisStage;
+	public static Stage thisStage;
 
 	public static Scene getScene(){
 		return scene;

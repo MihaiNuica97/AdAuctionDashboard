@@ -115,11 +115,11 @@
 
 
    <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
          <content>
             <VBox fx:id="graphVBox" prefWidth="788.0">
                <children>
-                  <AnchorPane prefHeight="1253.0" prefWidth="788.0">
+                  <AnchorPane fx:id="graphAnchorPane" prefHeight="1253.0" prefWidth="788.0">
                      <children>
                         <VBox layoutY="-3.0" prefHeight="1858.0" prefWidth="178.0" spacing="20.0">
                            <children>

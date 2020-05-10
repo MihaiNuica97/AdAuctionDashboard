@@ -13,16 +13,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Shadow;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -86,6 +93,14 @@ public class DashboardController implements Initializable {
     @FXML
     private VBox leftVBox;
 
+    @FXML
+    private VBox graphVBox;
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private AnchorPane graphAnchorPane;
     /**
      *
      * @param url
@@ -95,6 +110,8 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initLabels();
 //    DONT DELETE ^
+
+        printButton.setOnAction( e -> print());
 
         Text settingsIcon = GlyphsDude.createIcon(FontAwesomeIcons.COG, "40px");
         settingsButton.setGraphic(settingsIcon);
@@ -238,6 +255,20 @@ public class DashboardController implements Initializable {
         settingsScene.getStylesheets().add(App.themeController.getCurrentThemeUrl());
         settingsStage.setScene(settingsScene);
         settingsStage.show();
+    }
+
+    @FXML
+    void print(){
+        WritableImage snapshot = graphAnchorPane.snapshot(new SnapshotParameters(), null);
+        ImageView printImage = new ImageView(snapshot);
+        printImage.setFitWidth(450);
+        printImage.setFitHeight(740);
+
+        Node printNode = (Node) printImage;
+
+        PrintController printer = new PrintController(printNode);
+        printer.print();
+
     }
 
 
