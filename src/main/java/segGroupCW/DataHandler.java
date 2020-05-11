@@ -16,10 +16,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class DataHandler {
-    private List<Click> clicks;
-    private List<User> users;
-    private List<Impression> impressions;
-    private List<Server> serverLogs;
+    public List<Click> clicks;
+    public List<User> users;
+    public List<Impression> impressions;
+    public List<Server> serverLogs;
     static List<String> genders = Arrays.asList("Male", "Female");
     static List<String> ages = Arrays.asList("< 25 years", "25 - 34 years", "35 - 44 years", "45 - 54 years", "> 54 years");
     static List<String> income = Arrays.asList("Low", "Medium", "High");
