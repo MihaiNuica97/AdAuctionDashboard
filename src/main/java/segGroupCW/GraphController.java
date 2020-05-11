@@ -300,27 +300,27 @@ public class GraphController implements Initializable
      * @param url
      * @param resourceBundle
      */
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        checkBoxList = new ArrayList<JFXCheckBox>();
-        checkBoxList.add(femaleCheckBox);
-        checkBoxList.add(maleCheckbox);
-        checkBoxList.add(age1Checkbox);
-        checkBoxList.add(age2Checkbox);
-        checkBoxList.add(age3Checkbox);
-        checkBoxList.add(age4Checkbox);
-        checkBoxList.add(age5Checkbox);
-        checkBoxList.add(lowIncomeCheckbox);
-        checkBoxList.add(MediumIncomeCheckbox);
-        checkBoxList.add(highIncomeCheckbox);
-        checkBoxList.add(shoppingCheckbox);
-        checkBoxList.add(newsCheckbox);
-        checkBoxList.add(blogCheckbox);
-        checkBoxList.add(socialMCheckbox);
-        checkBoxList.add(hobbiesCheckbox);
-        checkBoxList.add(travelCheckbox);
-        mainMetricLabel.setText("");
-    }
+//    @Override
+//    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        checkBoxList = new ArrayList<JFXCheckBox>();
+//        checkBoxList.add(femaleCheckBox);
+//        checkBoxList.add(maleCheckbox);
+//        checkBoxList.add(age1Checkbox);
+//        checkBoxList.add(age2Checkbox);
+//        checkBoxList.add(age3Checkbox);
+//        checkBoxList.add(age4Checkbox);
+//        checkBoxList.add(age5Checkbox);
+//        checkBoxList.add(lowIncomeCheckbox);
+//        checkBoxList.add(MediumIncomeCheckbox);
+//        checkBoxList.add(highIncomeCheckbox);
+//        checkBoxList.add(shoppingCheckbox);
+//        checkBoxList.add(newsCheckbox);
+//        checkBoxList.add(blogCheckbox);
+//        checkBoxList.add(socialMCheckbox);
+//        checkBoxList.add(hobbiesCheckbox);
+//        checkBoxList.add(travelCheckbox);
+//        mainMetricLabel.setText("");
+//    }
 
     private void refreshGraph(List<Impression> impressionList, List<Click> clickList, List<Server> serverList, List<String> userList){
         switch (mainMetricLabel.getText()) {
@@ -559,16 +559,12 @@ public class GraphController implements Initializable
         mainChart.getData().add(series);
     }
 
-    private void refreshCPMGraph(List<Click> clicksList, List<Impression> impressionList){
+    private void refreshCPMGraph(List<Click> clicksList, List<Impression> impressionList) {
         XYChart.Series series = new XYChart.Series();
-        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
-        for(LocalDate date: dates){
-            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpmAtDate(date,clicksList,impressionList)));
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days", 1);
+        for (LocalDate date : dates) {
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpmAtDate(date, clicksList, impressionList)));
         }
         mainChart.getData().add(series);
-    @FXML
-    void print(ActionEvent event) {
-
     }
-
 }

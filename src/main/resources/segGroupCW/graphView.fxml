@@ -166,7 +166,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
                         <JFXButton fx:id="settingsButton" layoutX="94.0" layoutY="14.0" mnemonicParsing="false" onAction="#settingsPage" prefHeight="42.0" prefWidth="57.0" text=" " />
-                  <JFXButton fx:id="printButton" layoutX="26.0" layoutY="21.0" mnemonicParsing="false" onAction="#print" prefHeight="42.0" prefWidth="57.0" text=" " />
+                  <JFXButton fx:id="printButton" layoutX="26.0" layoutY="21.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="57.0" text=" " />
                </children>
             </Pane>
                </children>
