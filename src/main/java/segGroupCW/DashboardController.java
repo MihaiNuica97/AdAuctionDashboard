@@ -574,18 +574,23 @@ public class DashboardController implements Initializable {
     }
 
     void refreshBounceLabels() {
+        int bounces;
         switch (bounceMethod) {
+
             case "Page":
-                noBounceLabel.setText(Double.toString(initialLabels.get("BouncePage")));
-                bounceRateLabel.setText(Double.toString(initialLabels.get("BounceRatePage")));
+                bounces = App.dataHandler.calcBouncePage(bounceValue);
+                noBounceLabel.setText(Double.toString(bounces));
+                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRatePages(bounces, (initialLabels.get("Clicks").intValue()))));
                 break;
             case "Conv":
-                noBounceLabel.setText(Double.toString(initialLabels.get("BounceConv")));
-                bounceRateLabel.setText(Double.toString(initialLabels.get("BounceRateConv")));
+                bounces = App.dataHandler.calcBounceConv();
+                noBounceLabel.setText(Double.toString(bounces));
+                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateConv(bounces, (initialLabels.get("Clicks").intValue()))));
                 break;
             case "Time":
-                noBounceLabel.setText(Double.toString(initialLabels.get("BounceTime")));
-                bounceRateLabel.setText(Double.toString(initialLabels.get("BounceRateTime")));
+                bounces = App.dataHandler.calcBounceTime(bounceValue);
+                noBounceLabel.setText(Double.toString(bounces));
+                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateTime(bounces, (initialLabels.get("Clicks").intValue()))));
             default:
                 noBounceLabel.setText("n/a");
                 bounceRateLabel.setText("n/a");
