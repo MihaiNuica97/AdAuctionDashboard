@@ -5,7 +5,6 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
 import de.jensd.fx.glyphs.GlyphsDude;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcons;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,40 +13,32 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.print.PrinterJob;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Shadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import org.w3c.dom.CDATASection;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.*;
 import java.util.List;
+
 
 public class DashboardController implements Initializable {
 
@@ -99,6 +90,9 @@ public class DashboardController implements Initializable {
 
     private static DateFormat dateformat = new DateFormat();
 
+    private HashMap<String, Double> initialLabels = new HashMap<>();
+    private HashMap<String, XYChart.Series> initialSeries = new HashMap<>();
+
     @FXML
     private VBox graphVBox;
 
@@ -114,7 +108,8 @@ public class DashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initLabels();
+        calcInitLabels();
+        setInitLabels();
         initGraphs();
 //    DONT DELETE ^
 
@@ -302,12 +297,12 @@ public class DashboardController implements Initializable {
                 refreshCPCGraph(clicks,impressions);
                 refreshCPMGraph(clicks,impressions);
             } else {
-                initLabels();
+                setInitLabels();
                 initGraphs();
             }
 
         } else {
-            initLabels();
+            setInitLabels();
             initGraphs();
         }
     }
@@ -324,7 +319,7 @@ public class DashboardController implements Initializable {
                // System.out.println(checkBox.getText() + " is cleared" );
             }
         }
-        initLabels();
+        calcInitLabels();
     }
 
 
@@ -550,65 +545,68 @@ public class DashboardController implements Initializable {
 
     }
 
-    private void initLabels() {
+    private void calcInitLabels() {
         int impressions = App.dataHandler.calcImpressions();
-        noImprLabel.setText(Integer.toString(impressions));
+        initialLabels.put("Impressions", (double) impressions);
         int clicks = App.dataHandler.calcClicks();
-        noClicksLabel.setText(Integer.toString(clicks));
-        noUniqueLabel.setText(Integer.toString(App.dataHandler.calcUniques()));
-        int bounces;
-        switch (bounceMethod) {
-            case "Page":
-                bounces = App.dataHandler.calcBouncePage(bounceValue);
-                noBounceLabel.setText(Integer.toString(bounces));
-                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRatePages(bounces, clicks)));
-                break;
-            case "Conv":
-                bounces = App.dataHandler.calcBounceConv();
-                noBounceLabel.setText(Integer.toString(bounces));
-                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateConv(bounces, clicks)));
-                break;
-            case "Time":
-                bounces = App.dataHandler.calcBounceTime(bounceValue);
-                noBounceLabel.setText(Integer.toString(bounces));
-                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateTime(bounces, clicks)));
-            default:
-                bounces = 0;
-                noBounceLabel.setText("n/a");
-        }
+        initialLabels.put("Clicks", (double) clicks);
+        int uniques = App.dataHandler.calcUniques();
+        initialLabels.put("Uniques", (double) uniques);
+
+        int bounces = App.dataHandler.calcBouncePage(bounceValue);
+        initialLabels.put("BouncePage", (double) bounces);
+        initialLabels.put("BounceRatePage", App.dataHandler.calcBounceRatePages(bounces, clicks));
+        bounces = App.dataHandler.calcBounceConv();
+        initialLabels.put("BounceConv", (double) bounces);
+        initialLabels.put("BounceRateConv", App.dataHandler.calcBounceRateConv(bounces, clicks));
+        bounces = App.dataHandler.calcBounceTime(bounceValue);
+        initialLabels.put("BounceTime", (double) bounces);
+        initialLabels.put("BounceRateTime", App.dataHandler.calcBounceRateTime(bounces, clicks));
+
         int convs = App.dataHandler.calcConversions();
-        noConversionLabel.setText(Integer.toString(convs));
+        initialLabels.put("Conversions", (double) convs);
         double totalCost = App.dataHandler.calcTotalCost();
-        totalCostLabel.setText(Double.toString(totalCost));
-        ctrLabel.setText(Double.toString(App.dataHandler.calcCTR(clicks, impressions)));
-        cpaLabel.setText(Double.toString(App.dataHandler.calcCPA(totalCost, convs)));
-        cpcLabel.setText(Double.toString(App.dataHandler.calcCPC(totalCost, clicks)));
-        cpmLabel.setText(Double.toString(App.dataHandler.calcCPM(totalCost, impressions)));
+        initialLabels.put("TotalCost", totalCost);
+        initialLabels.put("CTR", App.dataHandler.calcCTR(clicks, impressions));
+        initialLabels.put("CPA",App.dataHandler.calcCPA(totalCost, convs));
+        initialLabels.put("CPC",App.dataHandler.calcCPC(totalCost, clicks));
+        initialLabels.put("CPM",App.dataHandler.calcCPM(totalCost, impressions));
     }
 
     void refreshBounceLabels() {
-        int bounces;
         switch (bounceMethod) {
             case "Page":
-                bounces = App.dataHandler.calcBouncePage(bounceValue);
-                noBounceLabel.setText(Integer.toString(bounces));
-                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRatePages(bounceValue)));
+                noBounceLabel.setText(Double.toString(initialLabels.get("BouncePage")));
+                bounceRateLabel.setText(Double.toString(initialLabels.get("BounceRatePage")));
                 break;
             case "Conv":
-                bounces = App.dataHandler.calcBounceConv();
-                noBounceLabel.setText(Integer.toString(bounces));
-                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateConv()));
+                noBounceLabel.setText(Double.toString(initialLabels.get("BounceConv")));
+                bounceRateLabel.setText(Double.toString(initialLabels.get("BounceRateConv")));
                 break;
             case "Time":
-                bounces = App.dataHandler.calcBounceTime(bounceValue);
-                noBounceLabel.setText(Integer.toString(bounces));
-                bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateTime(bounceValue)));
+                noBounceLabel.setText(Double.toString(initialLabels.get("BounceTime")));
+                bounceRateLabel.setText(Double.toString(initialLabels.get("BounceRateTime")));
             default:
                 noBounceLabel.setText("n/a");
                 bounceRateLabel.setText("n/a");
         }
     }
 
+    void setInitLabels() {
+
+        noImprLabel.setText(Integer.toString(initialLabels.get("Impressions").intValue()));
+        noClicksLabel.setText(Integer.toString(initialLabels.get("Clicks").intValue()));
+        noUniqueLabel.setText(Integer.toString(initialLabels.get("Uniques").intValue()));
+
+        refreshBounceLabels();
+
+        noConversionLabel.setText(Integer.toString(initialLabels.get("Conversions").intValue()));
+        totalCostLabel.setText(Double.toString(initialLabels.get("TotalCost")));
+        ctrLabel.setText(Double.toString(initialLabels.get("CTR")));
+        cpaLabel.setText(Double.toString(initialLabels.get("CPA")));
+        cpcLabel.setText(Double.toString(initialLabels.get("CPC")));
+        cpmLabel.setText(Double.toString(initialLabels.get("CPM")));
+    }
 
 
 
