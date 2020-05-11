@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -21,12 +25,29 @@ public class DataHandler {
     static List<String> income = Arrays.asList("Low", "Medium", "High");
     static List<String> context = Arrays.asList("Blog", "News", "Shopping", "Social Media", "Hobbies", "Travel");
 
+    private static DateFormat dateformat = new DateFormat();
+    private static Date imprFirstDate, imprLastDate, clickFirstDate, clickLastDate, serverEntFirstDate, serverEntLastDate, serverExFirstDate, serverExLastDate;
+
+    //remove, a stub due to the graph controller not being connected
+    public DataHandler(){
+
+    }
+
     public DataHandler(File impFile, File clickFile, File serverFile) {
         try {
-            CSVParser.parseImpression(impFile, this);
-            clicks = CSVParser.parseClicks(clickFile);
-            serverLogs = CSVParser.parseServer(serverFile);
+            CSVParser csvParser = new CSVParser();
+            csvParser.parseImpression(impFile, this);
+            clicks = csvParser.parseClicks(clickFile);
+            serverLogs = csvParser.parseServer(serverFile);
 
+            imprFirstDate = csvParser.getImprFirstDate();
+            imprLastDate = csvParser.getImprLastDate();
+            clickFirstDate = csvParser.getClickFirstDate();
+            clickLastDate = csvParser.getClickFirstDate();
+            serverEntFirstDate = csvParser.getServerEntFirstDate();
+            serverEntLastDate = csvParser.getServerEntLastDate();
+            serverExFirstDate = csvParser.getServerExFirstDate();
+            serverExLastDate = csvParser.getServerExLastDate();
         } catch (IOException e) {
             System.out.println("Failed to parse files");
             e.printStackTrace();
@@ -94,6 +115,48 @@ public class DataHandler {
         } else {
             return p -> ages.contains(p.getAge());
         }
+    }
+
+    //int for interval num and string for day/month
+    public static ArrayList<LocalDate> iterTimeIntervals(Date start, Date end, String interval, int num){
+        ArrayList<LocalDate> intervals = new ArrayList<>();
+        LocalDate startDate = dateformat.asLocalDate(start);
+        LocalDate endDate = dateformat.asLocalDate(end).plusDays(1);
+        intervals.add(startDate);
+
+        switch  (interval){
+            case "days":
+                while (startDate.isBefore(endDate)){
+                    startDate = startDate.plusDays(num);
+                    intervals.add(startDate);
+                }
+                break;
+            case "months":
+                while (startDate.isBefore(endDate)){
+                    startDate = startDate.plusMonths(num);
+                    intervals.add(startDate);
+                }
+                break;
+            case "weeks":
+                while (startDate.isBefore(endDate)){
+                    startDate = startDate.plusWeeks(num);
+                    intervals.add(startDate);
+                }
+                break;
+        }
+        return intervals;
+    }
+
+    public static ArrayList<LocalDate> initialImprTI(String interval, int num){
+        return iterTimeIntervals(imprFirstDate,imprLastDate,interval,num);
+    }
+
+    public static ArrayList<LocalDate> initialClicksTI(String interval, int num){
+        return iterTimeIntervals(clickFirstDate,clickLastDate,interval,num);
+    }
+
+    public static ArrayList<LocalDate> initialServerTI(String interval, int num){
+        return iterTimeIntervals(serverEntFirstDate,serverEntLastDate,interval,num);
     }
 
     public String convertAge(String wrongAge) {
@@ -238,6 +301,86 @@ public class DataHandler {
 
     public double calcBounceRateTime(int bounceTime, int clicks) { return Math.round( ((double) bounceTime / clicks) * 100.0) / 100.0; }
 
+    //init for grpahs
+
+    public int impressionsAtDate(LocalDate date ){
+        return (int)impressions.stream().filter(impressionAtDate(date)).count();
+    }
+    public int clicksAtDate(LocalDate date ){
+        return (int)clicks.stream().filter(clickAtDate(date)).count();
+    }
+
+    public int uniquesAtDate(LocalDate date ){
+        return (int)clicks.stream().filter(uniqueAtDate(date,Click::getId)).count();
+    }
+
+    // bounce stuff
+
+    public int conversionsAtDate(LocalDate date ){
+        return (int)serverLogs.stream().filter(serverAtEntryDate(date)).count();
+    }
+
+    public double totalCostAtDate(LocalDate date ){
+        double impCost = impressions.stream().filter(impressionAtDate(date)).mapToDouble(p -> p.getCost().doubleValue()).sum();
+        double clickCost = clicks.stream().filter(clickAtDate(date)).mapToDouble(p -> p.getCost().doubleValue()).sum();
+        return Math.round( (impCost + clickCost) * 100.0) / 100.0;    }
+
+    public double ctrAtDate(LocalDate date){
+        return Math.round( ((double) clicksAtDate(date) / impressionsAtDate(date)) * 100.0) / 100.0;
+    }
+
+    public double cpaAtDate(LocalDate date){
+        return Math.round( (totalCostAtDate(date) / conversionsAtDate(date)) * 100.0) / 100.0;
+    }
+
+    public double cpcAtDate(LocalDate date){
+        return Math.round( (totalCostAtDate(date) / clicksAtDate(date)) * 100.0) / 100.0;
+    }
+
+    public double cpmAtDate(LocalDate date){
+        return Math.round( (totalCostAtDate(date) / (impressionsAtDate(date) * 1000)) * 100.0) / 100.0;
+    }
+
+
+    //filters for graphs
+
+    public int impressionsAtDate(LocalDate date, List<Impression> impressionList){
+        return (int)impressionList.stream().filter(impressionAtDate(date)).count();
+    }
+    public int clicksAtDate(LocalDate date, List<Click> clicksList){
+        return (int)clicksList.stream().filter(clickAtDate(date)).count();
+    }
+
+    public int uniquesAtDate(LocalDate date, List<Click> clicksList ){
+        return (int)clicksList.stream().filter(uniqueAtDate(date,Click::getId)).count();
+    }
+
+    // bounce stuff
+
+    public int conversionsAtDate(LocalDate date, List<Server> serverList){
+        return (int)serverList.stream().filter(serverAtEntryDate(date)).count();
+    }
+
+    public double totalCostAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList){
+        double impCost = impressionList.stream().filter(impressionAtDate(date)).mapToDouble(p -> p.getCost().doubleValue()).sum();
+        double clickCost = clicksList.stream().filter(clickAtDate(date)).mapToDouble(p -> p.getCost().doubleValue()).sum();
+        return Math.round( (impCost + clickCost) * 100.0) / 100.0;    }
+
+    public double ctrAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList){
+        return Math.round( ((double) clicksAtDate(date, clicksList) / impressionsAtDate(date, impressionList)) * 100.0) / 100.0;
+    }
+
+    public double cpaAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList, List<Server> serverList){
+        return Math.round( (totalCostAtDate(date,clicksList,impressionList) / conversionsAtDate(date,serverList)) * 100.0) / 100.0;
+    }
+
+    public double cpcAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList){
+        return Math.round( (totalCostAtDate(date,clicksList,impressionList) / clicksAtDate(date,clicksList)) * 100.0) / 100.0;
+    }
+
+    public double cpmAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList){
+        return Math.round( (totalCostAtDate(date,clicksList,impressionList) / (impressionsAtDate(date,impressionList) * 1000)) * 100.0) / 100.0;
+    }
 
     // Predicates
 
@@ -247,4 +390,23 @@ public class DataHandler {
         Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
+
+    private static Predicate<Impression> impressionAtDate(LocalDate date){
+        return p -> dateformat.dayComparable(p.getDate()).isEqual(date);
+    }
+
+    private static Predicate<Click> clickAtDate(LocalDate date){
+        return p -> dateformat.dayComparable(p.getDate()).isEqual(date);
+    }
+
+    private static Predicate<Server> serverAtEntryDate(LocalDate date){
+        return p -> dateformat.dayComparable(p.getEntryDate()).isEqual(date);
+    }
+
+    private static Predicate<Click> uniqueAtDate(LocalDate date, Function<? super Click, ?> keyExtractor){
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return p -> dateformat.dayComparable(p.getDate()).isEqual(date) && seen.putIfAbsent(keyExtractor.apply(p), Boolean.TRUE) == null;
+    }
+
+
 }

@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -89,7 +90,6 @@ public class GraphController implements Initializable
                 Label label = new Label();
                 label.setText(checkBox.getText());
                 hbox.getChildren().add(label);
-
             }
         }
         JFXButton button = new JFXButton();
@@ -99,11 +99,42 @@ public class GraphController implements Initializable
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                filterVbox.getChildren().remove(hbox);
+                List<String> selectedCheckBoxes = new ArrayList<>();
+                for (JFXCheckBox checkBox : checkBoxList) {
+                    if (checkBox.isSelected()) {
+                        selectedCheckBoxes.add(checkBox.getText());
+                        // System.out.println(checkBox.getText());
+                    }
+                }
+                if (!selectedCheckBoxes.isEmpty()) {
+
+                    if (selectedCheckBoxes.containsAll(DataHandler.genders)) {
+                        selectedCheckBoxes.removeAll(DataHandler.genders);
+                    }
+                    if (selectedCheckBoxes.containsAll(DataHandler.income)) {
+                        selectedCheckBoxes.removeAll(DataHandler.income);
+                    }
+                    if (selectedCheckBoxes.containsAll(DataHandler.ages)) {
+                        selectedCheckBoxes.removeAll(DataHandler.ages);
+                    }
+                    if (!selectedCheckBoxes.isEmpty()) {
+                        List<String> users = App.dataHandler.filterUsers(selectedCheckBoxes);
+                        List<Impression> impressions = App.dataHandler.filterImpressions(users);
+                        List<Server> server = App.dataHandler.filterServers(users);
+                        List<Click> clicks = App.dataHandler.filterClicks(users);
+                        refreshGraph(impressions,clicks,server,users);
+
+                    } else {
+                        initGraph();
+                    }
+
+                } else {
+                    initGraph();
+                }
             }
         });
         hbox.getChildren().add(button);
-        filterVbox.getChildren().add(hbox);
+        //filterVbox.getChildren().add(hbox);
 
         //deleting the selected checkboxes after adding them
         for (JFXCheckBox checkBox : checkBoxList) {
@@ -217,5 +248,252 @@ public class GraphController implements Initializable
         checkBoxList.add(socialMCheckbox);
         checkBoxList.add(hobbiesCheckbox);
         checkBoxList.add(travelCheckbox);
+        mainMetricLabel.setText("");
+    }
+
+    private void refreshGraph(List<Impression> impressionList, List<Click> clickList, List<Server> serverList, List<String> userList){
+        switch (mainMetricLabel.getText()) {
+            case "Impressions":
+                refreshImpressionsGraph(impressionList);
+                break;
+            case "CLicks":
+                refreshClicksGraph(clickList);
+                break;
+            case "Uniques":
+                refreshUniquesGraph(clickList);
+                break;
+            case "Conversions":
+                refreshConvsGraph(serverList);
+                break;
+            case "Total Cost":
+                refreshTotalCostGraph(clickList, impressionList);
+                break;
+            case "CTR":
+                refreshCTRGraph(clickList, impressionList);
+                break;
+            case "CPA":
+                refreshCPAGraph(clickList, impressionList, serverList);
+                break;
+            case "CPC":
+                refreshCPCGraph(clickList, impressionList);
+                break;
+            case "CPM":
+                refreshCPMGraph(clickList, impressionList);
+                break;
+            case "":
+                refreshImpressionsGraph(impressionList);
+                break;
+        }
+    }
+
+    private void initGraph(){
+        switch (mainMetricLabel.getText()) {
+            case "Impressions":
+                initImpressionsGraph();
+                break;
+            case "CLicks":
+                initClicksGraph();
+                break;
+            case "Uniques":
+                initUniquesGraph();
+                break;
+            case "Conversions":
+                initConvsGraph();
+                break;
+            case "Total Cost":
+                initTotalCostGraph();
+                break;
+            case "CTR":
+                initCTRGraph();
+                break;
+            case "CPA":
+                initCPAGraph();
+                break;
+            case "CPC":
+                initCPCGraph();
+                break;
+            case "CPM":
+                initCPMGraph();
+                break;
+            case "":
+                initImpressionsGraph();
+                break;
+        }
+    }
+
+
+
+    private void initImpressionsGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.impressionsAtDate(date)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void initClicksGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialClicksTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.clicksAtDate(date)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void initUniquesGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.uniquesAtDate(date)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    /*
+    private void refreshBouncePagesGraph(String start, String end){
+        NoUniquesChart.getData().add(null);
+    }
+     */
+
+    private void initConvsGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.conversionsAtDate(date)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void initTotalCostGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.totalCostAtDate(date)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void initCTRGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialClicksTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.ctrAtDate(date)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void initCPAGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpaAtDate(date)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void initCPCGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpcAtDate(date)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void initCPMGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpmAtDate(date)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void refreshImpressionsGraph(List<Impression> impressionList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.impressionsAtDate(date,impressionList)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void refreshClicksGraph(List<Click> clicksList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialClicksTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.clicksAtDate(date,clicksList)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void refreshUniquesGraph(List<Click> clicksList ){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.uniquesAtDate(date,clicksList)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    /*
+    private void refreshBouncePagesGraph(String start, String end){
+        NoUniquesChart.getData().add(null);
+    }
+     */
+
+    private void refreshConvsGraph( List<Server> serverList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.conversionsAtDate(date,serverList)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void refreshTotalCostGraph(List<Click> clicksList, List<Impression> impressionList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.totalCostAtDate(date,clicksList,impressionList)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void refreshCTRGraph( List<Click> clicksList, List<Impression> impressionList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialClicksTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.ctrAtDate(date,clicksList,impressionList)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void refreshCPAGraph(List<Click> clicksList, List<Impression> impressionList, List<Server> serverList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpaAtDate(date,clicksList,impressionList,serverList)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void refreshCPCGraph(List<Click> clicksList, List<Impression> impressionList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpcAtDate(date,clicksList,impressionList)));
+        }
+        mainChart.getData().add(series);
+    }
+
+    private void refreshCPMGraph(List<Click> clicksList, List<Impression> impressionList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpmAtDate(date,clicksList,impressionList)));
+        }
+        mainChart.getData().add(series);
     }
 }
