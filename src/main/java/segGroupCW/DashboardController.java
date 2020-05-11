@@ -195,6 +195,18 @@ public class DashboardController implements Initializable {
         checkBoxList.add(socialMCheckbox);
         checkBoxList.add(hobbiesCheckbox);
         checkBoxList.add(travelCheckbox);
+
+        noImprPane.setOnMouseClicked( e -> graphView("Impressions"));
+        noClicksPane.setOnMouseClicked( e -> graphView("Clicks"));
+        noOfUniques.setOnMouseClicked( e -> graphView("Uniques"));
+        noBouncePane.setOnMouseClicked( e -> graphView("Bounces"));
+        noOfConversionsPane.setOnMouseClicked( e -> graphView("Conversions"));
+        totalCostPane.setOnMouseClicked( e -> graphView("Total Cost"));
+        ctrPane.setOnMouseClicked( e -> graphView("Click Through Rate"));
+        cpaPane.setOnMouseClicked( e -> graphView("CPA"));
+        cpcPane.setOnMouseClicked( e -> graphView("Cost per Click "));
+        cpmPane.setOnMouseClicked( e -> graphView("CPM"));
+        bounceRatePane.setOnMouseClicked( e -> graphView("Bounce Rate"));
     }
 
     /**
@@ -354,10 +366,6 @@ public class DashboardController implements Initializable {
         App.setRoot("fileUpload");
     }
 
-    @FXML
-    void print(ActionEvent event) {
-
-    }
 
     /**
      * Functionality for changing bounce change
@@ -501,72 +509,21 @@ public class DashboardController implements Initializable {
     }
 
 
-    /**
-     * Brings you to the Impressions graph page by clicking on pane
-     * @param event
-     * @throws IOException
-     */
+
     @FXML
-    void graphViewImpressions(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
-    }
+    void graphView(String graphName){
+        System.out.println(graphName);
+        GraphOptions options = new GraphOptions(graphName);
 
 
-    /**
-     * Brings you to the Bounce Rate graph page by clicking on pane
-     * @param event
-     * @throws IOException
-     */
-    @FXML
-    void graphViewBounceRate(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
+        try {
+            App.switchToGraphView(options);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    @FXML
-    void graphViewCPA(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
-    }
-
-    @FXML
-    void graphViewCPC(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
-    }
-
-    @FXML
-    void graphViewCPM(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
-    }
-
-    @FXML
-    void graphViewCTR(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
-    }
-
-    @FXML
-    void graphViewNoBounces(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
-    }
-
-    @FXML
-    void graphViewNoClicks(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
-    }
-
-    @FXML
-    void graphViewNoConversions(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
-    }
-
-    @FXML
-    void graphViewNoUniques(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
-    }
-
-    @FXML
-    void graphViewTotalCost(MouseEvent event) throws IOException {
-        App.setRoot("graphView");
-    }
 
 
     /**

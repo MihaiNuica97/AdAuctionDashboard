@@ -64,6 +64,9 @@ public class GraphController implements Initializable
     @FXML
     private VBox filterVbox;
 
+    @FXML
+    private Label dashBoardLabel;
+
     /**
      * list that holds all the filter checkboxes
      */
@@ -295,32 +298,6 @@ public class GraphController implements Initializable
         chartPane.getChildren().add(mainChart);
     }
 
-    /**
-     *
-     * @param url
-     * @param resourceBundle
-     */
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        checkBoxList = new ArrayList<JFXCheckBox>();
-//        checkBoxList.add(femaleCheckBox);
-//        checkBoxList.add(maleCheckbox);
-//        checkBoxList.add(age1Checkbox);
-//        checkBoxList.add(age2Checkbox);
-//        checkBoxList.add(age3Checkbox);
-//        checkBoxList.add(age4Checkbox);
-//        checkBoxList.add(age5Checkbox);
-//        checkBoxList.add(lowIncomeCheckbox);
-//        checkBoxList.add(MediumIncomeCheckbox);
-//        checkBoxList.add(highIncomeCheckbox);
-//        checkBoxList.add(shoppingCheckbox);
-//        checkBoxList.add(newsCheckbox);
-//        checkBoxList.add(blogCheckbox);
-//        checkBoxList.add(socialMCheckbox);
-//        checkBoxList.add(hobbiesCheckbox);
-//        checkBoxList.add(travelCheckbox);
-//        mainMetricLabel.setText("");
-//    }
 
     private void refreshGraph(List<Impression> impressionList, List<Click> clickList, List<Server> serverList, List<String> userList){
         switch (mainMetricLabel.getText()) {
@@ -566,5 +543,14 @@ public class GraphController implements Initializable
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpmAtDate(date, clicksList, impressionList)));
         }
         mainChart.getData().add(series);
+    }
+
+    public void setGraphsOptions(GraphOptions options){
+        dashBoardLabel.setText(options.labelName);
+
+
+
+//        mainMetricLabel.setText(options.labelName);
+//        initGraph();
     }
 }

@@ -155,7 +155,7 @@
                   </Pane>
                   <Pane prefHeight="100.0" prefWidth="672.0">
                      <children>
-                        <Label fx:id="dashBoardLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="269.0" layoutY="7.0" prefHeight="70.0" styleClass="HBox" text="No. of Impressions">
+                        <Label fx:id="dashBoardLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="269.0" layoutY="7.0" prefHeight="70.0" styleClass="HBox">
                            <font>
                               <Font name="Verdana" size="36.0" />
                            </font>

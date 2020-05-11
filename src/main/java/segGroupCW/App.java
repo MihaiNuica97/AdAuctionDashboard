@@ -39,7 +39,13 @@ public class App extends Application {
 //		stage.setWidth(600);
 	}
 
-
+	public static void switchToGraphView(GraphOptions options) throws IOException {
+		FXMLLoader loader = new FXMLLoader(App.class.getResource("graphView.fxml"));
+		scene.setRoot(loader.load());
+		GraphController controller = loader.getController();
+		controller.setGraphsOptions(options);
+		thisStage.sizeToScene();
+	}
 
 	public static void changeTheme(String newTheme){
 		themeController.changeTheme(newTheme);
