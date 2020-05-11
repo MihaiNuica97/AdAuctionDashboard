@@ -37,6 +37,7 @@ public class CSVParser {
             imprFirstDate = dateformat.smallestDate(imprFirstDate,date);
             imprLastDate = dateformat.largestDate(imprLastDate,date);
         }
+        System.out.println("Loaded impressions");
         dataHandler.setUsers(users);
         dataHandler.setImpressions(impressions);
     }
@@ -59,6 +60,7 @@ public class CSVParser {
             clickFirstDate = dateformat.smallestDate(imprFirstDate,date);
             clickLastDate = dateformat.largestDate(imprLastDate,date);
         }
+        System.out.println("Loaded clicks");
         return clicks;
     }
 
@@ -96,6 +98,7 @@ public class CSVParser {
                 servers.add(new Server(data[1], data[0], data[2], data[3], conv));
             }
         }
+        System.out.println("Loaded server");
         return servers;
     }
 

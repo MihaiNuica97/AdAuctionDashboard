@@ -191,12 +191,24 @@ public class DashboardController implements Initializable {
                 cpaLabel.setText(Double.toString(App.dataHandler.calcCPA(totalCost, convs)));
                 cpcLabel.setText(Double.toString(App.dataHandler.calcCPC(totalCost, noClicks)));
                 cpmLabel.setText(Double.toString(App.dataHandler.calcCPM(totalCost, noImps)));
+
+                refreshImpressionsGraph(impressions);
+                refreshClicksGraph(clicks);
+                refreshUniquesGraph(clicks);
+                refreshConvsGraph(server);
+                refreshTotalCostGraph(clicks,impressions);
+                refreshCTRGraph(clicks,impressions);
+                refreshCPAGraph(clicks,impressions,server);
+                refreshCPCGraph(clicks,impressions);
+                refreshCPMGraph(clicks,impressions);
             } else {
                 initLabels();
+                initGraphs();
             }
 
         } else {
             initLabels();
+            initGraphs();
         }
     }
 
@@ -460,15 +472,16 @@ public class DashboardController implements Initializable {
     }
 
     private void initGraphs(){
-        refreshImpressionsGraph();
-        refreshClicksGraph();
-        refreshUniquesGraph();
-        refreshConvsGraph();
-        refreshTotalCostGraph();
-        refreshCTRGraph();
-        refreshCPAGraph();
-        refreshCPCGraph();
-        refreshCPMGraph();
+
+        initImpressionsGraph();
+        initClicksGraph();
+        initUniquesGraph();
+        initConvsGraph();
+        initTotalCostGraph();
+        initCTRGraph();
+        initCPAGraph();
+        initCPCGraph();
+        initCPMGraph();
         //refreshBRPageGraph(dates[2],dates[3]);
 
     }
@@ -532,284 +545,32 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void setImpsLabel() throws SQLException {
-        noImprLabel.setText(null);
-    }
-
-    public void setClicksLabel() throws SQLException {
-        noClicksLabel.setText(null);
-    }
-
-    public void setUniquesLabel() throws SQLException {
-        noUniqueLabel.setText(null);
-    }
-
-    public void setNoBounceLabelPages(String pages) throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoBounceLabelTime(String unit, String time) throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoBounceLabelConv() throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoConvLabel() throws SQLException {
-        noConversionLabel.setText(null);
-    }
-
-    public void setTotalCostLabel() throws SQLException {
-        float impCost = 0;
-        float totalCost = impCost + 0;
-        double total = Math.round(totalCost * 100.0) / 100.0;
-        totalCostLabel.setText(Double.toString(total));
-    }
-
-    public void setCtrLabel() throws SQLException {
-        int imps = 0;
-        if (imps == 0) {
-            ctrLabel.setText("N/A");
-        } else {
-            int clicks = 0;
-            float ctr = (float) clicks / imps;
-            double ctrRound = Math.round(ctr * 100.0) / 100.0;
-            ctrLabel.setText(Double.toString(ctrRound));
-        }
-    }
-
-    public void setCpaLabel() throws SQLException {
-        int convs = 0;
-        if (convs == 0) {
-            cpaLabel.setText("N/A");
-        } else {
-            float impCost = 0;
-            float totalCost = 0;
-            float cpa = totalCost / convs;
-            double cpaRound = Math.round(cpa * 100.0) / 100.0;
-            cpaLabel.setText(Double.toString(cpaRound));
-        }
-    }
-
-    public void setCpcLabel() throws SQLException {
-        int clicks = 0;
-        if (clicks == 0) {
-            cpcLabel.setText("N/A");
-        } else {
-            float impCost = 0;
-            float totalCost = 0;
-            float cpc = totalCost / clicks;
-            double cpcRound = Math.round(cpc * 100.0) / 100.0;
-            cpcLabel.setText(Double.toString(cpcRound));
-        }
-    }
-
-    public void setCpmLabel() throws SQLException {
-        int imps = 0;
-        if (imps == 0) {
-            cpmLabel.setText("N/A");
-        } else {
-            float impCost = 0;
-            float totalCost = 0;
-            float cpm = totalCost / (imps * 1000);
-            double cpmRound = Math.round(cpm * 100.0) / 100.0;
-            cpmLabel.setText(Double.toString(cpmRound));
-        }
-    }
-
-    public void setBounceRateLabelPages(String pages) throws SQLException {
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    public void setBounceRateLabelTime(String unit, String time) throws SQLException{
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    public void setBounceRateLabelConv() throws SQLException {
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    public void setImpsLabel(List<String> filters) throws SQLException {
-        noImprLabel.setText(null);
-    }
-
-    public void setClicksLabel(List<String> filters) throws SQLException {
-        noClicksLabel.setText(null);
-    }
-
-    public void setUniquesLabel(List<String> filters) throws SQLException {
-        noUniqueLabel.setText(null);
-    }
-
-    public void setNoBounceLabelPages(String pages, List<String> filters) throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoBounceLabelTime(String unit, String time, List<String> filters) throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoBounceLabelConv(List<String> filters) throws SQLException {
-        noBounceLabel.setText(null);
-    }
-
-    public void setNoConvLabel(List<String> filters) throws SQLException {
-        noConversionLabel.setText(null);
-    }
-
-    public void setTotalCostLabel(List<String> filters) throws SQLException {
-        float impCost = 0;
-        float totalCost = 0;
-        double total = Math.round(totalCost * 100.0) / 100.0;
-        totalCostLabel.setText(Double.toString(total));
-    }
-
-    public void setCtrLabel(List<String> filters) throws SQLException {
-        int imps = 0;
-        if (imps == 0) {
-            ctrLabel.setText("N/A");
-        } else {
-            int clicks = 0;
-            float ctr = (float) clicks / imps;
-            double ctrRound = Math.round(ctr * 100.0) / 100.0;
-            ctrLabel.setText(Double.toString(ctrRound));
-        }
-    }
-
-    public void setCpaLabel(List<String> filters) throws SQLException {
-        int convs = 0;
-        if (convs == 0) {
-            cpaLabel.setText("N/A");
-        } else {
-            float impCost = 0;
-            float totalCost = 0;
-            float cpa = totalCost / convs;
-            double cpaRound = Math.round(cpa * 100.0) / 100.0;
-            cpaLabel.setText(Double.toString(cpaRound));
-        }
-    }
-
-    public void setCpcLabel(List<String> filters) throws SQLException {
-        int clicks = 0;
-        if (clicks == 0) {
-            cpcLabel.setText("N/A");
-        } else {
-
-            float impCost = 0;
-            float totalCost = 0;
-            float cpc = totalCost / clicks;
-            double cpcRound = Math.round(cpc * 100.0) / 100.0;
-            cpcLabel.setText(Double.toString(cpcRound));
-        }
-    }
-
-    public void setCpmLabel(List<String> filters) throws SQLException {
-
-        int imps = 0;
-        if (imps == 0) {
-            cpmLabel.setText("N/A");
-        } else {
-
-            float impCost = 0;
-            float totalCost = 0;
-            float cpm = totalCost / (imps * 1000);
-            double cpmRound = Math.round(cpm * 100.0) / 100.0;
-            cpmLabel.setText(Double.toString(cpmRound));
-        }
-    }
-
-    public void setBounceRateLabelPages(String pages, List<String> filters) throws SQLException {
-
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    public void setBounceRateLabelTime(String unit, String time, List<String> filters) throws SQLException{
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    public void setBounceRateLabelConv( List<String> filters) throws SQLException {
-        int clicks = 0;
-        if (clicks == 0) {
-            bounceRateLabel.setText("N/A");
-        } else {
-            int bounces = 0;
-            float br = (float) bounces / clicks;
-            double brRound = Math.round(br * 100.0) / 100.0;
-            bounceRateLabel.setText(Double.toString(brRound));
-        }
-    }
-
-    /*
-     * create function that gets first and last dates of tables
-     * recieves time interval and range and creates a list of sql statements, retruns a list of values
-     * turn values intop chart elemetns
-     */
 
 
-    private void refreshImpressionsGraph(){
+
+    private void initImpressionsGraph(){
         XYChart.Series series = new XYChart.Series();
         ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
         for(LocalDate date: dates){
-            series.getData().add(new XYChart.Data(date, App.dataHandler.impressionsAtDate(date)));
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.impressionsAtDate(date)));
         }
         NoImpressionsChart.getData().add(series);
     }
 
-    private void refreshClicksGraph(){
+    private void initClicksGraph(){
         XYChart.Series series = new XYChart.Series();
         ArrayList<LocalDate> dates = App.dataHandler.initialClicksTI("days",1);
         for(LocalDate date: dates){
-            series.getData().add(new XYChart.Data(date, App.dataHandler.clicksAtDate(date)));
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.clicksAtDate(date)));
         }
         noOfClicksChart.getData().add(series);
     }
 
-    private void refreshUniquesGraph(){
+    private void initUniquesGraph(){
         XYChart.Series series = new XYChart.Series();
         ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
         for(LocalDate date: dates){
-            series.getData().add(new XYChart.Data(date, App.dataHandler.uniquesAtDate(date)));
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.uniquesAtDate(date)));
         }
         NoUniquesChart.getData().add(series);
     }
@@ -820,56 +581,56 @@ public class DashboardController implements Initializable {
     }
      */
 
-    private void refreshConvsGraph(){
+    private void initConvsGraph(){
         XYChart.Series series = new XYChart.Series();
-        ArrayList<LocalDate> dates = App.dataHandler.initialServerTI("days",1);
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
         for(LocalDate date: dates){
-            series.getData().add(new XYChart.Data(date, App.dataHandler.conversionsAtDate(date)));
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.conversionsAtDate(date)));
         }
         NoConversionsChart.getData().add(series);
     }
 
-    private void refreshTotalCostGraph(){
+    private void initTotalCostGraph(){
         XYChart.Series series = new XYChart.Series();
         ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
         for(LocalDate date: dates){
-            series.getData().add(new XYChart.Data(date, App.dataHandler.totalCostAtDate(date)));
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.totalCostAtDate(date)));
         }
         totalCostChart.getData().add(series);
     }
 
-    private void refreshCTRGraph(){
+    private void initCTRGraph(){
         XYChart.Series series = new XYChart.Series();
         ArrayList<LocalDate> dates = App.dataHandler.initialClicksTI("days",1);
         for(LocalDate date: dates){
-            series.getData().add(new XYChart.Data(date, App.dataHandler.ctrAtDate(date)));
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.ctrAtDate(date)));
         }
         ctrChart.getData().add(series);
     }
 
-    private void refreshCPAGraph(){
+    private void initCPAGraph(){
         XYChart.Series series = new XYChart.Series();
         ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
         for(LocalDate date: dates){
-            series.getData().add(new XYChart.Data(date, App.dataHandler.cpaAtDate(date)));
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpaAtDate(date)));
         }
         cpaChart.getData().add(series);
     }
 
-    private void refreshCPCGraph(){
+    private void initCPCGraph(){
         XYChart.Series series = new XYChart.Series();
         ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
         for(LocalDate date: dates){
-            series.getData().add(new XYChart.Data(date, App.dataHandler.cpcAtDate(date)));
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpcAtDate(date)));
         }
         cpcChart.getData().add(series);
     }
 
-    private void refreshCPMGraph(){
+    private void initCPMGraph(){
         XYChart.Series series = new XYChart.Series();
         ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
         for(LocalDate date: dates){
-            series.getData().add(new XYChart.Data(date, App.dataHandler.cpmAtDate(date)));
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpmAtDate(date)));
         }
         cpmChart.getData().add(series);
     }
@@ -879,6 +640,102 @@ public class DashboardController implements Initializable {
         bounceRateChart.getData().add(null);
     }
 */
+
+    private void refreshImpressionsGraph(List<Impression> impressionList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.impressionsAtDate(date,impressionList)));
+        }
+        NoImpressionsChart.getData().clear();
+        NoImpressionsChart.getData().add(series);
+    }
+
+    private void refreshClicksGraph(List<Click> clicksList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialClicksTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.clicksAtDate(date,clicksList)));
+        }
+        noOfClicksChart.getData().clear();
+        noOfClicksChart.getData().add(series);
+    }
+
+    private void refreshUniquesGraph(List<Click> clicksList ){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.uniquesAtDate(date,clicksList)));
+        }
+        NoUniquesChart.getData().clear();
+        NoUniquesChart.getData().add(series);
+    }
+
+    /*
+    private void refreshBouncePagesGraph(String start, String end){
+        NoUniquesChart.getData().add(null);
+    }
+     */
+
+    private void refreshConvsGraph( List<Server> serverList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.conversionsAtDate(date,serverList)));
+        }
+        NoConversionsChart.getData().clear();
+        NoConversionsChart.getData().add(series);
+    }
+
+    private void refreshTotalCostGraph(List<Click> clicksList, List<Impression> impressionList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.totalCostAtDate(date,clicksList,impressionList)));
+        }
+        totalCostChart.getData().clear();
+        totalCostChart.getData().add(series);
+    }
+
+    private void refreshCTRGraph( List<Click> clicksList, List<Impression> impressionList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialClicksTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.ctrAtDate(date,clicksList,impressionList)));
+        }
+        ctrChart.getData().clear();
+        ctrChart.getData().add(series);
+    }
+
+    private void refreshCPAGraph(List<Click> clicksList, List<Impression> impressionList, List<Server> serverList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpaAtDate(date,clicksList,impressionList,serverList)));
+        }
+        cpaChart.getData().clear();
+        cpaChart.getData().add(series);
+    }
+
+    private void refreshCPCGraph(List<Click> clicksList, List<Impression> impressionList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpcAtDate(date,clicksList,impressionList)));
+        }
+        cpcChart.getData().clear();
+        cpcChart.getData().add(series);
+    }
+
+    private void refreshCPMGraph(List<Click> clicksList, List<Impression> impressionList){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpmAtDate(date,clicksList,impressionList)));
+        }
+        cpmChart.getData().clear();
+        cpmChart.getData().add(series);
+    }
 
 
 

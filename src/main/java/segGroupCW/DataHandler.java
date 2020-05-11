@@ -24,6 +24,10 @@ public class DataHandler {
     private static DateFormat dateformat = new DateFormat();
     private static Date imprFirstDate, imprLastDate, clickFirstDate, clickLastDate, serverEntFirstDate, serverEntLastDate, serverExFirstDate, serverExLastDate;
 
+    //remove, a stub due to the graph controller not being connected
+    public DataHandler(){
+
+    }
 
     public DataHandler(File impFile, File clickFile, File serverFile) {
         try {
@@ -268,6 +272,7 @@ public class DataHandler {
 
     public double calcBounceRateTime(int bounceTime, int clicks) { return Math.round( ((double) bounceTime / clicks) * 100.0) / 100.0; }
 
+    //init for grpahs
 
     public int impressionsAtDate(LocalDate date ){
         return (int)impressions.stream().filter(impressionAtDate(date)).count();
@@ -305,6 +310,47 @@ public class DataHandler {
 
     public double cpmAtDate(LocalDate date){
         return Math.round( (totalCostAtDate(date) / (impressionsAtDate(date) * 1000)) * 100.0) / 100.0;
+    }
+
+
+    //filters for graphs
+
+    public int impressionsAtDate(LocalDate date, List<Impression> impressionList){
+        return (int)impressionList.stream().filter(impressionAtDate(date)).count();
+    }
+    public int clicksAtDate(LocalDate date, List<Click> clicksList){
+        return (int)clicksList.stream().filter(clickAtDate(date)).count();
+    }
+
+    public int uniquesAtDate(LocalDate date, List<Click> clicksList ){
+        return (int)clicksList.stream().filter(uniqueAtDate(date,Click::getId)).count();
+    }
+
+    // bounce stuff
+
+    public int conversionsAtDate(LocalDate date, List<Server> serverList){
+        return (int)serverList.stream().filter(serverAtEntryDate(date)).count();
+    }
+
+    public double totalCostAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList){
+        double impCost = impressionList.stream().filter(impressionAtDate(date)).mapToDouble(p -> p.getCost().doubleValue()).sum();
+        double clickCost = clicksList.stream().filter(clickAtDate(date)).mapToDouble(p -> p.getCost().doubleValue()).sum();
+        return Math.round( (impCost + clickCost) * 100.0) / 100.0;    }
+
+    public double ctrAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList){
+        return Math.round( ((double) clicksAtDate(date, clicksList) / impressionsAtDate(date, impressionList)) * 100.0) / 100.0;
+    }
+
+    public double cpaAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList, List<Server> serverList){
+        return Math.round( (totalCostAtDate(date,clicksList,impressionList) / conversionsAtDate(date,serverList)) * 100.0) / 100.0;
+    }
+
+    public double cpcAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList){
+        return Math.round( (totalCostAtDate(date,clicksList,impressionList) / clicksAtDate(date,clicksList)) * 100.0) / 100.0;
+    }
+
+    public double cpmAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList){
+        return Math.round( (totalCostAtDate(date,clicksList,impressionList) / (impressionsAtDate(date,impressionList) * 1000)) * 100.0) / 100.0;
     }
 
     // Predicates
