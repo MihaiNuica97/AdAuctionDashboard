@@ -298,12 +298,12 @@ public class DashboardController implements Initializable {
                 refreshCPMGraph(clicks,impressions);
             } else {
                 setInitLabels();
-                initGraphs();
+                setInitGraphs();
             }
 
         } else {
             setInitLabels();
-            initGraphs();
+            setInitGraphs();
         }
     }
 
@@ -608,7 +608,26 @@ public class DashboardController implements Initializable {
         cpmLabel.setText(Double.toString(initialLabels.get("CPM")));
     }
 
-
+    void setInitGraphs() {
+        NoImpressionsChart.getData().clear();
+        NoImpressionsChart.getData().add(initialSeries.get("Impressions"));
+        noOfClicksChart.getData().clear();
+        noOfClicksChart.getData().add(initialSeries.get("Clicks"));
+        NoUniquesChart.getData().clear();
+        NoUniquesChart.getData().add(initialSeries.get("Uniques"));
+        NoConversionsChart.getData().clear();
+        NoConversionsChart.getData().add(initialSeries.get("Conversions"));
+        totalCostChart.getData().clear();
+        totalCostChart.getData().add(initialSeries.get("TotalCost"));
+        ctrChart.getData().clear();
+        ctrChart.getData().add(initialSeries.get("CTR"));
+        cpaChart.getData().clear();
+        cpaChart.getData().add(initialSeries.get("CPA"));
+        cpcChart.getData().clear();
+        cpcChart.getData().add(initialSeries.get("CPC"));
+        cpmChart.getData().clear();
+        cpmChart.getData().add(initialSeries.get("CPM"));
+    }
 
     private void initImpressionsGraph(){
         XYChart.Series series = new XYChart.Series();
@@ -616,6 +635,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.impressionsAtDate(date)));
         }
+        initialSeries.put("Impressions", series);
         NoImpressionsChart.getData().add(series);
     }
 
@@ -625,6 +645,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.clicksAtDate(date)));
         }
+        initialSeries.put("Clicks", series);
         noOfClicksChart.getData().add(series);
     }
 
@@ -634,9 +655,19 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.uniquesAtDate(date)));
         }
+        initialSeries.put("Uniques", series);
         NoUniquesChart.getData().add(series);
     }
-
+/*
+    private void initBouncePageGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.BouncePageAtDate(date)));
+        }
+        initialSeries.put("Uniques", series);
+        NoUniquesChart.getData().add(series);
+    } /*
     /*
     private void refreshBouncePagesGraph(String start, String end){
         NoUniquesChart.getData().add(null);
@@ -649,6 +680,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.conversionsAtDate(date)));
         }
+        initialSeries.put("Conversions", series);
         NoConversionsChart.getData().add(series);
     }
 
@@ -658,6 +690,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.totalCostAtDate(date)));
         }
+        initialSeries.put("TotalCost", series);
         totalCostChart.getData().add(series);
     }
 
@@ -667,6 +700,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.ctrAtDate(date)));
         }
+        initialSeries.put("CTR", series);
         ctrChart.getData().add(series);
     }
 
@@ -676,6 +710,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpaAtDate(date)));
         }
+        initialSeries.put("CPA", series);
         cpaChart.getData().add(series);
     }
 
@@ -685,6 +720,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpcAtDate(date)));
         }
+        initialSeries.put("CPC", series);
         cpcChart.getData().add(series);
     }
 
@@ -694,6 +730,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpmAtDate(date)));
         }
+        initialSeries.put("CPM", series);
         cpmChart.getData().add(series);
     }
 
