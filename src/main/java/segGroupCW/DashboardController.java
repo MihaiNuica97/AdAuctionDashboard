@@ -199,7 +199,7 @@ public class DashboardController implements Initializable {
         totalCostPane.setOnMouseClicked( e -> graphView("Total Cost"));
         ctrPane.setOnMouseClicked( e -> graphView("Click Through Rate"));
         cpaPane.setOnMouseClicked( e -> graphView("CPA"));
-        cpcPane.setOnMouseClicked( e -> graphView("Cost per Click "));
+        cpcPane.setOnMouseClicked( e -> graphView("Cost per Click"));
         cpmPane.setOnMouseClicked( e -> graphView("CPM"));
         bounceRatePane.setOnMouseClicked( e -> graphView("Bounce Rate"));
     }
@@ -509,7 +509,7 @@ public class DashboardController implements Initializable {
     void graphView(String graphName){
         System.out.println(graphName);
         GraphOptions options = new GraphOptions(graphName);
-
+        options.chartData = initialSeries.get(graphName);
 
         try {
             App.switchToGraphView(options);
@@ -559,9 +559,9 @@ public class DashboardController implements Initializable {
         bounces = App.dataHandler.calcBounceConv();
         initialLabels.put("BounceConv", (double) bounces);
         initialLabels.put("BounceRateConv", App.dataHandler.calcBounceRateConv(bounces, clicks));
-        bounces = App.dataHandler.calcBounceTime(bounceValue);
-        initialLabels.put("BounceTime", (double) bounces);
-        initialLabels.put("BounceRateTime", App.dataHandler.calcBounceRateTime(bounces, clicks));
+//        bounces = App.dataHandler.calcBounceTime(bounceValue);
+//        initialLabels.put("BounceTime", (double) bounces);
+//        initialLabels.put("BounceRateTime", App.dataHandler.calcBounceRateTime(bounces, clicks));
 
         int convs = App.dataHandler.calcConversions();
         initialLabels.put("Conversions", (double) convs);
@@ -618,13 +618,13 @@ public class DashboardController implements Initializable {
         NoConversionsChart.getData().clear();
         NoConversionsChart.getData().add(initialSeries.get("Conversions"));
         totalCostChart.getData().clear();
-        totalCostChart.getData().add(initialSeries.get("TotalCost"));
+        totalCostChart.getData().add(initialSeries.get("Total Cost"));
         ctrChart.getData().clear();
-        ctrChart.getData().add(initialSeries.get("CTR"));
+        ctrChart.getData().add(initialSeries.get("Click Through Rate"));
         cpaChart.getData().clear();
         cpaChart.getData().add(initialSeries.get("CPA"));
         cpcChart.getData().clear();
-        cpcChart.getData().add(initialSeries.get("CPC"));
+        cpcChart.getData().add(initialSeries.get("Cost per Click"));
         cpmChart.getData().clear();
         cpmChart.getData().add(initialSeries.get("CPM"));
     }
@@ -690,7 +690,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.totalCostAtDate(date)));
         }
-        initialSeries.put("TotalCost", series);
+        initialSeries.put("Total Cost", series);
         totalCostChart.getData().add(series);
     }
 
@@ -700,7 +700,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.ctrAtDate(date)));
         }
-        initialSeries.put("CTR", series);
+        initialSeries.put("Click Through Rate", series);
         ctrChart.getData().add(series);
     }
 
@@ -720,7 +720,7 @@ public class DashboardController implements Initializable {
         for(LocalDate date: dates){
             series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.cpcAtDate(date)));
         }
-        initialSeries.put("CPC", series);
+        initialSeries.put("Cost per Click", series);
         cpcChart.getData().add(series);
     }
 

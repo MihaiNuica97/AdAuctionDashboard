@@ -547,6 +547,7 @@ public class GraphController implements Initializable
 
     public void setGraphsOptions(GraphOptions options){
         dashBoardLabel.setText(options.labelName);
+        mainChart.getData().add(options.chartData);
 
 
 
