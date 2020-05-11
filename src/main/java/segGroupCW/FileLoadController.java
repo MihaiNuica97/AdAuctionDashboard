@@ -1,5 +1,7 @@
 package segGroupCW;
 
+import com.jfoenix.controls.JFXBadge;
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -50,6 +52,7 @@ public class FileLoadController {
         browseClicksBtn.setOnAction( e -> browseFiles(clicksPathLabel,"Clicks Log"));
 		browseImprBtn.setOnAction( e -> browseFiles(imprPathLabel,"Impressions"));
 		browseServerBtn.setOnAction( e -> browseFiles(serverPathLabel,"Server Log"));
+
 //		dashboardBtn.setDisable(true);
 	}
 

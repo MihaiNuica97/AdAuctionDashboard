@@ -1,19 +1,22 @@
 .root{
     -main-bg-color: #f9f9f9;
-    -secondary-bg-color: #5988FF;
+    -secondary-bg-color: #f8d4d4;
     -primary: #f9f9f9;
-    -secondary: #5988FF;
-    -text-primary: #f9f9f9;
-    -text-secondary: #63788F;
+    -secondary: #f8d4d4;
+    -text-primary: #7D314C;
+    -text-secondary: #7e7f9a;
     -success: #55CF5A;
     -error: red;
     -fx-background-color: -main-bg-color;
     -fx-font-size: 12px;
     -fx-text-fill: -text-secondary;
-    -label: #5988FF;
-    -icons: black;
-    -tg: #5988FF;
+    -label: #7D314C;
+    -icons: #7D314C;
+    -card: #f8d4d4;
+    -tg: #ff9842;
+
 }
+
 
 .primary{
     -fx-color: -primary;
@@ -22,20 +25,20 @@
 
 .btn-primary{
 
-    -fx-border-color: -primary;
+    -fx-border-color: -text-primary;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
     -fx-background-color: -secondary;
-    -fx-text-fill: -primary;
+    -fx-text-fill: -text-primary;
 }
 
 .btn-primary:hover{
 
-    -fx-border-color: -primary;
+    -fx-border-color: -text-primary;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
-    -fx-background-color: -primary;
-    -fx-text-fill: #63788F;
+    -fx-background-color: -text-primary;
+    -fx-text-fill: #ff9842;
 }
 
 .text-primary{
@@ -48,14 +51,14 @@
 }
 
 .card{
-    -fx-background-color: -primary;
+    -fx-background-color: -card;
     -fx-background-radius: 15%;
     -fx-border-radius: 15%;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
 .card-corners{
-    -fx-background-color: -primary;
+    -fx-background-color: -card;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
@@ -65,4 +68,14 @@
     -fx-font-size: 2em;
 }
 
+.chart-plot-background{
+    -fx-background-color:  -card;
+}
+.axis{
+    -fx-tick-label-fill: #7D314C;
 
+}
+
+.card .label{
+    -fx-text-fill: -label;
+}

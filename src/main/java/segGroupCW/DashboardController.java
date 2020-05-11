@@ -14,15 +14,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Shadow;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -31,6 +39,7 @@ import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.w3c.dom.CDATASection;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.IOException;
@@ -49,7 +58,10 @@ public class DashboardController implements Initializable {
     private Label noImprLabel, noClicksLabel, noUniqueLabel, noBounceLabel, noConversionLabel, totalCostLabel, ctrLabel, cpaLabel, cpcLabel, cpmLabel, bounceRateLabel;
 
     @FXML
-    private JFXButton bounceDefinitionButton, settingsButton, homeButton;
+    private Label noClicksTitle, noImprTitle, noUniqueTitle, noBounceTitle, noConversionTitle, totalCostTitle, ctrTitle, cpaTitle, cpcTitle, cpmTitle, bounceRateTitle;
+
+    @FXML
+    private JFXButton bounceDefinitionButton, settingsButton, homeButton, printButton;
 
     @FXML
     private Pane noImprPane, noClicksPane, noOfUniques, noBouncePane, noOfConversionsPane, totalCostPane, ctrPane, cpaPane, topPane;
@@ -87,6 +99,14 @@ public class DashboardController implements Initializable {
 
     private static DateFormat dateformat = new DateFormat();
 
+    @FXML
+    private VBox graphVBox;
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private AnchorPane graphAnchorPane;
     /**
      *
      * @param url
@@ -98,6 +118,8 @@ public class DashboardController implements Initializable {
         initGraphs();
 //    DONT DELETE ^
 
+        printButton.setOnAction( e -> print());
+
         Text settingsIcon = GlyphsDude.createIcon(FontAwesomeIcons.COG, "40px");
         settingsButton.setGraphic(settingsIcon);
 
@@ -106,6 +128,55 @@ public class DashboardController implements Initializable {
 
         Text bounceIcon = GlyphsDude.createIcon(FontAwesomeIcons.PENCIL, "20px");
         bounceDefinitionButton.setGraphic(bounceIcon);
+
+        Text printIcon = GlyphsDude.createIcon(FontAwesomeIcons.PRINT, "40px");
+        printButton.setGraphic(printIcon);
+
+        Tooltip tooltip = new Tooltip("Change definition of a Bounce");
+        tooltip.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipImpressions = new Tooltip("When a user views an Ad");
+        tooltipImpressions.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipClicks = new Tooltip("When a user clicks an Ad");
+        tooltipImpressions.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipUnique = new Tooltip("No. of unique users that click on an Ad");
+        tooltipUnique.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipBounce = new Tooltip("User fails to interact with website");
+        tooltipBounce.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipConversion = new Tooltip("User acts on an Ad");
+        tooltipConversion.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipTotalCost = new Tooltip("Cost of displaying Ad");
+        tooltipTotalCost.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipCTR = new Tooltip("Average clicks per impression");
+        tooltipCTR.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipCPA = new Tooltip("Average amount spent on Ad campaign for each conversion");
+        tooltipCPA.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipCPC = new Tooltip("Average amount spent on Ad campaign for each click ");
+        tooltipCPC.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipCPM = new Tooltip("Average amount spent on Ad campaign for every 1,000 impressions");
+        tooltipCPM.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipBounceRate = new Tooltip("Average no. of bounces per click");
+        tooltipBounceRate.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipSettings = new Tooltip("Change dashboard theme");
+        tooltipSettings.setShowDelay(Duration.seconds(0.05));
+        Tooltip tooltipHome = new Tooltip("Return to file upload");
+        tooltipHome.setShowDelay(Duration.seconds(0.05));
+
+        //All labels popup
+        bounceDefinitionButton.setTooltip(tooltip);
+        noImprTitle.setTooltip(tooltipImpressions);
+        noClicksTitle.setTooltip(tooltipClicks);
+        noUniqueTitle.setTooltip(tooltipUnique);
+        noBounceTitle.setTooltip(tooltipBounce);
+        noConversionTitle.setTooltip(tooltipConversion);
+        totalCostTitle.setTooltip(tooltipTotalCost);
+        ctrTitle.setTooltip(tooltipCTR);
+        cpaTitle.setTooltip(tooltipCPA);
+        cpcTitle.setTooltip(tooltipCPC);
+        cpmTitle.setTooltip(tooltipCPM);
+        bounceRateTitle.setTooltip(tooltipBounceRate);
+        //buttons
+        settingsButton.setTooltip(tooltipSettings);
+        homeButton.setTooltip(tooltipHome);
 
         checkBoxList = new ArrayList<JFXCheckBox>();
         checkBoxList.add(femaleCheckBox);
@@ -259,6 +330,20 @@ public class DashboardController implements Initializable {
         settingsStage.show();
     }
 
+    @FXML
+    void print(){
+        WritableImage snapshot = graphAnchorPane.snapshot(new SnapshotParameters(), null);
+        ImageView printImage = new ImageView(snapshot);
+        printImage.setFitWidth(450);
+        printImage.setFitHeight(740);
+
+        Node printNode = (Node) printImage;
+
+        PrintController printer = new PrintController(printNode);
+        printer.print();
+
+    }
+
 
     /**
      * Brings you to the main Input page
@@ -267,6 +352,11 @@ public class DashboardController implements Initializable {
     @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("fileUpload");
+    }
+
+    @FXML
+    void print(ActionEvent event) {
+
     }
 
     /**
