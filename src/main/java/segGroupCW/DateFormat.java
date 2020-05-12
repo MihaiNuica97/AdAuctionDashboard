@@ -27,20 +27,20 @@ public class DateFormat {
                 return firstDate;
             }
             return secondDate;
-        }
-        else {
-            return new Date();
-        }
+        } else if (firstDate != null) {
+            return firstDate;
+        } else return secondDate;
     }
 
-    public Date smallestDate(Date firstDate, Date secondDate){
-        if(firstDate != null && secondDate != null) {
+    public Date smallestDate(Date firstDate, Date secondDate) {
+        if (firstDate != null && secondDate != null) {
             if (firstDate.compareTo(secondDate) < 0) {
                 return firstDate;
             }
             return secondDate;
-        }
-        else return new Date();
+        } else if (firstDate != null) {
+            return firstDate;
+        } else return secondDate;
     }
 
     public static LocalDate asLocalDate(Date date) {

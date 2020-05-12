@@ -57,8 +57,8 @@ public class CSVParser {
             data = row.split(",");
             clicks.add(new Click(data[1], data[0], data[2]));
             Date date = dateformat.convertDate(data[0]);
-            clickFirstDate = dateformat.smallestDate(imprFirstDate,date);
-            clickLastDate = dateformat.largestDate(imprLastDate,date);
+            clickFirstDate = dateformat.smallestDate(clickFirstDate,date);
+            clickLastDate = dateformat.largestDate(clickLastDate,date);
         }
         System.out.println("Loaded clicks");
         return clicks;
@@ -71,6 +71,7 @@ public class CSVParser {
         String row = csvReader.readLine();
         String[] data = row.split(",");
         String conv = "FALSE";
+        List<Server> noExitDate = new ArrayList<>();
         if (!data[0].equals("Entry Date")) {  // Includes first line if it isn't the headings
             serverEntFirstDate = dateformat.convertDate(data[0]);
             serverEntLastDate = dateformat.convertDate(data[0]);
@@ -80,23 +81,32 @@ public class CSVParser {
                 conv = "TRUE";
             }
             if (data[2].equals("n/a")) {  // If no valid exit date, skip it
-                servers.add(new Server(data[1], data[0], data[3], conv));
+                noExitDate.add(new Server(data[1], data[0], data[3], conv));
             } else {
                 servers.add(new Server(data[1], data[0], data[2], data[3], conv));
             }
         }
         while ((row = csvReader.readLine()) != null) {
             data = row.split(",");
+            Date date = dateformat.convertDate(data[0]);
+            serverEntFirstDate = dateformat.smallestDate(serverEntFirstDate, date);
+            serverEntLastDate = dateformat.largestDate(serverEntLastDate, date);
             if (data[4].equals("Yes")) {
                 conv = "TRUE";
             } else {
                 conv = "FALSE";
             }
             if (data[2].equals("n/a")) {  // If no valid exit date, skip it
-                servers.add(new Server(data[1], data[0], data[3], conv));
+                noExitDate.add(new Server(data[1], data[0], data[3], conv));
             } else {
+                date = dateformat.convertDate(data[2]);
+                serverExFirstDate = dateformat.smallestDate(serverExFirstDate, date);
+                serverExLastDate = dateformat.largestDate(serverExLastDate, date);
                 servers.add(new Server(data[1], data[0], data[2], data[3], conv));
             }
+        }
+        for (Server each : noExitDate) {
+            each.setExitDate(serverExLastDate);
         }
         System.out.println("Loaded server");
         return servers;
