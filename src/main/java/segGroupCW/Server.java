@@ -50,6 +50,11 @@ public class Server {
         return this.exitDate;
     }
 
+    public Date setExitDate(Date date) {
+        this.exitDate = date;
+        return this.exitDate;
+    }
+
     public String setPages(String pages){
         this.pages = Integer.parseInt(pages);
         return pages;
