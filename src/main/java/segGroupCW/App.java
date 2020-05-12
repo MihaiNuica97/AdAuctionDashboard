@@ -20,6 +20,7 @@ public class App extends Application {
 	public static Boolean packaged = false;
 	public static DataHandler dataHandler;
 	public static Stage thisStage;
+	public static String currentGraph;
 
 	public static Scene getScene(){
 		return scene;
@@ -39,7 +40,8 @@ public class App extends Application {
 //		stage.setWidth(600);
 	}
 
-	public static void switchToGraphView(GraphOptions options) throws IOException {
+	public static void switchToGraphView(GraphOptions options, String name) throws IOException {
+		currentGraph = name;
 		FXMLLoader loader = new FXMLLoader(App.class.getResource("graphView.fxml"));
 		scene.setRoot(loader.load());
 		GraphController controller = loader.getController();

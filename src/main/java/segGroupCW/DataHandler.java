@@ -316,6 +316,21 @@ public class DataHandler {
 
     // bounce stuff
 
+    public int bouncePageAtDate(LocalDate date, double page){
+        return (int)serverLogs.stream().filter(bouncePageAtDatePred(date,page)).count();
+    }
+
+    public int bounceConvAtDate(LocalDate date){
+        return (int)serverLogs.stream().filter(bounceConvAtDatePred(date)).count();
+    }
+
+    public int bounceTimeAtDate(LocalDate date, double time){
+        return (int)serverLogs.stream().filter(bounceTimeAtDatePred(date,time)).count();
+    }
+
+
+    //
+
     public int conversionsAtDate(LocalDate date ){
         return (int)serverLogs.stream().filter(serverAtEntryDate(date)).count();
     }
@@ -341,6 +356,18 @@ public class DataHandler {
         return Math.round( (totalCostAtDate(date) / (impressionsAtDate(date) * 1000)) * 100.0) / 100.0;
     }
 
+    public double bounceRatePageAtDate(LocalDate date, double page){
+        return calcBounceRatePages(bouncePageAtDate(date,page),clicksAtDate(date));
+    }
+
+    public double bounceRateConvAtDate(LocalDate date){
+        return calcBounceRateConv(bounceConvAtDate(date),clicksAtDate(date));
+    }
+
+    public double bounceRateTimeAtDate(LocalDate date, double time){
+        return calcBounceRateTime(bounceTimeAtDate(date,time),clicksAtDate(date));
+    }
+
 
     //filters for graphs
 
@@ -356,6 +383,20 @@ public class DataHandler {
     }
 
     // bounce stuff
+
+    public int bouncePageAtDate(LocalDate date,List<Server> serverList, double page){
+        return (int)serverList.stream().filter(bouncePageAtDatePred(date,page)).count();
+    }
+
+    public int bounceConvAtDate(LocalDate date,List<Server> serverList){
+        return (int)serverList.stream().filter(bounceConvAtDatePred(date)).count();
+    }
+
+    public int bounceTimeAtDate(LocalDate date,List<Server> serverList, double time){
+        return (int)serverList.stream().filter(bounceTimeAtDatePred(date,time)).count();
+    }
+
+    //
 
     public int conversionsAtDate(LocalDate date, List<Server> serverList){
         return (int)serverList.stream().filter(serverAtEntryDate(date)).count();
@@ -380,6 +421,18 @@ public class DataHandler {
 
     public double cpmAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList){
         return Math.round( (totalCostAtDate(date,clicksList,impressionList) / (impressionsAtDate(date,impressionList) * 1000)) * 100.0) / 100.0;
+    }
+
+    public double bounceRatePageAtDate(LocalDate date, List<Server> serverList, double page){
+        return calcBounceRatePages(bouncePageAtDate(date, serverList, page),clicksAtDate(date));
+    }
+
+    public double bounceRateConvAtDate(LocalDate date, List<Server> serverList){
+        return calcBounceRatePages(bounceConvAtDate(date, serverList),clicksAtDate(date));
+    }
+
+    public double bounceRateTimeAtDate(LocalDate date, List<Server> serverList, double time){
+        return calcBounceRatePages(bounceTimeAtDate(date,serverList, time),clicksAtDate(date));
     }
 
     // Predicates
@@ -408,5 +461,16 @@ public class DataHandler {
         return p -> dateformat.dayComparable(p.getDate()).isEqual(date) && seen.putIfAbsent(keyExtractor.apply(p), Boolean.TRUE) == null;
     }
 
+    private static Predicate<Server> bouncePageAtDatePred(LocalDate date, Double pages){
+        return p -> dateformat.dayComparable(p.getEntryDate()).isEqual(date) && p.getPages() > pages;
+    }
+
+    private static Predicate<Server> bounceConvAtDatePred(LocalDate date){
+        return p -> dateformat.dayComparable(p.getEntryDate()).isEqual(date) && !p.getConversion();
+    }
+
+    private static Predicate<Server> bounceTimeAtDatePred(LocalDate date, Double time){
+        return p -> dateformat.dayComparable(p.getEntryDate()).isEqual(date) && p.getExitDate().getTime() - p.getEntryDate().getTime() < time;
+    }
 
 }

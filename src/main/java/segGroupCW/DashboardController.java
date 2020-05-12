@@ -258,21 +258,35 @@ public class DashboardController implements Initializable {
                 noClicksLabel.setText(Integer.toString(noClicks));
                 noUniqueLabel.setText(Integer.toString(App.dataHandler.calcUniques(clicks)));
                 int bounces;
+                XYChart.Series series = new XYChart.Series();
+                ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
                 switch (bounceMethod) {
                     case "Page":
                         bounces = App.dataHandler.calcBouncePage(server, bounceValue);
                         noBounceLabel.setText(Integer.toString(bounces));
                         bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRatePages(bounces, noClicks)));
+                        for(LocalDate date: dates){
+                            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bouncePageAtDate(date,server,bounceValue)));
+                        }
+                        NoBouncesChart.getData().add(series);
                         break;
                     case "Conv":
                         bounces = App.dataHandler.calcBounceConv(server);
                         noBounceLabel.setText(Integer.toString(bounces));
                         bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateConv(bounces, noClicks)));
+                        for(LocalDate date: dates){
+                            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceConvAtDate(date,server)));
+                        }
+                        NoBouncesChart.getData().add(series);
                         break;
                     case "Time":
                         bounces = App.dataHandler.calcBounceTime(server, bounceValue);
                         noBounceLabel.setText(Integer.toString(bounces));
                         bounceRateLabel.setText(Double.toString(App.dataHandler.calcBounceRateTime(bounces, noClicks)));
+                        for(LocalDate date: dates){
+                            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceTimeAtDate(date,server,bounceValue)));
+                        }
+                        NoBouncesChart.getData().add(series);
                     default:
                         bounces = 0;
                         noBounceLabel.setText("n/a");
@@ -470,6 +484,7 @@ public class DashboardController implements Initializable {
                     bounceMethod = "Conv";
                 }
                 refreshBounceLabels();
+                refreshBounceGraph();
                 newStage.close();
             }
         };
@@ -512,7 +527,7 @@ public class DashboardController implements Initializable {
         options.chartData = initialSeries.get(graphName);
 
         try {
-            App.switchToGraphView(options);
+            App.switchToGraphView(options,graphName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -535,13 +550,13 @@ public class DashboardController implements Initializable {
         initImpressionsGraph();
         initClicksGraph();
         initUniquesGraph();
+        initBounceGraph();
         initConvsGraph();
         initTotalCostGraph();
         initCTRGraph();
         initCPAGraph();
         initCPCGraph();
         initCPMGraph();
-        //refreshBRPageGraph(dates[2],dates[3]);
 
     }
 
@@ -594,6 +609,36 @@ public class DashboardController implements Initializable {
             default:
                 noBounceLabel.setText("n/a");
                 bounceRateLabel.setText("n/a");
+        }
+    }
+
+    private void refreshBounceGraph(){
+        XYChart.Series series1 = new XYChart.Series();
+        XYChart.Series series2 = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        switch (bounceMethod) {
+            case "Page":
+                for(LocalDate date: dates){
+                    series1.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bouncePageAtDate(date,bounceValue)));
+                    series2.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceRatePageAtDate(date,bounceValue)));
+                }
+                NoBouncesChart.getData().add(series1);
+                break;
+            case "Conv":
+                for(LocalDate date: dates){
+                    series1.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceConvAtDate(date)));
+                    series2.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceRateConvAtDate(date)));
+                }
+                NoBouncesChart.getData().add(series1);
+                break;
+            case "Time":
+                for(LocalDate date: dates){
+                    series1.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceTimeAtDate(date,bounceValue)));
+                    series2.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceRateTimeAtDate(date,bounceValue)));
+                }
+                NoBouncesChart.getData().add(series1);
+                bounceRateChart.getData().add(series2);
+            break;
         }
     }
 
@@ -678,6 +723,16 @@ public class DashboardController implements Initializable {
         NoUniquesChart.getData().add(null);
     }
      */
+
+    private void initBounceGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bouncePageAtDate(date,bounceValue)));
+        }
+        initialSeries.put("Bounce Page", series);
+        NoBouncesChart.getData().add(series);
+    }
 
     private void initConvsGraph(){
         XYChart.Series series = new XYChart.Series();
