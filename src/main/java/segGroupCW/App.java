@@ -47,6 +47,7 @@ public class App extends Application {
 		GraphController controller = loader.getController();
 		controller.setGraphsOptions(options);
 		thisStage.sizeToScene();
+		thisStage.setResizable(false);
 	}
 
 	public static void changeTheme(String newTheme){
@@ -56,6 +57,7 @@ public class App extends Application {
  	static void setRoot(String fxml) throws IOException {
 		scene.setRoot(loadFXML(fxml));
 		thisStage.sizeToScene();
+		thisStage.setResizable(false);
 
 	}
 	

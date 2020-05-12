@@ -220,6 +220,7 @@ public class GraphController implements Initializable
     @FXML
     void goHome(ActionEvent event) throws IOException {
         App.setRoot("dashboard");
+        App.getScene().getWindow().setHeight(925);
     }
 
     /**
