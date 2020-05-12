@@ -35,7 +35,7 @@ public class GraphController implements Initializable
     private Label mainMetricLabel, timeLabel, graphLabel;
 
     @FXML
-    private JFXButton changeCampaignButton, settingsButton, homeButton, backButton, printButton;
+    private JFXButton changeCampaignButton, settingsButton, homeButton, backButton;
 
     @FXML
     private Pane chartPane;
@@ -97,9 +97,6 @@ public class GraphController implements Initializable
         Text backIcon = GlyphsDude.createIcon(FontAwesomeIcons.ARROW_LEFT, "40px");
         backButton.setGraphic(backIcon);
 
-        Text printIcon = GlyphsDude.createIcon(FontAwesomeIcons.PRINT, "40px");
-        printButton.setGraphic(printIcon);
-
         Tooltip tooltipSettings = new Tooltip("Change dashboard theme");
         tooltipSettings.setShowDelay(Duration.seconds(0.05));
         Tooltip tooltipHome = new Tooltip("Return to file upload");
@@ -122,7 +119,6 @@ public class GraphController implements Initializable
         settingsButton.setTooltip(tooltipSettings);
         homeButton.setTooltip(tooltipHome);
         backButton.setTooltip(tooltipBack);
-        printButton.setTooltip(tooltipPrint);
         addFilterButton.setTooltip(tooltipAddFilter);
         timeLabel.setTooltip(tooltipTime);
         graphLabel.setTooltip(tooltipGraph);
