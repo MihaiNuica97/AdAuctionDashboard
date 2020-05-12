@@ -33,7 +33,7 @@ public class SettingsController implements Initializable {
                 newButton.setSelected(true);
             }
             newButton.setOnAction(e -> changeTheme(name));
-            newButton.setText(name);
+            newButton.setText(App.themeController.getDisplayNames().get(name));
             stylesVBox.getChildren().add(newButton);
         }
     }

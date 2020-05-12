@@ -9,6 +9,10 @@ import java.util.HashMap;
 public class ThemeController {
 	private String currentTheme;
 	private HashMap<String, String> themeURLs = new HashMap<>();
+
+
+
+	private HashMap<String,String> displayNames = new HashMap<>();
 	private ArrayList<String> themeNames;
 	private Boolean packaged;
 
@@ -36,7 +40,30 @@ public class ThemeController {
 				themeNames.add(filename);
 			}
 		}
-
+		for(String name : themeNames){
+			System.out.println(name);
+			switch (name){
+				case "default.css":
+				{
+					displayNames.put(name, "Default");
+					break;
+				}
+				case "dark.css":
+				{
+					displayNames.put(name, "Night Theme");
+					break;
+				}
+				case "dyslexic-friendly.css":
+				{
+					displayNames.put(name, "Dyslexic friendly");
+					break;
+				}case "colourblind-friendly.css":
+				{
+					displayNames.put(name, "Colourblind friendly");
+					break;
+				}
+			}
+		}
 
 		this.applyTheme(currentTheme);
 	}
@@ -94,5 +121,8 @@ public class ThemeController {
 		System.out.println(Arrays.toString(aux.listFiles()));
 
 		return fileNames;
+	}
+	public HashMap<String, String> getDisplayNames() {
+		return displayNames;
 	}
 }
