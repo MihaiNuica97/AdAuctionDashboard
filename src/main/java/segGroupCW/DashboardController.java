@@ -574,9 +574,9 @@ public class DashboardController implements Initializable {
         bounces = App.dataHandler.calcBounceConv();
         initialLabels.put("BounceConv", (double) bounces);
         initialLabels.put("BounceRateConv", App.dataHandler.calcBounceRateConv(bounces, clicks));
-//        bounces = App.dataHandler.calcBounceTime(bounceValue);
-//        initialLabels.put("BounceTime", (double) bounces);
-//        initialLabels.put("BounceRateTime", App.dataHandler.calcBounceRateTime(bounces, clicks));
+        bounces = App.dataHandler.calcBounceTime(bounceValue);
+        initialLabels.put("BounceTime", (double) bounces);
+          initialLabels.put("BounceRateTime", App.dataHandler.calcBounceRateTime(bounces, clicks));
 
         int convs = App.dataHandler.calcConversions();
         initialLabels.put("Conversions", (double) convs);
@@ -622,6 +622,7 @@ public class DashboardController implements Initializable {
                     series1.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bouncePageAtDate(date,bounceValue)));
                     series2.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceRatePageAtDate(date,bounceValue)));
                 }
+                NoBouncesChart.getData().clear();
                 NoBouncesChart.getData().add(series1);
                 break;
             case "Conv":
@@ -629,6 +630,7 @@ public class DashboardController implements Initializable {
                     series1.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceConvAtDate(date)));
                     series2.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceRateConvAtDate(date)));
                 }
+                NoBouncesChart.getData().clear();
                 NoBouncesChart.getData().add(series1);
                 break;
             case "Time":
@@ -636,6 +638,7 @@ public class DashboardController implements Initializable {
                     series1.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceTimeAtDate(date,bounceValue)));
                     series2.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceRateTimeAtDate(date,bounceValue)));
                 }
+                NoBouncesChart.getData().clear();
                 NoBouncesChart.getData().add(series1);
                 bounceRateChart.getData().add(series2);
             break;
