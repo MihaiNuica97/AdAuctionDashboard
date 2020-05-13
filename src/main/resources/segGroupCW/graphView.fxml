@@ -110,9 +110,9 @@
                               <ToggleGroup fx:id="timeToggle1" />
                            </toggleGroup>
                         </JFXRadioButton>
-                        <JFXRadioButton fx:id="daysRadioButton1" text="Days" toggleGroup="$timeToggle1" />
-                        <JFXRadioButton fx:id="weeksRadioButton1" text="Weeks" toggleGroup="$timeToggle1" />
-                        <JFXRadioButton fx:id="monthsRadioButton1" text="Months" toggleGroup="$timeToggle1" />
+                        <JFXRadioButton fx:id="daysRadioButton1" onAction="#changeTimeDays" text="Days" toggleGroup="$timeToggle1" />
+                        <JFXRadioButton fx:id="weeksRadioButton1" onAction="#changeTimeWeeks" text="Weeks" toggleGroup="$timeToggle1" />
+                        <JFXRadioButton fx:id="monthsRadioButton1" onAction="#changeTimeMonths" text="Months" toggleGroup="$timeToggle1" />
                      </children>
                      <padding>
                         <Insets left="10.0" right="10.0" />

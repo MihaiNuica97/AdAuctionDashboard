@@ -43,7 +43,7 @@ public class DataHandler {
             imprFirstDate = csvParser.getImprFirstDate();
             imprLastDate = csvParser.getImprLastDate();
             clickFirstDate = csvParser.getClickFirstDate();
-            clickLastDate = csvParser.getClickFirstDate();
+            clickLastDate = csvParser.getClickLastDate();
             serverEntFirstDate = csvParser.getServerEntFirstDate();
             serverEntLastDate = csvParser.getServerEntLastDate();
             serverExFirstDate = csvParser.getServerExFirstDate();
@@ -52,6 +52,22 @@ public class DataHandler {
             System.out.println("Failed to parse files");
             e.printStackTrace();
         }
+    }
+
+    public List<Click> getClicks(){
+        return clicks;
+    }
+
+    public List<User> getUsers(){
+        return users;
+    }
+
+    public List<Impression> getImpressions(){
+        return impressions;
+    }
+
+    public List<Server> getServerLogs(){
+        return serverLogs;
     }
 
     public void setUsers(List<User> users) {

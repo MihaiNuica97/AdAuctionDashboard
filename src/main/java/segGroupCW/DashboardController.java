@@ -557,6 +557,7 @@ public class DashboardController implements Initializable {
         initCPAGraph();
         initCPCGraph();
         initCPMGraph();
+        initBouncRateGraph();
 
     }
 
@@ -633,6 +634,7 @@ public class DashboardController implements Initializable {
                 NoBouncesChart.getData().clear();
                 NoBouncesChart.getData().add(series1);
                 initialSeries.put("Bounces", series1);
+                bounceRateChart.getData().clear();
                 bounceRateChart.getData().add(series2);
                 initialSeries.put("Bounce Rate", series2);
                 break;
@@ -644,6 +646,7 @@ public class DashboardController implements Initializable {
                 NoBouncesChart.getData().clear();
                 NoBouncesChart.getData().add(series1);
                 initialSeries.put("Bounces", series1);
+                bounceRateChart.getData().clear();
                 bounceRateChart.getData().add(series2);
                 initialSeries.put("Bounce Rate", series2);
                 break;
@@ -655,6 +658,7 @@ public class DashboardController implements Initializable {
                 NoBouncesChart.getData().clear();
                 NoBouncesChart.getData().add(series1);
                 initialSeries.put("Bounces", series1);
+                bounceRateChart.getData().clear();
                 bounceRateChart.getData().add(series2);
                 initialSeries.put("Bounce Rate", series2);
             break;
@@ -802,6 +806,16 @@ public class DashboardController implements Initializable {
         }
         initialSeries.put("CPM", series);
         cpmChart.getData().add(series);
+    }
+
+    private void initBouncRateGraph(){
+        XYChart.Series series = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI("days",1);
+        for(LocalDate date: dates){
+            series.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceRatePageAtDate(date,bounceValue)));
+        }
+        initialSeries.put("Bounces", series);
+        bounceRateChart.getData().add(series);
     }
 
     /*
