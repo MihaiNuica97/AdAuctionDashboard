@@ -312,23 +312,29 @@ public class GraphController implements Initializable
             case "Uniques":
                 refreshUniquesGraph(clickList);
                 break;
+            case "Bounces":
+                refreshBounceGraph(serverList);
+                break;
             case "Conversions":
                 refreshConvsGraph(serverList);
                 break;
             case "Total Cost":
                 refreshTotalCostGraph(clickList, impressionList);
                 break;
-            case "CTR":
+            case "Click Through Rate":
                 refreshCTRGraph(clickList, impressionList);
                 break;
             case "CPA":
                 refreshCPAGraph(clickList, impressionList, serverList);
                 break;
-            case "CPC":
+            case "Cost per Click":
                 refreshCPCGraph(clickList, impressionList);
                 break;
             case "CPM":
                 refreshCPMGraph(clickList, impressionList);
+                break;
+            case "Bounce Rate":
+                refreshBounceRateGraph(serverList);
                 break;
             case "":
                 refreshImpressionsGraph(impressionList);
@@ -369,6 +375,32 @@ public class GraphController implements Initializable
         NoUniquesChart.getData().add(null);
     }
      */
+
+    private void refreshBounceGraph(List<Server> server){
+        XYChart.Series series1 = new XYChart.Series();
+        XYChart.Series series2 = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI(currentTG,1);
+        switch (App.bounceDef) {
+            case "Page":
+                for(LocalDate date: dates){
+                    series1.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bouncePageAtDate(date, server, App.bounceValue)));
+                }
+                mainChart.getData().add(series1);
+                break;
+            case "Conv":
+                for(LocalDate date: dates){
+                    series1.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceConvAtDate(date,server)));
+                }
+                mainChart.getData().add(series1);
+                break;
+            case "Time":
+                for(LocalDate date: dates){
+                    series1.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceTimeAtDate(date,server,App.bounceValue)));
+                }
+                mainChart.getData().add(series1);
+                break;
+        }
+    }
 
     private void refreshConvsGraph( List<Server> serverList){
         XYChart.Series series = new XYChart.Series();
@@ -423,6 +455,32 @@ public class GraphController implements Initializable
         }
         mainChart.getData().add(series);
     }
+
+    private void refreshBounceRateGraph(List<Server> server){
+        XYChart.Series series2 = new XYChart.Series();
+        ArrayList<LocalDate> dates = App.dataHandler.initialImprTI(currentTG,1);
+        switch (App.bounceDef) {
+            case "Page":
+                for(LocalDate date: dates){
+                    series2.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceRatePageAtDate(date,server,App.bounceValue)));
+                }
+                mainChart.getData().add(series2);
+                break;
+            case "Conv":
+                for(LocalDate date: dates){
+                    series2.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceRateConvAtDate(date,server)));
+                }
+                mainChart.getData().add(series2);
+                break;
+            case "Time":
+                for(LocalDate date: dates){
+                    series2.getData().add(new XYChart.Data(date.toString(), App.dataHandler.bounceRateTimeAtDate(date,server,App.bounceValue)));
+                }
+                mainChart.getData().add(series2);
+                break;
+        }
+    }
+
 
     public void setGraphsOptions(GraphOptions options){
         dashBoardLabel.setText(options.labelName);

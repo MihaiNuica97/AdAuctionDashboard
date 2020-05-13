@@ -21,6 +21,8 @@ public class App extends Application {
 	public static DataHandler dataHandler;
 	public static Stage thisStage;
 	public static String currentGraph;
+	public static String bounceDef = "Page";
+	public static Double bounceValue = 1.0;
 
 	public static Scene getScene(){
 		return scene;
