@@ -30,9 +30,8 @@ public class CSVParser {
             data = row.split(",");
             String id = data[1];
             Date date = DateFormat.convertDate(data[0]);
-            if (users.stream().noneMatch(p -> p.getId().equals(id))) {
-                users.add(new User(data[1], data[2], data[3], data[4]));
-            }
+            users.add(new User(data[1], data[2], data[3], data[4]));
+
             impressions.add(new Impression(data[1], data[0], data[5], data[6]));
             imprFirstDate = dateformat.smallestDate(imprFirstDate,date);
             imprLastDate = dateformat.largestDate(imprLastDate,date);

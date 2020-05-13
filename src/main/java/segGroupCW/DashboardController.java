@@ -198,6 +198,7 @@ public class DashboardController implements Initializable {
         cpcPane.setOnMouseClicked( e -> graphView("Cost per Click"));
         cpmPane.setOnMouseClicked( e -> graphView("CPM"));
         bounceRatePane.setOnMouseClicked( e -> graphView("Bounce Rate"));
+
     }
 
     /**
