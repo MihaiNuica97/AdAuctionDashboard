@@ -224,7 +224,7 @@ public class DashboardController implements Initializable {
             if (selectedCheckBoxes.containsAll(DataHandler.ages)) {
                 selectedCheckBoxes.removeAll(DataHandler.ages);
             }
-            ArrayList<String> contexts = new ArrayList<>();
+            HashSet<String> contexts = new HashSet<>();
             if (selectedCheckBoxes.containsAll(DataHandler.context)) {
                 selectedCheckBoxes.removeAll(DataHandler.context);
             } else {
@@ -236,20 +236,32 @@ public class DashboardController implements Initializable {
             }
 
             if (!selectedCheckBoxes.isEmpty()) {
-                List<String> users = App.dataHandler.filterUsers(selectedCheckBoxes);
-                List<Impression> impressions;
+                HashSet<String> users = App.dataHandler.filterUsers(selectedCheckBoxes);
+                System.out.println(System.currentTimeMillis());
+                HashSet<Impression> impressions;
                 List<Server> server;
                 List<Click> clicks;
                 if (!contexts.isEmpty()) {
                     impressions = App.dataHandler.filterImpressions(users, contexts);
-                    server = App.dataHandler.filterCServers(impressions);
-                    clicks = App.dataHandler.filterCClicks(impressions);
+                    System.out.println(System.currentTimeMillis());
+                    HashMap<String, Date> impMap = new HashMap<>();
+                    for (Impression each : impressions) {
+                        impMap.put(each.getId(), each.getDate());
+                    }
+                    System.out.println(System.currentTimeMillis());
+                    server = App.dataHandler.filterCServers(impMap);
+                    System.out.println(System.currentTimeMillis());
+                    clicks = App.dataHandler.filterCClicks(impMap);
+                    System.out.println(System.currentTimeMillis());
                 } else {
                     impressions = App.dataHandler.filterImpressions(users);
+                    System.out.println(System.currentTimeMillis());
                     server = App.dataHandler.filterServers(users);
+                    System.out.println(System.currentTimeMillis());
                     clicks = App.dataHandler.filterClicks(users);
+                    System.out.println(System.currentTimeMillis());
                 }
-                int noImps = App.dataHandler.calcImpressions(impressions);
+                int noImps = App.dataHandler.calcImpressions(new ArrayList<Impression>(impressions));
                 noImprLabel.setText(Integer.toString(noImps));
                 int noClicks = App.dataHandler.calcClicks(clicks);
                 noClicksLabel.setText(Integer.toString(noClicks));
@@ -305,22 +317,22 @@ public class DashboardController implements Initializable {
                 }
                 int convs = App.dataHandler.calcConversions(server);
                 noConversionLabel.setText(Integer.toString(convs));
-                double totalCost = App.dataHandler.calcTotalCost(clicks, impressions);
+                double totalCost = App.dataHandler.calcTotalCost(clicks, new ArrayList<Impression>(impressions));
                 totalCostLabel.setText(Double.toString(totalCost));
                 ctrLabel.setText(Double.toString(App.dataHandler.calcCTR(noClicks, noImps)));
                 cpaLabel.setText(Double.toString(App.dataHandler.calcCPA(totalCost, convs)));
                 cpcLabel.setText(Double.toString(App.dataHandler.calcCPC(totalCost, noClicks)));
                 cpmLabel.setText(Double.toString(App.dataHandler.calcCPM(totalCost, noImps)));
 
-                refreshImpressionsGraph(impressions);
+                refreshImpressionsGraph(new ArrayList<Impression>(impressions));
                 refreshClicksGraph(clicks);
                 refreshUniquesGraph(clicks);
                 refreshConvsGraph(server);
-                refreshTotalCostGraph(clicks,impressions);
-                refreshCTRGraph(clicks,impressions);
-                refreshCPAGraph(clicks,impressions,server);
-                refreshCPCGraph(clicks,impressions);
-                refreshCPMGraph(clicks,impressions);
+                refreshTotalCostGraph(clicks,new ArrayList<Impression>(impressions));
+                refreshCTRGraph(clicks,new ArrayList<Impression>(impressions));
+                refreshCPAGraph(clicks,new ArrayList<Impression>(impressions),server);
+                refreshCPCGraph(clicks,new ArrayList<Impression>(impressions));
+                refreshCPMGraph(clicks,new ArrayList<Impression>(impressions));
             } else {
                 setInitLabels();
                 setInitGraphs();

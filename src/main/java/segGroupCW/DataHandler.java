@@ -76,10 +76,10 @@ public class DataHandler {
         this.impressions = impressions;
     }
 
-    public List<String> filterUsers(List<String> filters) {
+    public HashSet<String> filterUsers(List<String> filters) {
         filters.removeAll(context);
         if (filters.isEmpty()) {
-            return users.stream().map(User::getId).collect(Collectors.toList());
+            return (HashSet<String>) users.stream().map(User::getId).collect(Collectors.toSet());
         } else {
             ArrayList<String> filterIncome = new ArrayList<>();
             ArrayList<String> filterAge = new ArrayList<>();
@@ -96,9 +96,9 @@ public class DataHandler {
             }
 
             if (filterGender.equals("NULL")) {
-                return users.stream().filter(userFilterPredicate(filterIncome, filterAge)).map(User::getId).collect(Collectors.toList());
+                return (HashSet<String>) users.stream().filter(userFilterPredicate(filterIncome, filterAge)).map(User::getId).collect(Collectors.toSet());
             } else {
-                return users.stream().filter(userFilterPredicate(filterIncome, filterAge, filterGender)).map(User::getId).collect(Collectors.toList());
+                return (HashSet<String>) users.stream().filter(userFilterPredicate(filterIncome, filterAge, filterGender)).map(User::getId).collect(Collectors.toSet());
             }
         }
     }
@@ -195,38 +195,45 @@ public class DataHandler {
         return age;
     }
 
-    public List<Impression> filterImpressions(List<String> ids) {
-        return impressions.stream().filter(p -> ids.contains(p.getId())).collect(Collectors.toList());
+    public HashSet<Impression> filterImpressions(HashSet<String> ids) {
+        return (HashSet<Impression>) impressions.stream().filter(p -> ids.contains(p.getId())).collect(Collectors.toSet());
     }
 
-    public List<Impression> filterImpressions(List<String> ids, ArrayList<String> contexts) {
-        return impressions.stream().filter(p -> ids.contains(p.getId()) && contexts.contains(p.getContext())).collect(Collectors.toList());
+    public HashSet<Impression> filterImpressions(HashSet<String> ids, HashSet<String> contexts) {
+        return (HashSet<Impression>)impressions.stream().filter(p -> ids.contains(p.getId()) && contexts.contains(p.getContext())).collect(Collectors.toSet());
     }
 
-    public List<Click> filterClicks(List<String> ids) {
+    public List<Click> filterClicks(HashSet<String> ids) {
         return clicks.stream().filter(p -> ids.contains(p.getId())).collect(Collectors.toList());
     }
 
-    public List<Server> filterServers(List<String> ids) {
+    public List<Server> filterServers(HashSet<String> ids) {
         return serverLogs.stream().filter(p -> ids.contains(p.getId())).collect(Collectors.toList());
     }
 
-    public List<Click> filterCClicks(List<Impression> impressions) {
+    public List<Click> filterCClicks(HashSet<Impression> impressions) {
         return clicks.stream().filter(compareCToImpressions(impressions) ).collect(Collectors.toList());
     }
 
-    public List<Server> filterCServers(List<Impression> impressions) {
+    public List<Server> filterCServers(HashSet<Impression> impressions) {
         return serverLogs.stream().filter(compareSToImpressions(impressions) ).collect(Collectors.toList());
     }
 
-    private Predicate<Click> compareCToImpressions(List<Impression> imps) {
+    private Predicate<Click> compareCToImpressions(HashSet<Impression> imps) {
         return p -> imps.stream().anyMatch(t -> t.getId().equals(p.getId()) && (t.getDate().getTime() - p.getDate().getTime() < 300000 ));
     }
 
-    private Predicate<Server> compareSToImpressions(List<Impression> imps) {
+    private Predicate<Server> compareSToImpressions(HashSet<Impression> imps) {
         return p -> imps.stream().anyMatch(t -> t.getId().equals(p.getId()) && (t.getDate().getTime() - p.getEntryDate().getTime() < 300000 ));
     }
 
+    public List<Server> filterCServers(HashMap<String, Date> impressions) {
+        return serverLogs.stream().filter(p -> impressions.get(p.getId()) != null && impressions.get(p.getId()).getTime() - p.getEntryDate().getTime() < 300000 ).collect(Collectors.toList());
+    }
+
+    public List<Click> filterCClicks(HashMap<String, Date> impressions) {
+        return clicks.stream().filter(p -> impressions.get(p.getId()) != null && impressions.get(p.getId()).getTime() - p.getDate().getTime() < 300000 ).collect(Collectors.toList());
+    }
     //Normal Calculations
 
     public int calcImpressions(){ return impressions.size(); }

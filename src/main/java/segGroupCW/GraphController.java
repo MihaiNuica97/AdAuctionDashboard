@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -199,11 +200,11 @@ public class GraphController implements Initializable
             }
             if (!selectedCheckBoxes.isEmpty()) {
                 filterSet.add(selectedCheckBoxes);
-                List<String> users = App.dataHandler.filterUsers(selectedCheckBoxes);
-                List<Impression> impressions = App.dataHandler.filterImpressions(users);
+                HashSet<String> users = App.dataHandler.filterUsers(selectedCheckBoxes);
+                HashSet<Impression> impressions = App.dataHandler.filterImpressions(users);
                 List<Server> server = App.dataHandler.filterServers(users);
                 List<Click> clicks = App.dataHandler.filterClicks(users);
-                refreshGraph(impressions,clicks,server,users);
+                refreshGraph(new ArrayList<>(impressions),clicks,server,new ArrayList<>(users));
 
             }
 
