@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -106,14 +104,14 @@ public class DataHandler {
     }
 
     private Predicate<User> userFilterPredicate(List<String> incomes, List<String> ages, String gender) {
-        if (incomes.size() > 0) {
-            if (ages.size() > 0) {
+        if (!incomes.isEmpty()) {
+            if (!ages.isEmpty()) {
                 return p -> incomes.contains(p.getIncome()) && ages.contains(p.getAge()) && p.getGender().equals(gender);
             } else {
                 return p -> incomes.contains(p.getIncome()) && p.getGender().equals(gender);
             }
         } else {
-            if (ages.size() > 0) {
+            if (!ages.isEmpty()) {
                 return p -> ages.contains(p.getAge()) && p.getGender().equals(gender);
             } else {
                 return p -> p.getGender().equals(gender);
@@ -122,8 +120,8 @@ public class DataHandler {
     }
 
     private Predicate<User> userFilterPredicate(List<String> incomes, List<String> ages) {
-        if (incomes.size() > 0) {
-            if (ages.size() > 0) {
+        if (!incomes.isEmpty()) {
+            if (!ages.isEmpty()) {
                 return p -> incomes.contains(p.getIncome()) && ages.contains(p.getAge());
             } else {
                 return p -> incomes.contains(p.getIncome());
@@ -136,8 +134,8 @@ public class DataHandler {
     //int for interval num and string for day/month
     public static ArrayList<LocalDate> iterTimeIntervals(Date start, Date end, String interval, int num){
         ArrayList<LocalDate> intervals = new ArrayList<>();
-        LocalDate startDate = dateformat.asLocalDate(start);
-        LocalDate endDate = dateformat.asLocalDate(end).plusDays(1);
+        LocalDate startDate = DateFormat.asLocalDate(start);
+        LocalDate endDate = DateFormat.asLocalDate(end).plusDays(1);
         intervals.add(startDate);
 
         switch  (interval){
@@ -163,15 +161,15 @@ public class DataHandler {
         return intervals;
     }
 
-    public static ArrayList<LocalDate> initialImprTI(String interval, int num){
+    public ArrayList<LocalDate> initialImprTI(String interval, int num){
         return iterTimeIntervals(imprFirstDate,imprLastDate,interval,num);
     }
 
-    public static ArrayList<LocalDate> initialClicksTI(String interval, int num){
+    public ArrayList<LocalDate> initialClicksTI(String interval, int num){
         return iterTimeIntervals(clickFirstDate,clickLastDate,interval,num);
     }
 
-    public static ArrayList<LocalDate> initialServerTI(String interval, int num){
+    public ArrayList<LocalDate> initialServerTI(String interval, int num){
         return iterTimeIntervals(serverEntFirstDate,serverEntLastDate,interval,num);
     }
 
@@ -348,7 +346,7 @@ public class DataHandler {
     //
 
     public int conversionsAtDate(LocalDate date ){
-        return (int)serverLogs.stream().filter(serverAtEntryDate(date)).count();
+        return (int)serverLogs.stream().filter(conversionsDatePredicate(date)).count();
     }
 
     public double totalCostAtDate(LocalDate date ){
@@ -415,7 +413,7 @@ public class DataHandler {
     //
 
     public int conversionsAtDate(LocalDate date, List<Server> serverList){
-        return (int)serverList.stream().filter(serverAtEntryDate(date)).count();
+        return (int)serverList.stream().filter(conversionsDatePredicate(date)).count();
     }
 
     public double totalCostAtDate(LocalDate date, List<Click> clicksList, List<Impression> impressionList){
@@ -455,38 +453,37 @@ public class DataHandler {
 
 
     public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
-
         Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 
     private static Predicate<Impression> impressionAtDate(LocalDate date){
-        return p -> dateformat.dayComparable(p.getDate()).isEqual(date);
+        return p -> DateFormat.dayComparable(p.getDate()).isEqual(date);
     }
 
     private static Predicate<Click> clickAtDate(LocalDate date){
-        return p -> dateformat.dayComparable(p.getDate()).isEqual(date);
+        return p -> DateFormat.dayComparable(p.getDate()).isEqual(date);
     }
 
-    private static Predicate<Server> serverAtEntryDate(LocalDate date){
-        return p -> dateformat.dayComparable(p.getEntryDate()).isEqual(date);
+    private static Predicate<Server> conversionsDatePredicate(LocalDate date){
+        return p -> p.getConversion() && DateFormat.dayComparable(p.getEntryDate()).isEqual(date);
     }
 
     private static Predicate<Click> uniqueAtDate(LocalDate date, Function<? super Click, ?> keyExtractor){
         Map<Object, Boolean> seen = new ConcurrentHashMap<>();
-        return p -> dateformat.dayComparable(p.getDate()).isEqual(date) && seen.putIfAbsent(keyExtractor.apply(p), Boolean.TRUE) == null;
+        return p -> DateFormat.dayComparable(p.getDate()).isEqual(date) && seen.putIfAbsent(keyExtractor.apply(p), Boolean.TRUE) == null;
     }
 
     private static Predicate<Server> bouncePageAtDatePred(LocalDate date, Double pages){
-        return p -> dateformat.dayComparable(p.getEntryDate()).isEqual(date) && p.getPages() > pages;
+        return p -> DateFormat.dayComparable(p.getEntryDate()).isEqual(date) && p.getPages() <= pages;
     }
 
     private static Predicate<Server> bounceConvAtDatePred(LocalDate date){
-        return p -> dateformat.dayComparable(p.getEntryDate()).isEqual(date) && !p.getConversion();
+        return p -> DateFormat.dayComparable(p.getEntryDate()).isEqual(date) && !p.getConversion();
     }
 
     private static Predicate<Server> bounceTimeAtDatePred(LocalDate date, Double time){
-        return p -> dateformat.dayComparable(p.getEntryDate()).isEqual(date) && p.getExitDate().getTime() - p.getEntryDate().getTime() < time;
+        return p -> DateFormat.dayComparable(p.getEntryDate()).isEqual(date) && p.getExitDate().getTime() - p.getEntryDate().getTime() < time;
     }
 
 }
